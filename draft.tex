@@ -1,4 +1,4 @@
-\documentclass{elsarticle}
+\documentclass[final]{elsarticle}
 
 \usepackage{lineno}
 \usepackage[hidelinks]{hyperref}
@@ -110,13 +110,14 @@
 % \tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
 
 %% or include affiliations in footnotes:
-\author{Rainer M. Schaich}
+\author{Rainer M. Schaich\fnref{akn}}
 \ead{rainer.schaich@eng.ox.ac.uk}
+\fntext[akn]{The author is funded by the EPSRC DTA and the Worcester College Martin Senior Scholarship.}
 
-\author{Mark Cannon\corref{correspondingauthor}}
+
+\author{Mark Cannon}
 \ead{mark.cannon@eng.ox.ac.uk}
 
-\cortext[correspondingauthor]{Corresponding author}
 
 
 \address{Department of Engineering Science, University of Oxford, Parks Road, OX1 3PJ, Oxford}
@@ -137,7 +138,7 @@ Two examples are used to illustrate the presented methodology.
 \end{abstract}
 
 \begin{keyword}
-Parametric Convexity \sep Piecewise Affine Set-Valued Map \sep Pontryagin Difference
+Parametric Convexity \sep Piecewise Affine Set-Valued Map \sep Pontryagin Difference \sep Parametrised Polytopes
 \end{keyword}
 
 \end{frontmatter}
@@ -887,7 +888,7 @@ The sets $\tilde P_i$ and $L$ are given by
 % With this the set of points for which there exists a feasible $w\in\mathcal W$ reaching the face $P_i$ is given as the projection
 % %
 $$
-\tilde P_i= \left\{(z,t,\tau): \begin{array}{rcl}\Lambda_i Tt &\leq& \tau\\ Fz&\leq& t\\ \Lambda_i(z+\tau)&=&\lambda_i\\ \Lambda_j(z+T_lt)&\leq&\lambda_j\end{array},j\neq i,l\in\{1,\dots,n\}\right\}
+\tilde P_i= \left\{(z,t,\tau): \begin{array}{rcl}\kappa\Lambda_i Tt &\leq& \tau\\ Fz&\leq& t\\ \Lambda_i(z+\tau)&=&\lambda_i\\ \Lambda_j(z+\kappa T_lt)&\leq&\lambda_j\end{array},j\neq i,l\in\{1,\dots,n\}\right\}
 $$
 %
 and
@@ -897,7 +898,7 @@ and
 % Alternatively, the set~$X\ominus\mathcal W(X)$ can be obtained by a single projection of the higher dimensional set:
 $$
 L = \left\{(z,t,\tau_1,\dots,\tau_q):\begin{array}{rcl}
-\Lambda_i Tt & \leq &\tau_i\\
+\kappa\Lambda_i Tt & \leq &\tau_i\\
 Fz &\leq& t\\
 \Lambda_i(z+\tau_i)&\leq&\lambda_i
 \end{array},i\in\{1,\dots,q\}\right\}
