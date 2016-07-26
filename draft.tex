@@ -123,15 +123,15 @@
 
 
 \begin{abstract}
-The Pontryagin set difference is a commonly used operation between two polytopes to calculate a set of safe operation.
+The Pontryagin set difference is an operation between two polytopes that is used to calculate sets of safe operation in applications of game theory and robust control design.
 %
-We suggest to use a particular class of set-valued maps as the subtrahend, for this we introduce the property of parametric convexity and present some of its analytic framework.
+We consider a particular class of set-valued maps as the subtrahend; for this we introduce the property of parametric convexity and present some of its analytic framework.
 %
-In order to guarantee the convexity of the difference of a convex minuend and a set-valued map it proves necessary and sufficient to have the parametrically convexity property of the set-valued map.
+In order to guarantee the convexity of the difference of a convex minuend and a set-valued map it proves necessary and sufficient that the set-valued map is parametrically convex.
 %
-For generic piecewise polyhedral set-valued maps we prove that parametric convexity is equivalent to a constant combinatorial structure of all its realisations.
+For generic piecewise polyhedral set-valued maps we show that parametric convexity is equivalent to a constant combinatorial structure of all its realisations.
 %
-We present a computational way of verifying parametric convexity of a piecewise polyhedral set-valued map as well as a way to calculate the parametric Pontryagin difference between a polyhedron and a piecewise polyhedral set-valued map.
+We present a computational method for verifying parametric convexity of a piecewise polyhedral set-valued map as well as a way to calculate the parametric Pontryagin difference between a polyhedron and a piecewise polyhedral set-valued map.
 %
 Two examples are used to illustrate the presented methodology.
 \end{abstract}
@@ -319,7 +319,7 @@ lies either outside the set $\mathcal W(\lambda p_1+(1-\lambda)p_2)$ or on its b
 %
 contains the set $\mathcal W(\lambda p_1 + (1-\lambda)p_2)$ for all $\lambda\in(0,1)$.
 %
-Furthermore, since $\lambda(p_1,z_1)+(1-\lambda)(p_2,z_2)\not\in \text{int}(\mathscr G(\mathcal W))$ and both $(p_1,z_1)$ and $(p_2,z_2)$ die on the boundary either $z_1-z_2$ or $z_2-z_1$ is outward facing for both $\mathcal W(p_1)$ and $\mathcal W(p_2)$, therefore either $z_1-z_2$ or $z_2-z_1$ is in $\mathcal N\mathcal W(p_1,z_1)$ and $\mathcal N\mathcal W(p_2,z_2)$ and hence in their intersection.
+Furthermore, since $\lambda(p_1,z_1)+(1-\lambda)(p_2,z_2)\not\in \text{int}(\mathscr G(\mathcal W))$ and both $(p_1,z_1)$ and $(p_2,z_2)$ lie on the boundary, either $z_1-z_2$ or $z_2-z_1$ is outward facing for both $\mathcal W(p_1)$ and $\mathcal W(p_2)$; therefore either $z_1-z_2$ or $z_2-z_1$ lies in both $\mathcal N\mathcal W(p_1,z_1)$ and $\mathcal N\mathcal W(p_2,z_2)$ and hence also in their intersection.
 
 Now suppose that $\mathcal W$ is parametrically convex and that~\eqref{eq:graph:def:p:convexity} is not satisfied for 
 some $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$ with $\mathcal N\mathcal W(p_1,z_1)\cap\mathcal 
@@ -585,7 +585,7 @@ To complete the proof we note that~\eqref{eq:derivative:condition:on:index:sets}
 It is worth pointing out that Corollary~\ref{thm:p:convexity:PWA:set:constant:num:verts} can be reformulated in a numerically useful way:
 %
 \begin{cor}\label{thm:combinatorical:equivalence:alternative}
-The generic set~$\mathcal W(p)$ defined by~\eqref{eq:definition:PWA:polytopic:set:general} is parametrically convex if and only if, it is combinatorially equivalent for any $p_1,p_2\in Y\subseteq\mathbb R^d$ almost everywhere, i.e. $\mathcal W(p_1)\cong\mathcal W(p_2)$.
+The generic set~$\mathcal W(p)$ defined by~\eqref{eq:definition:PWA:polytopic:set:general} is parametrically convex if and only if it is combinatorially equivalent for any $p_1,p_2\in Y\subseteq\mathbb R^d$ almost everywhere, i.e.\ $\mathcal W(p_1)\cong\mathcal W(p_2)$.
 \end{cor}
 %
 \begin{proof}
