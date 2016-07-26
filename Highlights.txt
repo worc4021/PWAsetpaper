@@ -1,4 +1,4 @@
+- To guarantee convexity of the parametric Pontryagin difference of a convex set and a set-valued map, parametric convexity of the set-valued map is necessary and sufficient.
 - Parametric Convexity for set-valued maps is equivalent to being nowhere strictly convex in the parameter.
-- To guarantee convexity of the parametric Pontryagin difference of a convex set and a set-valued map parametric convexity is necessary and sufficient.
 - A generic point-wise polyhedral set-valued map is parametrically convex if and only if the combinatorial structure of all its realisations is constant.
-- Computationally verifying parametric convexity for a generic piecewise polyhedral set-valued map can be done by vertex enumerating an epigraph-like object, a similar polyhedron can be used to calculate the parametric Pontryagin difference between a polyhedron and a piecewise polyhedral set-valued map.
+- Computational verification of parametric convexity for a generic piecewise polyhedral set-valued map can be performed by vertex enumerating an epigraph-like object; a similar process can be used to calculate the parametric Pontryagin difference between a polyhedron and a piecewise polyhedral set-valued map.
