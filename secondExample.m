@@ -120,9 +120,11 @@ D(:,:,4) = kron(eye(4),L(4,:))*T;
     for i = 1:size(VV,1)
         x = VV(i,:)';
         t = [max(M1*x+B1),max(M2*x+B2),max(M3*x+B3),max(M4*x+B4)]';
-        ValidateF(x,t)
+        ValidateF(x,t);
         dx = reshape(T*t,2,4)+repmat(x,1,4);
         vv((4*i-3):4*i,:) = dx';
+        fprintf('\\draw[cyan] (%8.4f,%8.4f) -- (%8.4f,%8.4f) -- (%8.4f,%8.4f) -- (%8.4f,%8.4f) -- cycle;\n',...
+            dx(1),dx(2),dx(3),dx(4),dx(7),dx(8),dx(5),dx(6));
         r = [1,-1/2]*x;
         dx = [([1/2,1]*x)^3/10;
             real(1/2*asin(heav(r).*sqrt(abs(r)/2) + heav(-r).*r/2))];
@@ -144,8 +146,11 @@ D(:,:,4) = kron(eye(4),L(4,:))*T;
 xlabel('$x_1$');
 ylabel('$x_2$');
 
-
-
+% fprintf('\n');
+% for i = 1:size(vv,1)
+%     fprintf('%8.4f/%8.4f,',vv(i,1),vv(i,2));
+% end
+% fprintf('\n');
 Vn = [];
 for i = 1:4
     IDX = false(4,1);
