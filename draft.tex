@@ -6,7 +6,7 @@
 
 \usepackage{amsmath,amsthm,amssymb,mathrsfs}
 
-\journal{Journal of Combinatorial Theory, Series A}
+\journal{Computational Geometry: Theory and Applications}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %% Elsevier bibliography styles
@@ -112,15 +112,15 @@
 %% or include affiliations in footnotes:
 \author{Rainer M. Schaich\fnref{akn}}
 \ead{rainer.schaich@eng.ox.ac.uk}
-\fntext[akn]{The author is funded by the EPSRC DTA and the Worcester College Martin Senior Scholarship.}
+\fntext[akn]{Supported by the EPSRC DTA and the Worcester College Martin Senior Scholarship}
 
 
-\author{Mark Cannon}
+\author{Mark Cannon\fnref{coa}}
 \ead{mark.cannon@eng.ox.ac.uk}
+\fntext[coa]{Corresponding author}
 
 
-
-\address{Department of Engineering Science, University of Oxford, Parks Road, OX1 3PJ, Oxford}
+\address{Department of Engineering Science, University of Oxford, Oxford,  OX1 3PJ, UK}
 
 
 \begin{abstract}
@@ -219,7 +219,7 @@ It is easy to see, that if $A(\cdot)$ and $b(\cdot)$ are continuous in $y$, then
 
 The induced graph~$G(P)$ of a polytope~$P$ is the graph with vertices and edges that coincide with the vertices and edges of the polytope itself~\cite{Bondy:2008}.
 %
-In this paper we only use one property of induced graphs, namely the \emph{Perles' Conjecture}~\cite{Kalai:1988}:
+In this paper we only use one property of induced graphs, namely the \emph{Perles Conjecture}~\cite{Kalai:1988}:
 \emph{For a simple polytope~$P$ the graph~$G(P)$ determines the combinatorial structure of~$P$.}
 
 \section{Parametric Convexity}\label{sec:parametric:convexity}
@@ -530,7 +530,7 @@ $\bar{\mathcal A}_\kappa(p)$ respectively, where
   a_i v_\kappa(p) &< b_{i,k_i^\ast} + c_{i,k_i^\ast} p \quad\forall i\in\bar{\mathcal A}_\kappa(p) .
 \end{split}\end{equation*}
 %
-Since $\mathcal W(p)$ is simple almost everywhere in~$Y$, i.e. each vertex is defined by exactly $n$ active inequalities $\abs{\mathcal A_\kappa(p)}=n$ for all $p\in Y$ and all $\kappa$.
+Since $\mathcal W(p)$ is simple almost everywhere in~$Y$, i.e. each vertex is defined by exactly $n$ active inequalities, we have $\abs{\mathcal A_\kappa(p)}=n$ for all $p\in Y$ and all $\kappa$.
 %
 Furthermore, since~$\mathcal W(p)$ is generic, only one element of ${\bf{k}}^\ast\vert_{\mathcal P_{j_1}}$
 and ${\bf{k}}^\ast\vert_{\mathcal P_{j_2}}$ for neighbouring $\mathcal P_{j_1}$ and $\mathcal P_{j_2}$ differs, that is, there exists a single index $i\in\{1,\dots,m\}$ such that $k_i^\ast\vert_{\mathcal P_{j_1}}\neq k_i^\ast\vert_{\mathcal P_{j_2}}$.
@@ -596,7 +596,7 @@ It is clear that as long as all complexes in proof~\ref{thm:p:convexity:PWA:set:
 %
 Although the shape of~$\mathcal W(p)$ might change its, combinatorial structure does not, furthermore the combinatorial structure of $\mathcal W(p)$ is not affected by changes of the right hand side.
 %
-The \emph{Perles' Conjecture}~\cite{Kalai:1988}, states that the combinatorial structure of a simple polytope is uniquely determined by its graph, that is, as long as the induced graph of~$\mathcal W(p)$ remains unchanged so does its combinatorial structure.
+The Perles Conjecture~\cite{Kalai:1988} states that the combinatorial structure of a simple polytope is uniquely determined by its graph, that is, as long as the induced graph of~$\mathcal W(p)$ remains unchanged so does its combinatorial structure.
 %
 The induced graph of a polytope is given by the vertices and the edges of a polytope, and since we have that the number of vertices remains unchanged throughout~$Y$ for $\mathcal W(p)$, the induced graph $G(\mathcal W(p))$ has to have a constant number of vertices.
 %
@@ -688,9 +688,9 @@ $$
 	\bigcup_{P\in\mathcal C}\text{vert}(P) = \bigcup_{(\ast)} \text{vert}(\pi_d(F)) = \bigcup_{i\in\{1,\dots,m\}}\pi_d(\text{vert}(\epi(\phi_i))),
 $$
 %
-with $(\ast) = \{F: d-\text{dimensional face of } \epi(d_i) \text{ for some } i\in\{1,\dots,m\}\}$.
+with $(\ast) = \{F: F \text{ is a } d\text{-dimensional face of } \epi(d_i) \text{ for some } i\in\{1,\dots,m\}\}$.
 %
-It is now almost obvious that the graph $\mathscr G(\mathcal W\vert_{\mathcal P_j})$ on each $d$-dimensional element $\mathcal P_j\in\mathcal C$ is entirely defined by the values of $\mathcal W(p_j)$ at the vertices $p_j\in\text{vert}(\mathcal P_j)$.
+It is now obvious that the graph $\mathscr G(\mathcal W\vert_{\mathcal P_j})$ on each $d$-dimensional element $\mathcal P_j\in\mathcal C$ is entirely defined by the values of $\mathcal W(p_j)$ at the vertices $p_j\in\text{vert}(\mathcal P_j)$.
 %
 In each~$\mathcal P_j$ we have $\mathcal W(p) = \{z: a_i z\leq \sum_f \lambda_f t_{i,j,f}, \sum_f\lambda_f p_{j,f}=p, \sum_f\lambda=1,{\bf{0}}\leq\lambda\leq{\bf{1}}\; \forall i\in\{1,\dots,m\}\}$
 %
