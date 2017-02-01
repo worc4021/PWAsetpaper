@@ -349,6 +349,7 @@ $\zeta =\lambda \zeta_1+
 with $z_1 + \epsilon \zeta_1\in\mathcal W(p_1)$ and $z_2  + \epsilon \zeta_2\in\mathcal W(p_2)$.
 %
 It follows that $\mathcal W$ cannot be parametrically convex.
+\qed
 \end{proof}
 %
 
@@ -384,6 +385,7 @@ $\mathscr G(\mathcal W)\vert_{\mathcal C}$ is strictly convex in $p$.
 Hence~\eqref{eq:graph:def:p:convexity} is violated in this case, implying that $r(p,z)$ cannot be a non-concave function of $p$ in any non-empty set $\Omega$ if $\mathcal W$ is parametrically convex. 
 %
 Conversely, if $r(p,z)$ is concave in $p$ for all $p\in\mathbb R^d$, then the conditions of Theorem~\ref{thm:p:convexity:graph} necessarily hold.
+\qed
 \end{proof}
 %
 It is useful to be able to perform set certain set operations on set-valued maps, therefore we define the parametric Pontryagin difference:
@@ -450,7 +452,7 @@ To demonstrate that parametric convexity of $\mathcal W$ is necessary for convex
   (1-\lambda)\bigl(\{z_2\}\oplus \mathcal W(z_2)\bigr) .
 \end{align*}
 Therefore if $S$ is a convex polyhedron constructed so that $\{z_1\}\oplus\mathcal W(z_1)$ and $\{z_2\}\oplus\mathcal W(z_2)$ contain points lying on the same facet of $S$ (this is always possible if $S^\prime=S\ominus \mathcal W(S)$ has a non-empty interior), then there exists $\lambda \in (0,1)$ such that $\lambda z_1 + (1-\lambda) z_2 \notin S^\prime$.
-%
+\qed
 \end{proof}
 %
 Theorem~\ref{thm:convexity:of:pontryagin:difference} provides necessary and sufficient conditions for convexity of the parametric Pontryagin difference. 
@@ -493,6 +495,7 @@ If $B\neq 0$, then the graph
 \end{equation*}
 %
 is convex and violates the conditions of Theorem~\ref{thm:p:convexity:graph}.
+\qed
 \end{proof}
 %
 We now present the central theorem of this work, which holds for piecewise affine polytopic set-valued maps which are generic, which implies two things, their realisation is simple and further no more than one structural component changes at a time. 
@@ -510,7 +513,7 @@ is parametrically convex iff the number of vertices, $v_\kappa(p)$, and rays, $r
 \end{corollary}
 %
 \begin{proof}
-For clarity this proof is divided in 3 parts:
+For clarity this proof is divided into three parts:
 \begin{enumerate}
 \item Note that $h_i(p) = \max_{k} \{b_{i,k} + c_{i,k}p\}$ is a multi-parametric linear program (mpLP),
 the solution of which is a piecewise affine function $h_i(p) = b_{i,k^\ast_i} + c_{i,k^\ast_i}p$, where $k^\ast_i(p)$ is piecewise constant on a polyhedral complex, see e.g.~\cite{spjotvold:2005}.
@@ -590,8 +593,8 @@ and since we can assume that the inequalities are non-redundant for some right h
 has to hold for the degenerate graph to remain parametrically convex.
 %
 To complete the proof we note that~\eqref{eq:derivative:condition:on:index:sets} is a degenerate condition, in the sense that an arbitrarily small perturbation will result in $v_{\kappa_1}(p) \neq v_{\kappa_2}(p)$, and we therefore disregard this possibility.
+\qed
 \end{enumerate}
-\vskip-1.15\baselineskip
 \end{proof}
 %
 It is worth pointing out that Corollary~\ref{thm:p:convexity:PWA:set:constant:num:verts} can be reformulated in a numerically useful way:
@@ -620,6 +623,7 @@ and vertices may merge, however due to the fact that for parameters outside such
 %
 This means in particular that we ignore the fact that locally $v_{\kappa_1}=v_{\kappa_2}$ and can
  use a locally redundant representation $\mathcal W(p) = \conv_\kappa\{v_\kappa(p)\}$.
+\qed
 \end{proof}
 %
 This allows for efficient numerical treatment, since we know how the vertices are defined, i.e.~$\mathcal A_\kappa = const$.
