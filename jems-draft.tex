@@ -161,7 +161,7 @@ For generic piecewise polyhedral set-valued maps we show that parametric convexi
 %
 We present a computational method for verifying parametric convexity of a piecewise polyhedral set-valued map as well as a way to calculate the parametric Pontryagin difference between a polyhedron and a piecewise polyhedral set-valued map.
 %
-Two examples are used to illustrate the presented methodology.
+Two examples are given to illustrate the presented methodology.
 
 \keywords{Pontryagin difference, piecewise affine set-valued map,
   parametrised polytopes, parametric convexity}
@@ -687,11 +687,19 @@ We will illustrate how we exploit this property in Section~\ref{sec:computationa
 %
 %
 \subsection{Determination of Parametric Convexity}
-In the previous sections we have derived that for the Pontryagin difference between any convex set $S$ and a set-valued map~$\mathcal W$ to be convex itself we require the parametric convexity property for~$\mathcal W$.
+%In the previous sections it was demonstrated that a set-valued
+%map~$\mathcal W$ must be parametrically convex in order that the
+%Pontryagin difference between any convex set $S$ and $\mathcal W$ is convex.
 %
-We have also seen that for set-valued maps with polyhedral realisations $\mathcal W(p)$, the number of vertices and rays must not change throughout the parameter space~$Y$ in order that $\mathcal W(p)$ is parametrically convex.
+In Section~3 it was demonstrated that, in order for the
+Pontryagin difference between any convex set $S$ and a set-valued
+map~$\mathcal W$ to be convex, $\mathcal W$ must be parametrically
+convex.
 %
-This might seem like a computationally challenging endeavour, however we will see that it suffices to solve a finite number of calculations.
+We have also seen that for a set-valued map with polyhedral realisations $\mathcal W(p)$, the number of vertices and rays must not change throughout the parameter space~$Y$ in order that $\mathcal W(p)$ is parametrically convex.
+%
+Checking this condition may seem computationally challenging, however
+we show in this section that it suffices to perform a finite number of calculations.
 %
 For notational convenience let $\phi_i(p) = \max_k\{b_{i,k}+c_{i,k}p\}$ denote the right hand side of~\eqref{eq:definition:PWA:polytopic:set:general}, i.e. $\mathcal W(p) = \{z\in\mathbb R^n: a_i z\leq \phi_i(p)\;\forall i\in\mathbb N_m\}$.
 %
@@ -745,17 +753,19 @@ Firstly, compute all vertices~$\text{vert}(E)$.
 %
 Next, check whether the number of vertices is constant on $\mathcal D = \pi_d\left(\text{vert}(E)\right)$, i.e. 
 %
-$$\abs{\text{vert}(\mathcal W(p))} = \text{const.}\quad \forall p\in\mathcal D$$.
+$$\abs{\text{vert}(\mathcal W(p))} = c_{\mathcal D} \quad \forall p\in\mathcal D$$
 %
-then Corollary~\ref{thm:p:convexity:PWA:set:constant:num:verts} holds and $\mathcal W(p)$ is parametrically convex, furthermore enumerating the vertices of $\mathcal W(p)$ for any fixed $p\in Y$ yields all vertex defining index sets $\mathcal A_\kappa\subset\mathbb N_m$ which remain unchanged for all $p\neq\tilde p\in Y$ according to Corollary~\ref{thm:combinatorical:equivalence:alternative}.
+for some constant $c_{\mathcal D}$. If this is the case, then
+Corollary~\ref{thm:p:convexity:PWA:set:constant:num:verts} holds and
+$\mathcal W(p)$ is parametrically convex. Furthermore enumerating the vertices of $\mathcal W(p)$ for any fixed $p\in Y$ yields all vertices defining index sets $\mathcal A_\kappa\subset\mathbb N_m$ which remain unchanged for all $p\neq\tilde p\in Y$ according to Corollary~\ref{thm:combinatorical:equivalence:alternative}.
 %
 \subsection{Computing the Parametric Pontryagin Difference}\label{ssec:computation:p:pontryagin:difference}
 %
 %
 %
-The constancy of the active inequalities defining vertices of~$\mathcal W(p)$ is particularly useful when we compute the parametric Pontryagin difference $S\ominus\mathcal W(S)$:
+The constancy of the active inequalities defining vertices of~$\mathcal W(p)$ is particularly useful when we compute the parametric Pontryagin difference $S\ominus\mathcal W(S)$.
 %
-For the set $S=\{p\in\mathbb R^d:\Lambda_i p\leq\lambda_i,i\in\mathbb N_q\}$ each facet $P_i=\{p:\Lambda_i p=\lambda_i\wedge\Lambda_j p\leq\lambda_j,j\neq i\}$ defines facets of the set difference.
+In particular for the set $S=\{p\in\mathbb R^d:\Lambda_i p\leq\lambda_i,i\in\mathbb N_q\}$ each facet $P_i=\{p:\Lambda_i p=\lambda_i\wedge\Lambda_j p\leq\lambda_j,j\neq i\}$ defines facets of the set difference.
 %
 Namely each point~$p$ on the boundary of $S\ominus\mathcal W(S)$ is such that there exists an admissible $w^\ast$ such that $p+w^\ast$ lies on the boundary of $S$.
 %
@@ -768,8 +778,10 @@ In order to find such points we use the inequality they have to satisfy:
   \Lambda_i p+\underbrace{\max_{w\in\mathcal W(p)}\Lambda_i w}_{(\dagger)}\leq\lambda_i
 \end{split}\end{equation}
 %
-The term~$(\dagger)$ is a mpLP, we are less interested in the objective value of~$(\dagger)$ but rather in the shape of its solution over~$p$ since it defines the shape of the set of points 
-which can only just be taken to $P_i$ for an extremal value of $w\in\mathcal W(p)$ and therefore form the boundary of $S\ominus \mathcal W(S)$.
+The term~$(\dagger)$ is a mpLP, however we are less interested in the
+objective value of~$(\dagger)$ than the shape of its solution
+over~$p$, since this defines the shape of the set of points 
+that can only just be taken to $P_i$ for an extremal value of $w\in\mathcal W(p)$ and hence form the boundary of $S\ominus \mathcal W(S)$.
 %
 We exploit the linearity of the objective function to argue that only vertices of~$\mathcal W(p)$ are candidates to be the maximiser in~$(\dagger)$.
 %
@@ -787,23 +799,23 @@ It is easy to see that the choice $t_i(p)=\phi_i(p)$ again leads us to the epigr
   \max_{w\in\mathcal W(p)}\Lambda_i w = \left\{\begin{array}{rl}
   \min& \tau\\
   \text{s.t.}& \Lambda_iT_jt\leq\tau\\
-  & B_i+C_ip\leq t_i\\
-  & j\in\mathbb N_N
+  & B_k+C_k p \leq t_k\\
+  & j\in\mathbb N_N, \ k\in\mathbb N_m 
   \end{array}\right.
 \end{equation}
 %
-further, the solution to~\eqref{eq:rewriting:pontryagin:diff:without:facet:constraint} is only relevant for such~$p$ that can be taken to~$P_i$ for some $i\in\mathbb N_q$.
+Furthermore the solution to~\eqref{eq:rewriting:pontryagin:diff:without:facet:constraint} is only relevant for such~$p$ that can be taken to~$P_i$ for some $i\in\mathbb N_q$.
 %
-We can add that constraint to~\eqref{eq:rewriting:pontryagin:diff:without:facet:constraint} in order to obtain a linear program that is only feasible on the points which can be taken to $P_i$ for feasible $w$:
+By including this constraint in~\eqref{eq:rewriting:pontryagin:diff:without:facet:constraint}, we obtain a linear program that is only feasible on the points which can be taken to $P_i$ for feasible $w$:
 %
 \begin{equation}\label{eq:rewriting:pontryagin:diff:with:facet:constraint}
   \begin{array}{rl}
   \min& \tau\\
   \text{s.t.}& \Lambda_iT_jt\leq\tau\\
-  & B_j+C_j p\leq t_j\\
+  & B_k+C_k p\leq t_k\\
   &\Lambda_i p + \tau=\lambda_i\\
   &\Lambda_l(p + T_jt)\leq\lambda_l\\
-  &l\neq i, j\in\mathbb N_N
+  &l\neq i, \ j\in\mathbb N_N, \ k\in\mathbb N_m 
   \end{array}
 \end{equation}
 %
@@ -818,14 +830,14 @@ Notice that we are only interested in the feasible~$p$ rather than the objective
   \end{array},\begin{array}{l}
    l\neq i\\
    j\in\mathbb N_N\\
-   k\in\mathbb N_q
+   k\in\mathbb N_m
    \end{array}
    \right\}
 \end{equation}
 %
-but this is the definition of the projection onto $\mathbb R^d$.
+%but this is the definition of the projection onto $\mathbb R^d$.
 %
-With this the boundary of $S\ominus \mathcal W(S)$ is given as the union of projections:
+Therefore the boundary of $S\ominus \mathcal W(S)$ can be expressed as the union of projections:
 %
 \begin{equation}\label{eq:boundary:S:ominus:WS}
  \partial(S\ominus\mathcal W(S)) = \bigcup_{i\in\{1,\dots,q\}}\pi_d\left(
@@ -836,26 +848,41 @@ With this the boundary of $S\ominus \mathcal W(S)$ is given as the union of proj
 The simplest way to use~\eqref{eq:boundary:S:ominus:WS} is to use a vertex description of $\tilde P_i$:
 %
 \begin{equation}\label{the:way:we:compute:p:pontryagin:differences}
-  \text{vert}(S\ominus\mathcal W(S)) = \bigcup_{i\in\{1,\dots,q\}}\pi_d(\text{vert}(\tilde P_i))
+  \text{vert}(S\ominus\mathcal W(S)) =
+  \bigcup_{i\in\{1,\dots,q\}}\pi_d(\text{vert}(\tilde P_i)) .
 \end{equation}
 
-We further propose an alternative way of computing $S\ominus\mathcal W(S)$:
+We conclude this section by proposing an alternative way of computing $S\ominus\mathcal W(S)$.
 %
-Instead of using~$\tilde P_i$ which are points~$p$ that can be taken to $P_i$ for a feasible $w\in\mathcal W(p)$ and the values of the~$\phi_i(p)$ and so on, we obtain all feasible~$p$ such that a feasible $w\in\mathcal W(p)$ exists such that $p+w$ lies on the boundary of $S$.
+%Instead of using~$\tilde P_i$, which consists of points~$p$ that can be taken
+%to $P_i$ for a feasible $w\in\mathcal W(p)$, and the values of
+%$\phi_i(p)$, 
+%we obtain all feasible~$p$ such that a feasible $w\in\mathcal W(p)$
+%exists such that $p+w$ lies on the boundary of $S$.
+%
+%To directly obtain all feasible~$p$ such that a feasible $w\in\mathcal W(p)$
+%exists such that $p+w$ lies on the boundary of $S$, c
+Consider the set
 %
 \begin{equation}
   L = \left\{(p,t,\tau):\begin{array}{rcl}
   \Lambda_iT_jt&\leq&\tau_i\\
-  B_i+C_i p&\leq& t_i\\
+  B_k+C_k p&\leq& t_k\\
   \Lambda_i p + \tau_i&\leq&\lambda_i\\
-  \end{array},\begin{array}{rcl}
-  j&\in&\mathbb N_N\\
-  i&\in&\mathbb N_q\end{array}
-  \right\}
+  \end{array},\begin{array}{l}
+  j\in\mathbb N_N\\
+  k\in\mathbb N_m\\
+  i\in\mathbb N_q\end{array}
+  \right\} .
 \end{equation}
 %
-The set~$L$ contains all such $p$ for which there exists a feasible $w\in\mathcal W(p)$ such that $p+w\in S$ and hence $\pi_d(L)=S\ominus\mathcal W(S)$, which does not require a vertex enumeration.
+The set~$L$ contains all points $p$ for which there exists a feasible $w\in\mathcal W(p)$ such that $p+w\in S$ and hence $\pi_d(L)=S\ominus\mathcal W(S)$, which does not require a vertex enumeration.
 %
+Notice that although both of the methods described in this section
+provide the same result, the first method requires the vertex
+enumeration of $q$ $(d + m + 1)$-dimensional polyhedrons, whereas the
+latter requires the projection of a $(d + m + q)$-dimensional polyhedron
+onto $\mathbb R^d$. Depending on the complexity of $S$, the appropriate method may be chosen.
 %
 %
 %
@@ -971,7 +998,7 @@ For the choice~$\kappa=0.2$ and~$n = 35$ the set~$X\ominus\mathcal W(X)=\pi_2(L)
 \end{figure}
 
 
-\subsection{Element wise bound sets}\label{exp:second:example}
+\subsection{Elementwise bound sets}\label{exp:second:example}
 %
 For another example we take inspiration from a robust control scenario.
 %
@@ -1085,7 +1112,7 @@ The resulting set for this 2 dimensional example is illustrated in Figure~\ref{f
 \fill[pattern = north east lines, opacity=.5] (-2.0000, -0.8000) -- (-1.5556, -0.3764) -- (-1.1111, -0.1372) -- (-0.6667, -0.0296) -- (-0.2222, -0.0011) -- (0,0) -- (-2,0) -- cycle; 
 \fill[pattern = north east lines, opacity=.5] (0,0) -- (0.2222, 0.0011) -- (0.6667, 0.0296) -- (1.1111, 0.1372) -- (1.5556, 0.3764) -- (2.0000, 0.8000) -- (2,0) -- cycle;
 \end{tikzpicture}
-\caption{$f_1(t=\frac{x_1}{2}+x_2)$ and its approximation by 9 secants used in Example~\ref{exp:second:example}.}
+\caption{$f_1(t)$, for $t=\frac{x_1}{2}+x_2$, and its approximation by 9 secants used in Example~\ref{exp:second:example}.}
 \label{fig:approximation:f1:p:diff}
 \end{figure}
 
@@ -1106,7 +1133,7 @@ The resulting set for this 2 dimensional example is illustrated in Figure~\ref{f
 \draw (-.5466,0) -- (0.7000, 0.3165) -- (1.0000, 0.3927) -- (1.5000, 0.5236) -- (1.7000, 0.5865) -- (2.0000, 0.7854);
 \fill[pattern = north east lines, opacity=.5] (-.5466,0) -- (0.7000, 0.3165) -- (1.0000, 0.3927) -- (1.5000, 0.5236) -- (1.7000, 0.5865) -- (2.0000, 0.7854) -- (2,0) -- cycle;
 \end{tikzpicture}
-\caption{$f_2(t=x_1-\frac{x_2}{2})$ and its approximation by 5 secants and 4 tangents as used in Example~\ref{exp:second:example}.}
+\caption{$f_2(t)$, for $t=x_1-\frac{x_2}{2}$, and its approximation by 5 secants and 4 tangents as used in Example~\ref{exp:second:example}.}
 \label{fig:approximation:f2:p:diff}
 \end{figure}
 
@@ -1169,9 +1196,10 @@ The resulting set for this 2 dimensional example is illustrated in Figure~\ref{f
 %
 %
 %
-In this paper we present a way to extend the scope of the Pontryagin difference to a wide class of sets.
+In this paper we present a way to extend the scope of the Pontryagin
+difference operation to a wide class of sets and set-valued maps.
 %
-We introduce the framework of parametric convexity and some of its analysis, which proves essential for the convexity of the parametric Pontryagin difference.
+We introduce the framework of parametric convexity and related analysis, which proves essential for the convexity of the parametric Pontryagin difference.
 %
 Furthermore we provide the link required to make the parametric Pontryagin difference computationally accessible for polytopic sets, this relies on the combinatorial nature of the subtrahend set-valued map.
 %
