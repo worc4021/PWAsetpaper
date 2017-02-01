@@ -1,70 +1,42 @@
-% Modif. April 30, 2010
-% Send comments to publ@impan.pl
 
-\documentclass[a4paper, 12pt, twoside]{article}
-\usepackage{amsmath,amsthm,amssymb}
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+%
+\smartqed  % flush right qed marks, e.g. at end of proof
+%
+\usepackage{graphicx}
+%
+\usepackage{amsmath,amssymb}
 \usepackage{times}
 \usepackage{enumerate}
 
 \usepackage{mathrsfs}
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+%
+% insert here the call for the packages your document requires
+%\usepackage{latexsym}
+% etc.
+%
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
+%
 
-\pagestyle{myheadings}
-\def\titlerunning#1{\gdef\titrun{#1}}
-\makeatletter
-\def\author#1{\gdef\autrun{\def\and{\unskip, }#1}\gdef\@author{#1}}
-\def\address#1{{\def\and{\\\hspace*{18pt}}\renewcommand{\thefootnote}{}%
-\footnote {#1}}%
-\markboth{\autrun}{\titrun}}
-\makeatother
-\def\email#1{e-mail: #1}
-\def\subjclass#1{{\renewcommand{\thefootnote}{}%
-\footnote{\emph{Mathematics Subject Classification (2010):} #1}}}
-\def\keywords#1{\par\medskip
-\noindent\textbf{Keywords.} #1}
+% \newtheorem{thm}{Theorem}[section]
+% \newtheorem{cor}[thm]{Corollary}
+% \newtheorem{lem}[thm]{Lemma}
+% \newtheorem{prob}[thm]{Problem}
 
-%% Numbered objects of "theorem" style (text italicized).
-%% The optional parameters indicate that all objects are numbered together, and "by section".
-%% However, you are welcome to use any other numbering system of your choice.
-
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{cor}[thm]{Corollary}
-\newtheorem{lem}[thm]{Lemma}
-\newtheorem{prob}[thm]{Problem}
-
-
-%% A numbered theorem with a fancy name:
-
-\newtheorem{mainthm}[thm]{Main Theorem}
-
-%% Numbered objects of "non-theorem" style (text roman):
-
-\theoremstyle{definition}
-\newtheorem{defn}[thm]{Definition}
-\newtheorem{rem}[thm]{Remark}
-\newtheorem{exa}[thm]{Example}
-
-%% An unnumbered remark:
-
-\newtheorem*{xrem}{Remark}
-
+% %% Numbered objects of "non-theorem" style (text roman):
+% \theoremstyle{definition}
+% \newtheorem{defn}[thm]{Definition}
+% \newtheorem{rem}[thm]{Remark}
+% \newtheorem{exa}[thm]{Example}
 
 %% Equations numbered by section:
 
 \numberwithin{equation}{section}
-
-
-%%%%%%%%%%% For JEMS
-\frenchspacing
-
-\textwidth=15cm
-\textheight=23cm
-\parindent=16pt
-\oddsidemargin=-0.5cm
-\evensidemargin=-0.5cm
-\topmargin=-0.5cm
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%% Put your macros here:
 
@@ -83,10 +55,8 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,patterns,decorations.pathreplacing}
 
-
 %% Ticket list
 \openTickets{Manuel:convHull,Manuel:wlog,Manuel:invertability:assumption,Mark:log:bounds,Mark:proof:cor15,Manuel:proof:rewritten,Manuel:generic}
-
 
 \providecommand{\norm}[1]{\left\|#1\right\|}
 \providecommand{\abs}[1]{\left|#1\right|}
@@ -110,45 +80,33 @@
 % \newcommand{\todo}[1]{\textcolor{blue}{#1}}
 \newcommand{\highlight}[1]{\textcolor{red}{#1}}
 
+% Insert the name of "your journal" with
+% \journalname{myjournal}
+%
 \begin{document}
 
+\title{Explicit Operations on Parametrised Polytopes}%\thanks{Grants or other notes
+%about the article that should go on the front page should be
+%placed here. General acknowledgments should be placed at the end of the article.}
+%\subtitle{Do you have a subtitle?\\ If so, write it here}
 
-%%%%% To ease editing, add:
-
-%\baselineskip=17pt
-
-%%%%%%%%%%%%%%%%
-
-%% In the running head, give an abbreviation of the title. 
-\titlerunning{Explicit Operations on Parametrised Polytopes}
-
-\title{Explicit Operations on Parametrised Polytopes}
+%\titlerunning{Short form of title}        % if too long for running head
 
 \author{Rainer M. Schaich
 \and 
 Mark Cannon}
 
-\date{\today}
+%\authorrunning{Short form of author list} % if too long for running head
 
-\maketitle
-
-\address{R. M. Schaich: Department of Engineering Science,
+\institute{R. M. Schaich: Department of Engineering Science,
   University of Oxford, Oxford, OX1 3PJ, UK; \email{rainer.schaich@eng.ox.ac.uk}
 \and
 M. Cannon:  Department of Engineering Science,
   University of Oxford, Oxford, OX1 3PJ, UK; \email{mark.cannon@eng.ox.ac.uk}}
 
+\date{\today}
 
-\subjclass{Primary 52A20, 52B55; Secondary 52B11, 52A41, 90C25, 52B05,
-90C05}
-% 52A20 Convex sets in $n$ dimensions (including convex hypersurfaces)
-% 52B55 Computational aspects related to convexity
-% 52B11 $n$-dimensional polytopes
-% 52A41 Convex functions and convex programs
-% 52A30 Variants of convex sets (star-shaped, ($m, n$)-convex, etc.)
-% 90C25 Convex programming
-% 68U05 Computer graphics; computational geometry
-% 52C45 Combinatorial complexity of geometric structures
+\maketitle
 
 
 \begin{abstract}
@@ -164,8 +122,17 @@ We present a computational method for verifying parametric convexity of a piecew
 %
 Two examples are given to illustrate the presented methodology.
 
-\keywords{Pontryagin difference, piecewise affine set-valued map,
-  parametrised polytopes, parametric convexity}
+\keywords{Parametric convexity \and Piecewise affine set-valued map \and Pontryagin difference \and Parametrised polytopes}
+
+\subclass{52B55 \and 52A41 \and 90C25}
+% 52A20 Convex sets in $n$ dimensions (including convex hypersurfaces)
+% 52B55 Computational aspects related to convexity
+% 52B11 $n$-dimensional polytopes
+% 52A41 Convex functions and convex programs
+% 52A30 Variants of convex sets (star-shaped, ($m, n$)-convex, etc.)
+% 90C25 Convex programming
+% 68U05 Computer graphics; computational geometry
+% 52C45 Combinatorial complexity of geometric structures
 \end{abstract}
 
 % \linenumbers
@@ -274,7 +241,7 @@ This property is then used to demonstrate the convexity of a generalised Pontrya
 %
 % In this section we refer to sets $Y\subseteq\mathbb R^d$ and $Z\subseteq\mathbb R^n$.
 %
-\begin{defn}[Parametric Convexity]\label{def:parametric:convexity}
+\begin{definition}[Parametric Convexity]\label{def:parametric:convexity}
 Let $\mathcal W:Y\rightarrow \mathscr P(Z)$, where $Y\ni p\mapsto \mathcal W(p) \subset Z$, be a continuous set-valued map. The map $\mathcal W$ is called \emph{parametrically convex} if it satisfies
 %
   \begin{equation}\label{eq:def:parametrically:convex}
@@ -282,7 +249,7 @@ Let $\mathcal W:Y\rightarrow \mathscr P(Z)$, where $Y\ni p\mapsto \mathcal W(p) 
   \end{equation}
 %
   for all $p_1,p_2\in Y$ and $\lambda\in (0,1)$.
-\end{defn}
+\end{definition}
 %
 Notice that Definition~\ref{def:parametric:convexity} does not require convexity of~$\mathcal W(p)$. 
 %
@@ -297,7 +264,7 @@ set-valued maps satisfying~\eqref{eq:def:parametrically:convex}.
 %
 This is based on a description of parametric convexity in terms of conditions on the graph~$\mathscr G(\mathcal W)$ of a set-valued map.
 %
-\begin{defn}\label{def:graph:of:map}
+\begin{definition}\label{def:graph:of:map}
 Let $\mathcal W:Y\rightarrow \mathscr P(Z)$ be a continuous set-valued map
 such that $\mathcal W(p)$ is convex for all $p\in Y$, then 
 %
@@ -319,19 +286,19 @@ furthermore for any $(p,z)\in\partial\mathscr G(\mathcal W)$ the \emph{orientati
   \mathcal N\mathcal W(p,z) = \{\zeta \in\mathbb R^n: z+\epsilon \zeta \not\in \mathcal W(p)\; \forall \epsilon>0\} .
 \]
 %
-\end{defn}
+\end{definition}
 %
-\begin{rem}
+\begin{remark}
 %
 Note that the sets in Definition~\ref{def:graph:of:map} are defined in the space of the \emph{set variable} $z\in Y$ rather than \emph{graph variable} $(p,z)\in Y\times Z$.
 %
 Furthermore, the orientation cone contains all directions that point out of the set $\mathcal W(p)$ and hence all linear combinations thereof.
 %
-\end{rem}
+\end{remark}
 %
 The central idea connecting parametric convexity of a set valued map $\mathcal W$ with properties of its graph $\mathscr G(\mathcal W)$ is stated next.
 %
-\begin{thm}\label{thm:p:convexity:graph}
+\begin{theorem}\label{thm:p:convexity:graph}
 The map $\mathcal W$ is parametrically convex iff for all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$
 with $p_1\neq p_2$ and $\mathcal N\mathcal W(p_1,z_1)\cap\mathcal N\mathcal W(p_2,z_2)\neq\emptyset$,
 %
@@ -341,7 +308,7 @@ with $p_1\neq p_2$ and $\mathcal N\mathcal W(p_1,z_1)\cap\mathcal N\mathcal W(p_
 %
 holds for all $\lambda\in(0,1)$.
 %
-\end{thm}
+\end{theorem}
 %
 \begin{proof}
 %
@@ -391,7 +358,7 @@ Indeed it is shown next that if $\mathscr G(\mathcal W)$ is strictly convex at a
 $\mathcal W$ cannot be parametrically convex.
 
 %
-\begin{cor}\label{thm:inequalities:convex:concave}
+\begin{corollary}\label{thm:inequalities:convex:concave}
 %
 Let $\mathcal W(p):=\{z\in\mathbb R^n: r(p,z)\leq0\}$ define a set-valued
 map where 
@@ -399,7 +366,7 @@ $r: \mathbb R^d \times\mathbb R^n \rightarrow \mathbb R$, $(p,z)\mapsto r(p,z)$ 
 then $\mathcal W$ is parametrically
 convex iff the function $r$ is concave in $p\in\mathbb R^d$.
 %
-\end{cor}
+\end{corollary}
 %
 \begin{proof}
 First note that $r(p,z)$ is assumed to be a convex function of $z$ for any given value of $p$ so that $\mathcal W(p)$ is a convex set for each $p\in\mathbb R^d$.
@@ -421,7 +388,7 @@ Conversely, if $r(p,z)$ is concave in $p$ for all $p\in\mathbb R^d$, then the co
 %
 It is useful to be able to perform set certain set operations on set-valued maps, therefore we define the parametric Pontryagin difference:
 %
-\begin{defn}[Parametric Pontryagin Difference]\label{def:parametric:pontryagin:difference}
+\begin{definition}[Parametric Pontryagin Difference]\label{def:parametric:pontryagin:difference}
   Let $S\subseteq Z$ and let $\mathcal W:Z\to\mathscr P(Z)$ be a continuous set-valued map such that
   $\mathcal W(p)$ is convex for all $p\in Z$, then the \emph{parametric Pontryagin difference} 
   $S\ominus \mathcal W(S)$ is defined
@@ -430,7 +397,7 @@ It is useful to be able to perform set certain set operations on set-valued maps
     S\ominus \mathcal W(S) = \bigl\{z\in Z: \{z\} \oplus \mathcal W(z)\subseteq S\bigr\}.
   \end{equation}
 %
-\end{defn}
+\end{definition}
 %
 By a slight abuse of notation, $\mathcal{W}(S)$ is used in~(\ref{eq:definition:parametric:pontryagin:difference}) to indicate that $\mathcal{W}$ is a set-valued map and that $S\ominus\mathcal{W}(S)$ denotes the parametric Pontryagin difference, rather than a fixed set and the conventional Pontryagin difference. 
 %
@@ -440,13 +407,13 @@ In fact the definition~(\ref{eq:definition:parametric:pontryagin:difference}) in
 For the parametric Pontryagin difference of a convex set and a parametrically convex map we 
 have the following result.
 %
-\begin{thm}\label{thm:convexity:of:pontryagin:difference}
+\begin{theorem}\label{thm:convexity:of:pontryagin:difference}
 Let $\mathcal W: Z\rightarrow\mathscr P(Z)$ be a given set-valued map, then the parametric Pontryagin difference $S \ominus \mathcal W(S)$ is convex for every convex $S\subseteq Z$ if and only if $\mathcal W$ is parametrically convex.
-\end{thm}
-% \begin{thm}\label{thm:convexity:of:pontryagin:difference}
+\end{theorem}
+% \begin{theorem}\label{thm:convexity:of:pontryagin:difference}
 %   Let $S\subseteq X$ be a convex set and let $\mathcal W:X\rightarrow\mathscr P(X)$ be a parametrically convex point-to-set
 %   map such that $\mathcal W(p)$ is convex for all $p\in X$, then $S\ominus \mathcal W(S)$ is convex.
-% \end{thm}
+% \end{theorem}
 %
 \begin{proof}
 To prove convexity of $S^\prime =  S\ominus \mathcal W( S)$ when $\mathcal W$ is parametrically convex we pick any $z_1,z_2\in S^\prime$, then
@@ -502,7 +469,7 @@ In this section we discuss set-valued maps~$\mathcal W$ for which every realisat
 %
 To the authors' best knowledge the literature on piecewise polyhedral sets is limited to~\cite{Finzel:2000}, however properties of general set-valued maps are known and applicable, see e.g.~\cite{Aubin:2009}.
 %
-\begin{rem}
+\begin{remark}
 %
 Notice that the boundary of a polytope is almost everywhere locally convex (i.e. concave but not strictly concave) and locally strictly convex around lower dimensional faces (vertices, edges, etc.).
 %
@@ -511,12 +478,12 @@ This trivial but important fact is exploited throughout the following statements
 As long as the boundary $\partial\mathscr G(\mathcal W)$ is locally affine in $p\in Y$, Corollary~\ref{thm:inequalities:convex:concave} applies. 
 %
 Conversely if the boundary $\partial\mathscr G(\mathcal W)$ is locally given by more than one affine function in $p\in Y$ (determined by linear inequalities), then it is locally strictly convex and can therefore not be parametrically convex.
-\end{rem}
+\end{remark}
 %
-\begin{cor}\label{thm:polytopic:set:not:p:convex}
+\begin{corollary}\label{thm:polytopic:set:not:p:convex}
 The polytopic parametric set-valued map $\mathcal W(p):=\{z: a_i z + b_i p\leq c_i \; \forall i\in\mathbb N_m\}$
 is not parametrically convex for any non-zero matrix $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$.
-\end{cor}
+\end{corollary}
 %
 \begin{proof}
 If $B\neq 0$, then the graph
@@ -532,7 +499,7 @@ We now present the central theorem of this work, which holds for piecewise affin
 %
 The second assumption will become clearer in the proof of the central statement for piecewise affine polytopic set-valued maps and makes the statement of Theorem~\ref{thm:p:convexity:graph} more specific.
 %
-\begin{cor}\label{thm:p:convexity:PWA:set:constant:num:verts}
+\begin{corollary}\label{thm:p:convexity:PWA:set:constant:num:verts}
 The generic piecewise affine polytopic parametric set-valued valued map 
 %
 \begin{equation}\label{eq:definition:PWA:polytopic:set:general}
@@ -540,7 +507,7 @@ The generic piecewise affine polytopic parametric set-valued valued map
 \end{equation}
 %
 is parametrically convex iff the number of vertices, $v_\kappa(p)$, and rays, $r_\eta(p)$, of~$\mathcal W(p)$ is constant for almost all $p\in Y$.
-\end{cor}
+\end{corollary}
 %
 \begin{proof}
 For clarity this proof is divided in 3 parts:
@@ -629,9 +596,9 @@ To complete the proof we note that~\eqref{eq:derivative:condition:on:index:sets}
 %
 It is worth pointing out that Corollary~\ref{thm:p:convexity:PWA:set:constant:num:verts} can be reformulated in a numerically useful way:
 %
-\begin{cor}\label{thm:combinatorical:equivalence:alternative}
+\begin{corollary}\label{thm:combinatorical:equivalence:alternative}
 The generic set~$\mathcal W(p)$ defined by~\eqref{eq:definition:PWA:polytopic:set:general} is parametrically convex if and only if it is combinatorially equivalent for any $p_1,p_2\in Y\subseteq\mathbb R^d$ almost everywhere, i.e.\ $\mathcal W(p_1)\cong\mathcal W(p_2)$.
-\end{cor}
+\end{corollary}
 %
 \begin{proof}
 Two polyhedra are combinatorially equivalent if there exists a bijection between all their faces which preserves the inclusion, see e.g.~\cite{Ziegler:1995}.
@@ -983,7 +950,7 @@ respectively.
 
 For the choice~$\kappa=0.2$ and~$n = 35$ the set~$X\ominus\mathcal W(X)=\pi_2(L)=$\linebreak $\conv\{\cup_{i\in\{1,\dots,4\}}\pi_2(\text{vert}(\tilde P_i)\}$ is illustrated in Figure~\ref{fig:example:parametric:pontryagin:difference}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 % \includegraphics[width=.95\columnwidth]{parametricPD.pdf}
 \begin{tikzpicture}[scale=3]
@@ -1208,8 +1175,7 @@ Using two simple examples we illustrated the potency of the proposed methodology
 
 The parametric Pontryagin difference has been applied successfully in a robust control environment~\cite{Schaich:2015,Schaich:2015a} and this work will further to extend its scope of application.
 
-
-\bibliography{Bibliography}
 \bibliographystyle{plain}
+\bibliography{Bibliography}
 
 \end{document}
