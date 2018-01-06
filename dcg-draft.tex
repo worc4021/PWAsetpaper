@@ -245,10 +245,9 @@ This property is then used to demonstrate the convexity of a generalised Pontrya
 Let $\mathcal W:Y\rightarrow \mathscr P(Z)$, where $Y\ni p\mapsto \mathcal W(p) \subset Z$, be a continuous set-valued map. The map $\mathcal W$ is called \emph{parametrically convex} if it satisfies
 %
   \begin{equation}\label{eq:def:parametrically:convex}
-  \mathcal W(\lambda p_1 + (1-\lambda)p_2)\subseteq\lambda \mathcal W(p_1) \oplus (1-\lambda) \mathcal W(p_2)
-  \end{equation}
-%
-  for all $p_1,p_2\in Y$ and $\lambda\in (0,1)$.
+  \mathcal W(\lambda p_1 + (1-\lambda)p_2)\subseteq\lambda \mathcal W(p_1) \oplus (1-\lambda) \mathcal W(p_2).
+\end{equation}
+for all $p_1,p_2\in Y$ and $\lambda\in (0,1)$.
 \end{definition}
 %
 Notice that Definition~\ref{def:parametric:convexity} does not require convexity of~$\mathcal W(p)$. 
@@ -280,27 +279,30 @@ denotes the \emph{interior} of its graph and
 %
 its \emph{boundary};
 %
-furthermore for any $(p,z)\in\partial\mathscr G(\mathcal W)$ the \emph{orientation cone} is defined as 
+furthermore for any $(p,z)\in\partial\mathscr G(\mathcal W)$ the \emph{normal cone} is defined as 
 %
 \[
-  \mathcal N\mathcal W(p,z) = \{\zeta \in\mathbb R^n: z+\epsilon \zeta \not\in \mathcal W(p)\; \forall \epsilon>0\} .
+  \mathcal N_{\mathcal W} (p,z) = \{\zeta \in\mathbb R^n: \zeta^T (y - z) \leq 0, \;  \forall y\in \mathcal W(p) \} .
 \]
 %
 \end{definition}
 %
 \begin{remark}
 %
-Note that the sets in Definition~\ref{def:graph:of:map} are defined in the space of the \emph{set variable} $z\in Y$ rather than \emph{graph variable} $(p,z)\in Y\times Z$.
+Note that the normal cone in Definition~\ref{def:graph:of:map} is defined in the space of the \emph{set variable} $z\in Y$ rather than \emph{graph variable} $(p,z)\in Y\times Z$.
 %
-Furthermore, the orientation cone contains all directions that point out of the set $\mathcal W(p)$ and hence all linear combinations thereof.
+Furthermore, the normal cone $\mathcal N_{\mathcal W} (p,z)$ is the set of normals to all hyperplanes that contain $z$ but no other points in $\mathcal W(p)$.
 %
 \end{remark}
 %
 The central idea connecting parametric convexity of a set valued map $\mathcal W$ with properties of its graph $\mathscr G(\mathcal W)$ is stated next.
 %
 \begin{theorem}\label{thm:p:convexity:graph}
-The map $\mathcal W$ is parametrically convex iff for all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$
-with $p_1\neq p_2$ and $\mathcal N\mathcal W(p_1,z_1)\cap\mathcal N\mathcal W(p_2,z_2)\neq\emptyset$,
+  A map $\mathcal W$ such that $\mathcal W(p)\ni 0$ for all $p\in Y$
+  is parametrically convex iff for all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$
+  with
+  %$p_1\neq p_2$ and
+  $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$,
 %
 \begin{equation}\label{eq:graph:def:p:convexity}
 \lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \not\in\textup{int} (\mathscr G(\mathcal W))
@@ -311,45 +313,78 @@ holds for all $\lambda\in(0,1)$.
 \end{theorem}
 %
 \begin{proof}
-%
-Assume~\eqref{eq:graph:def:p:convexity} holds for $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$.
-%
-Then the extension of the definition of the Minkowski functional (see e.g.~\cite{Rudin:91}) to the graph $\mathscr G(\mathcal W)$,
-\[
-\mu_{\mathscr G(\mathcal W)} \bigl(
-\mathcal W(p), z \bigr)
-:= \min_\mu \{\mu \geq 0 : z \in \mu \mathcal W(p)\},
-\]
-yields $\mu_{\mathscr G(\mathcal W)}\left(\mathcal W(\lambda p_1 + (1-\lambda)p_2),\lambda z_1+(1-\lambda)z_2\right)\geq1$ for all $\lambda\in(0,1)$. Therefore $\lambda z_1 + (1-\lambda) z_2$
-lies either outside the set $\mathcal W(\lambda p_1+(1-\lambda)p_2)$ or on its boundary for all $\lambda\in(0,1)$, and hence the set of all possible interpolation points 
-%
-\[
-\begin{split}
-  \lambda \mathcal W(p_1)\oplus (1-\lambda)\mathcal W(p_2) = \{z : z=\lambda z_1 + (1-\lambda) z_2, z_1\in\mathcal  W(p_1),\, z_2\in\mathcal W(p_2)\}
-\end{split}
-\]
-%
-contains the set $\mathcal W(\lambda p_1 + (1-\lambda)p_2)$ for all $\lambda\in(0,1)$.
-%
-Furthermore, since $\lambda(p_1,z_1)+(1-\lambda)(p_2,z_2)\not\in \text{int}(\mathscr G(\mathcal W))$ and both $(p_1,z_1)$ and $(p_2,z_2)$ lie on the boundary, either $z_1-z_2$ or $z_2-z_1$ is outward facing for both $\mathcal W(p_1)$ and $\mathcal W(p_2)$; therefore either $z_1-z_2$ or $z_2-z_1$ lies in both $\mathcal N\mathcal W(p_1,z_1)$ and $\mathcal N\mathcal W(p_2,z_2)$ and hence also in their intersection.
+  %
+  Consider the set $S$, defined for given $\lambda\in (0,1)$ and $p_1,p_2\in Y$ by
+  \[
+    S = \lambda \mathcal{W}(p_1) \oplus (1-\lambda) \mathcal{W}(p_2) 
+      = \bigl\{ z : \lambda z_1 + (1 - \lambda) z_2, \ z_1 \in\mathcal W(p_1), \ z_2 \in\mathcal W(p_2) \bigr\} .
+  \]
+  % \begin{align*}
+  %   S &= \lambda \mathcal{W}(p_1) \oplus (1-\lambda) \mathcal{W}(p_2) \\
+  %     &= \bigl\{ z : \lambda z_1 + (1 - \lambda) z_2, \ z_1 \in\mathcal W(p_1), \ z_2 \in\mathcal W(p_2) \bigr\} .
+  % \end{align*}
+  We first show that $z\in \partial S = S \setminus \textup{int}(S)$ if and only if
+  % \begin{equation}\label{eq:Scond}
+  %   z = \lambda z_1 + (1 - \lambda) z_2
+  %   \quad \text{and} \quad
+  %   \mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset 
+  % \end{equation}
+  $z = \lambda z_1 + (1 - \lambda) z_2$ for some $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ such that $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$.
+  %
+  
+  Specifically, if $z\in \partial S$ then $z\in S$ and there exists $\zeta\in\mathbb R^n$ such that $z + \epsilon \zeta \notin S$ for all $\epsilon > 0$.
+  %
+  From this it follows that $z = \lambda z_1 + (1-\lambda ) z_2$ for $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ and there exists $n\in \mathbb R^n$ such that for all $\mu \in [0,1]$ we have
+  \begin{equation}\label{eq:normal_cone_cond}
+    n^T \bigl( \mu \zeta_1 + (1-\mu) \zeta_2 \bigr) \leq 0 
+  \end{equation}
+  for all $\zeta_1$and $\zeta_2$ such that $n_1^T\zeta_1 \leq 0$ and $n_2^T\zeta_2 \leq 0$ for all $n_1\in\mathcal N_{\mathcal W}(p_1)$ and $n_2\in\mathcal N_{\mathcal W}(p_2)$. Note that these conditions are equivalent to the requirement that the normal cone to $S$ at $z$ is non-empty.
+  %
+  Clearly $n\in \mathcal N_{\mathcal W}(p_1)$ (since $\mu = 1$ in (\ref{eq:normal_cone_cond}) gives $n^T\zeta_1 \leq 0$) and similarly $n\in \mathcal N_{\mathcal W}(p_2)$ (since $\mu = 0$ in (\ref{eq:normal_cone_cond}) gives $n^T\zeta_2 \leq 0$), and hence $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ is necessary for $z\in\partial S$.
+  %
+  Furthermore $n\in \mathcal N_{\mathcal W}(p_1)\cap \mathcal N_{\mathcal W}(p_2)$ is also sufficient for (\ref{eq:normal_cone_cond}) and hence also $z\in\partial S$.
+  %
 
-Now suppose that $\mathcal W$ is parametrically convex and that~\eqref{eq:graph:def:p:convexity} is not satisfied for 
-some $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$ with $\mathcal N\mathcal W(p_1,z_1)\cap\mathcal 
-N\mathcal W(p_2,z_2)\neq\emptyset$, 
-%
-i.e.~that there exists $\epsilon>0$ such that the ball
-$B_\epsilon(\lambda z_1 + (1-\lambda)z_2 )$
-is contained in $\mathcal W(\lambda p_1 + (1-\lambda)p_2)$ for some $\lambda \in (0,1)$.
-%
-But this implies that $\lambda z_1 + (1-\lambda) z_2 + \epsilon\zeta \in \mathcal W(\lambda p_1+(1-\lambda)p_2)$  for all $\zeta\in\mathbb R^n$ such that $\|\zeta\| = 1$, whereas
-$\mathcal N\mathcal W(p_1,z_1)\cap\mathcal N\mathcal W(p_2,z_2)\neq\emptyset$ implies that there exists 
-$\zeta \in\mathcal N\mathcal W(p_1,z_1)\cap\mathcal N\mathcal W(p_2,z_2)$ which cannot be represented as
-$\zeta =\lambda \zeta_1+
-(1-\lambda)\zeta_2$
-with $z_1 + \epsilon \zeta_1\in\mathcal W(p_1)$ and $z_2  + \epsilon \zeta_2\in\mathcal W(p_2)$.
-%
-It follows that $\mathcal W$ cannot be parametrically convex.
-\qed
+  The proof is completed by noting that, if $\lambda z_1 + (1-\lambda ) z_2 \in\partial S$, then  (\ref{eq:graph:def:p:convexity}) is equivalent to $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$, and by applying the preceding argument for all $\lambda\in (0,1)$ and all $p_1,p_2 \in Y$.
+  \qed
+% %
+% Assume~\eqref{eq:graph:def:p:convexity} holds for $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$.
+% %
+% Then the extension of the definition of the Minkowski functional (see e.g.~\cite{Rudin:91}) to the graph $\mathscr G(\mathcal W)$,
+% \[
+% \mu_{\mathscr G(\mathcal W)} \bigl(
+% \mathcal W(p), z \bigr)
+% := \min_\mu \{\mu \geq 0 : z \in \mu \mathcal W(p)\},
+% \]
+% yields $\mu_{\mathscr G(\mathcal W)}\left(\mathcal W(\lambda p_1 + (1-\lambda)p_2),\lambda z_1+(1-\lambda)z_2\right)\geq1$ for all $\lambda\in(0,1)$. Therefore $\lambda z_1 + (1-\lambda) z_2$
+% lies either outside the set $\mathcal W(\lambda p_1+(1-\lambda)p_2)$ or on its boundary for all $\lambda\in(0,1)$, and hence the set of all possible interpolation points 
+% %
+% \[
+% \begin{split}
+%   \lambda \mathcal W(p_1)\oplus (1-\lambda)\mathcal W(p_2) = \{z : z=\lambda z_1 + (1-\lambda) z_2, z_1\in\mathcal  W(p_1),\, z_2\in\mathcal W(p_2)\}
+% \end{split}
+% \]
+% %
+% contains the set $\mathcal W(\lambda p_1 + (1-\lambda)p_2)$ for all $\lambda\in(0,1)$.
+% %
+% Furthermore, since $\lambda(p_1,z_1)+(1-\lambda)(p_2,z_2)\not\in \text{int}(\mathscr G(\mathcal W))$ and both $(p_1,z_1)$ and $(p_2,z_2)$ lie on the boundary, either $z_1-z_2$ or $z_2-z_1$ is outward facing for both $\mathcal W(p_1)$ and $\mathcal W(p_2)$; therefore either $z_1-z_2$ or $z_2-z_1$ lies in both $\mathcal N_{\mathcal W}(p_1,z_1)$ and $\mathcal N_{\mathcal W}(p_2,z_2)$ and hence also in their intersection.
+
+% Now suppose that $\mathcal W$ is parametrically convex and that~\eqref{eq:graph:def:p:convexity} is not satisfied for 
+% some $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$ with $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$, 
+% %
+% i.e.~that there exists $\epsilon>0$ such that the ball
+% $B_\epsilon(\lambda z_1 + (1-\lambda)z_2 )$
+% is contained in $\mathcal W(\lambda p_1 + (1-\lambda)p_2)$ for some $\lambda \in (0,1)$.
+% %
+% But this implies that $\lambda z_1 + (1-\lambda) z_2 + \epsilon\zeta \in \mathcal W(\lambda p_1+(1-\lambda)p_2)$  for all $\zeta\in\mathbb R^n$ such that $\|\zeta\| = 1$, whereas
+% $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$ implies that there exists 
+% $\zeta \in\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)$ which cannot be represented as
+% $\zeta =\lambda \zeta_1+
+% (1-\lambda)\zeta_2$
+% with $z_1 + \epsilon \zeta_1\in\mathcal W(p_1)$ and $z_2  + \epsilon \zeta_2\in\mathcal W(p_2)$.
+% %
+% It follows that $\mathcal W$ cannot be parametrically convex.
+% \qed
 \end{proof}
 %
 
