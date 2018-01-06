@@ -298,17 +298,14 @@ Furthermore, the normal cone $\mathcal N_{\mathcal W} (p,z)$ is the set of norma
 The central idea connecting parametric convexity of a set valued map $\mathcal W$ with properties of its graph $\mathscr G(\mathcal W)$ is stated next.
 %
 \begin{theorem}\label{thm:p:convexity:graph}
-  A map $\mathcal W$ such that $\mathcal W(p)\ni 0$ for all $p\in Y$
-  is parametrically convex iff for all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$
-  with
-  %$p_1\neq p_2$ and
-  $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$,
+  A set-valued map $\mathcal W$ satisfying $\mathcal W(p)\ni 0$ for all $p\in Y$
+  is parametrically convex iff
 %
 \begin{equation}\label{eq:graph:def:p:convexity}
 \lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \not\in\textup{int} (\mathscr G(\mathcal W))
 \end{equation}
 %
-holds for all $\lambda\in(0,1)$.
+holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$ such that  $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$.
 %
 \end{theorem}
 %
@@ -334,18 +331,19 @@ holds for all $\lambda\in(0,1)$.
   
   Specifically, if $z\in \partial S$ then $z\in S$ and there exists $\zeta\in\mathbb R^n$ such that $z + \epsilon \zeta \notin S$ for all $\epsilon > 0$.
   %
-  From this it follows that $z = \lambda z_1 + (1-\lambda ) z_2$ for $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ and there exists $n\in \mathbb R^n$ such that for all $\mu \in [0,1]$ we have
+  From this it follows that $z = \lambda z_1 + (1-\lambda ) z_2$ for $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ and there exists $\nu\in \mathbb R^n$ such that for all $\mu \in [0,1]$ we have
   \begin{equation}\label{eq:normal_cone_cond}
-    n^T \bigl( \mu \zeta_1 + (1-\mu) \zeta_2 \bigr) \leq 0 
+    \nu^T \bigl( \mu \zeta_1 + (1-\mu) \zeta_2 \bigr) \leq 0 
   \end{equation}
-  for all $\zeta_1$ and $\zeta_2$ such that $n_1^T\zeta_1 \leq 0$ and $n_2^T\zeta_2 \leq 0$ for all $n_1\in\mathcal N_{\mathcal W}(p_1)$ and $n_2\in\mathcal N_{\mathcal W}(p_2)$. Note that these conditions are equivalent to the requirement that the normal cone to $S$ at $z$ is non-empty.
-  %
-  Clearly $n\in \mathcal N_{\mathcal W}(p_1)$ (since $\mu = 1$ in (\ref{eq:normal_cone_cond}) gives $n^T\zeta_1 \leq 0$) and similarly $n\in \mathcal N_{\mathcal W}(p_2)$ (since $\mu = 0$ in (\ref{eq:normal_cone_cond}) gives $n^T\zeta_2 \leq 0$), and hence $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ is necessary for $z\in\partial S$.
-  %
-  Furthermore $n\in \mathcal N_{\mathcal W}(p_1)\cap \mathcal N_{\mathcal W}(p_2)$ is also sufficient for (\ref{eq:normal_cone_cond}) and hence also $z\in\partial S$.
+  for all $\zeta_1$ and $\zeta_2$ such that $\nu_1^T\zeta_1 \leq 0$ and $\nu_2^T\zeta_2 \leq 0$ for all $\nu_1\in\mathcal N_{\mathcal W}(p_1)$ and $\nu_2\in\mathcal N_{\mathcal W}(p_2)$. Note that these conditions are equivalent to the requirement that the normal cone to $S$ at $z$ is non-empty.
   %
 
-  If $\lambda z_1 + (1-\lambda ) z_2 \in\partial S$, then (\ref{eq:graph:def:p:convexity}) is equivalent to $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$, and so proof is completed by applying the preceding argument for all $(p_1,z_1) \in\partial\mathscr G(\mathcal W)$ and $(p_2,z_2)\in\partial\mathscr G(\mathcal W)$, and all $\lambda\in (0,1)$.
+  Clearly we must have $\nu\in \mathcal N_{\mathcal W}(p_1)$ (since $\mu = 1$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_1 \leq 0$) and similarly $\nu\in \mathcal N_{\mathcal W}(p_2)$ (since $\mu = 0$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_2 \leq 0$), and hence $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ is necessary for $z\in\partial S$.
+  %
+  Furthermore $\nu\in \mathcal N_{\mathcal W}(p_1)\cap \mathcal N_{\mathcal W}(p_2)$ is also sufficient to ensure (\ref{eq:normal_cone_cond}) and hence also sufficient for $z\in\partial S$.
+  %
+
+  If $\lambda z_1 + (1-\lambda ) z_2 \in\partial S$, then (\ref{eq:graph:def:p:convexity}) is equivalent to $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$, and the proof is therefore completed by applying the preceding argument for all $(p_1,z_1) \in\partial\mathscr G(\mathcal W)$ and $(p_2,z_2)\in\partial\mathscr G(\mathcal W)$, and all $\lambda\in (0,1)$.
   \qed
 % %
 % Assume~\eqref{eq:graph:def:p:convexity} holds for $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$.
