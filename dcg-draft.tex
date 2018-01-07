@@ -77,7 +77,7 @@
 \DeclareMathSymbol{\temp}{\mathbin}{mathx}{'341}
 \newcommand{\bigominus}{\raisebox{10pt}{$\temp$}}
 
-% \newcommand{\todo}[1]{\textcolor{blue}{#1}}
+\newcommand{\revision}[1]{\textcolor{blue}{#1}}
 \newcommand{\highlight}[1]{\textcolor{red}{#1}}
 
 % Insert the name of "your journal" with
@@ -279,39 +279,39 @@ denotes the \emph{interior} of its graph and
 %
 its \emph{boundary};
 %
-furthermore for any $(p,z)\in\partial\mathscr G(\mathcal W)$ the \emph{normal cone} is defined as 
+\revision{furthermore for any $(p,z)\in\partial\mathscr G(\mathcal W)$ the \emph{normal cone} is defined as}
 %
 \[
-  \mathcal N_{\mathcal W} (p,z) = \{\zeta \in\mathbb R^n: \zeta^T (y - z) \leq 0, \;  \forall y\in \mathcal W(p) \} .
+  \revision{\mathcal N_{\mathcal W} (p,z) = \{\zeta \in\mathbb R^n: \zeta^T (y - z) \leq 0, \;  \forall y\in \mathcal W(p) \} .}
 \]
 %
 \end{definition}
 %
 \begin{remark}
 %
-Note that the normal cone in Definition~\ref{def:graph:of:map} is defined in the space of the \emph{set variable} $z\in Y$ rather than \emph{graph variable} $(p,z)\in Y\times Z$.
+\revision{Note that the normal cone in Definition~\ref{def:graph:of:map} is defined in the space of the \emph{set variable} $z\in Y$ rather than \emph{graph variable} $(p,z)\in Y\times Z$.
 %
-Furthermore, the normal cone $\mathcal N_{\mathcal W} (p,z)$ is the set of normals to all hyperplanes that contain $z$ but no other points in $\mathcal W(p)$.
+Furthermore, the normal cone $\mathcal N_{\mathcal W} (p,z)$ is the set of normals to all hyperplanes that contain $z$ but no other points in $\mathcal W(p)$.}
 %
 \end{remark}
 %
 The central idea connecting parametric convexity of a set valued map $\mathcal W$ with properties of its graph $\mathscr G(\mathcal W)$ is stated next.
 %
 \begin{theorem}\label{thm:p:convexity:graph}
-  A set-valued map $\mathcal W$ satisfying $\mathcal W(p)\ni 0$ for all $p\in Y$
+  \revision{A set-valued map $\mathcal W$ satisfying $\mathcal W(p)\ni 0$ for all $p\in Y$
   is parametrically convex iff
 %
 \begin{equation}\label{eq:graph:def:p:convexity}
 \lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \not\in\textup{int} (\mathscr G(\mathcal W))
 \end{equation}
 %
-holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$ such that  $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$.
+holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$ such that  $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$.}
 %
 \end{theorem}
 %
 \begin{proof}
   %
-  Consider the set $S$, defined for given $\lambda\in (0,1)$ and $p_1,p_2\in Y$ by
+  \revision{Consider the set $S$, defined for given $\lambda\in (0,1)$ and $p_1,p_2\in Y$ by
   \[
     S = \lambda \mathcal{W}(p_1) \oplus (1-\lambda) \mathcal{W}(p_2) 
       = \bigl\{ z : \lambda z_1 + (1 - \lambda) z_2, \ z_1 \in\mathcal W(p_1), \ z_2 \in\mathcal W(p_2) \bigr\} .
@@ -326,24 +326,22 @@ holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr
   %   \quad \text{and} \quad
   %   \mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset 
   % \end{equation}
-  $z = \lambda z_1 + (1 - \lambda) z_2$ for some $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ such that $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$.
-  %
+  $z = \lambda z_1 + (1 - \lambda) z_2$ for some $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ such that $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$.}
   
-  Specifically, if $z\in \partial S$ then $z\in S$ and there exists $\zeta\in\mathbb R^n$ such that $z + \epsilon \zeta \notin S$ for all $\epsilon > 0$.
+  \revision{Specifically, if $z\in \partial S$ then $z\in S$ and there exists $\zeta\in\mathbb R^n$ such that $z + \epsilon \zeta \notin S$ for all $\epsilon > 0$.
   %
   From this it follows that $z = \lambda z_1 + (1-\lambda ) z_2$ for $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ and there exists $\nu\in \mathbb R^n$ such that for all $\mu \in [0,1]$ we have
   \begin{equation}\label{eq:normal_cone_cond}
     \nu^T \bigl( \mu \zeta_1 + (1-\mu) \zeta_2 \bigr) \leq 0 
   \end{equation}
-  for all $\zeta_1$ and $\zeta_2$ such that $\nu_1^T\zeta_1 \leq 0$ and $\nu_2^T\zeta_2 \leq 0$ for all $\nu_1\in\mathcal N_{\mathcal W}(p_1)$ and $\nu_2\in\mathcal N_{\mathcal W}(p_2)$. Note that these conditions are equivalent to the requirement that the normal cone to $S$ at $z$ is non-empty.
+  for all $\zeta_1$ and $\zeta_2$ such that $\nu_1^T\zeta_1 \leq 0$ and $\nu_2^T\zeta_2 \leq 0$ for all $\nu_1\in\mathcal N_{\mathcal W}(p_1)$ and $\nu_2\in\mathcal N_{\mathcal W}(p_2)$. Note that these conditions are equivalent to the requirement that the normal cone to $S$ at $z$ is non-empty.}
+
+\revision{Clearly we must have $\nu\in \mathcal N_{\mathcal W}(p_1)$ (since $\mu = 1$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_1 \leq 0$) and similarly $\nu\in \mathcal N_{\mathcal W}(p_2)$ (since $\mu = 0$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_2 \leq 0$), and hence $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ is necessary for $z\in\partial S$.
+  %
+  Furthermore $\nu\in \mathcal N_{\mathcal W}(p_1)\cap \mathcal N_{\mathcal W}(p_2)$ is also sufficient to ensure (\ref{eq:normal_cone_cond}) for all $\mu\in[0,1]$, and hence also sufficient for $z\in\partial S$.}
   %
 
-  Clearly we must have $\nu\in \mathcal N_{\mathcal W}(p_1)$ (since $\mu = 1$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_1 \leq 0$) and similarly $\nu\in \mathcal N_{\mathcal W}(p_2)$ (since $\mu = 0$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_2 \leq 0$), and hence $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ is necessary for $z\in\partial S$.
-  %
-  Furthermore $\nu\in \mathcal N_{\mathcal W}(p_1)\cap \mathcal N_{\mathcal W}(p_2)$ is also sufficient to ensure (\ref{eq:normal_cone_cond}) and hence also sufficient for $z\in\partial S$.
-  %
-
-  If $\lambda z_1 + (1-\lambda ) z_2 \in\partial S$, then (\ref{eq:graph:def:p:convexity}) is equivalent to $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$, and the proof is therefore completed by applying the preceding argument for all $(p_1,z_1) \in\partial\mathscr G(\mathcal W)$ and $(p_2,z_2)\in\partial\mathscr G(\mathcal W)$, and all $\lambda\in (0,1)$.
+  \revision{If $\lambda z_1 + (1-\lambda ) z_2 \in\partial S$, then (\ref{eq:graph:def:p:convexity}) is equivalent to $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$, and the proof is therefore completed by applying the preceding argument for all $(p_1,z_1) \in\partial\mathscr G(\mathcal W)$ and $(p_2,z_2)\in\partial\mathscr G(\mathcal W)$, and all $\lambda\in (0,1)$.}
   \qed
 % %
 % Assume~\eqref{eq:graph:def:p:convexity} holds for $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$.
@@ -474,7 +472,7 @@ $\lambda z_1 + (1-\lambda) z_2 \in S^\prime$ for all $\lambda \in (0,1)$.
 %the property, which follows from Definition~\ref{def:parametric:pontryagin:difference}, that $S\subseteq Z$.
 %
 
-To demonstrate that parametric convexity of $\mathcal W$ is necessary for convexity of $S\ominus \mathcal W(S)$, suppose that condition~(\ref{eq:def:parametrically:convex}) does not hold and choose $z_1,z_2$ so that $\mathcal W(\lambda z_1 + (1-\lambda) z_2) \not\subseteq \lambda \mathcal W(z_1) \oplus (1-\lambda) \mathcal W (z_2)$ for some $\lambda \in (0,1)$. Then there exists a value of $\lambda\in(0,1)$ such that
+To demonstrate that parametric convexity of $\mathcal W$ is necessary for convexity of $S\ominus \mathcal W(S)$ \revision{for all convex $S$}, suppose that condition~(\ref{eq:def:parametrically:convex}) does not hold and choose $z_1,z_2$ so that $\mathcal W(\lambda z_1 + (1-\lambda) z_2) \not\subseteq \lambda \mathcal W(z_1) \oplus (1-\lambda) \mathcal W (z_2)$ for some $\lambda \in (0,1)$. Then there exists a value of $\lambda\in(0,1)$ such that
 \begin{align*}
   \{ \lambda z_1 + (1-&\lambda)z_2
   \}\oplus \mathcal W\left( \lambda z_1 + (1-\lambda)z_2\right)\\
@@ -484,7 +482,7 @@ To demonstrate that parametric convexity of $\mathcal W$ is necessary for convex
  \not\subseteq &\lambda\bigl(\{z_1\}\oplus \mathcal W(z_1)\bigr)\oplus
   (1-\lambda)\bigl(\{z_2\}\oplus \mathcal W(z_2)\bigr) .
 \end{align*}
-Therefore if $S$ is a convex polyhedron constructed so that $\{z_1\}\oplus\mathcal W(z_1)$ and $\{z_2\}\oplus\mathcal W(z_2)$ contain points lying on the same facet of $S$ (this is always possible if $S^\prime=S\ominus \mathcal W(S)$ has a non-empty interior), then there exists $\lambda \in (0,1)$ such that $\lambda z_1 + (1-\lambda) z_2 \notin S^\prime$.
+Therefore \revision{if, for example, $S$ is a convex polyhedron such that} $\{z_1\}\oplus\mathcal W(z_1)$ and $\{z_2\}\oplus\mathcal W(z_2)$ contain points lying on the same facet of $S$ (this is always possible if $S^\prime=S\ominus \mathcal W(S)$ has a non-empty interior), then there exists $\lambda \in (0,1)$ such that $\lambda z_1 + (1-\lambda) z_2 \notin S^\prime$.
 \qed
 \end{proof}
 %
