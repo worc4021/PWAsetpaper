@@ -517,17 +517,39 @@ Conversely if the boundary $\partial\mathscr G(\mathcal W)$ is locally given by 
 %
 \begin{corollary}\label{thm:polytopic:set:not:p:convex}
 The polytopic parametric set-valued map $\mathcal W(p):=\{z: a_i z + b_i p\leq c_i \; \forall i\in\mathbb N_m\}$
-is not parametrically convex for any non-zero matrix $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$.
+is not parametrically convex for any $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ with $\text{rank}(B)>1$.
 \end{corollary}
 %
 \begin{proof}
-If $B\neq 0$, then the graph
+First, assume $\text{rank}(B)=0$, in this case the graph $\mathscr G(\mathcal W)$ is constant for all $p$
 %
 \begin{equation*}
-	\mathscr G(\mathcal W) = \{(p,z):a_i z + b_i p\leq c_i \; \forall i\in\mathbb N_m\} ,
+	\mathscr G(\mathcal W) = \{(p,z):a_i z\leq c_i \; \forall i\in\mathbb N_m\},
 \end{equation*}
 %
-is convex and violates the conditions of Theorem~\ref{thm:p:convexity:graph}.
+which satisfies Theorem~\ref{thm:p:convexity:graph}.
+%
+Next assume $\text{rank}(B)=1$, this implies that the image of $B$ $\text{rg}(B)$ is one dimensional, in particular there exists $\gamma\in\mathbb{R}^m$ such that $\text{rg}(B) = \{\gamma t: t\in\mathbb R\}$.
+%
+This implies that the graph $\mathscr G(\mathcal W)$ is given by
+%
+\begin{equation*}
+  \mathscr G(\mathcal W) = \{(t,z)\in\mathbb R^{1+n}:a_i z\leq c_i-\gamma_i t \; \forall i\in\mathbb N_m\}
+\end{equation*}
+%
+which is empty for all $t>t^\ast$ for some $t^\ast$ and is a non-uniformly scaled version of $\{Az\leq c\}$ otherwise, and again satisfies Theorem~\ref{thm:p:convexity:graph}.
+%
+Now consider $\text{rank}(B)=r>1$, i.e. the image $\text{rg}(B)$ is higher-dimensional, i.e. we find $\gamma_1,\gamma_2,...$ such that $\text{rg}(B) = \{\gamma_1t_1+\gamma_2t_2+\dots:t_i\in \mathbb R\}$.
+%
+This implies that the elements of $\sum_i\gamma_i t_i$ which define the right hand side of $\mathscr{G}(\mathcal W)$
+%
+\begin{equation*}
+  \mathscr G(\mathcal W) = \{(t,z)\in\mathbb R^{r+n}:a_i z\leq c_i-\sum_j(\gamma_j)_i t_j \; \forall i\in\mathbb N_m\}
+\end{equation*}
+%
+will vary with $t$, in other words: 
+%
+For $\text{rank}(B)>2$ the graph $\mathscr G(\mathcal W)$ is given by a convex polyhedron with vertices in the parameter space, which implies that the graph is locally strictly convex and $\mathcal W(p)$ therefore violates Theorem~\ref{thm:p:convexity:graph}.
 \qed
 \end{proof}
 %
