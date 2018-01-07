@@ -64,6 +64,9 @@
 \providecommand{\conv}{\text{conv}}
 \providecommand{\epi}{\text{epi}}
 \providecommand{\rk}[1]{\text{rank}\left(#1\right)}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\image}{im}
 
 \newcommand*{\Resize}[1]{\resizebox{\columnwidth}{!}{$#1$}}
 
@@ -268,13 +271,13 @@ Let $\mathcal W:Y\rightarrow \mathscr P(Z)$ be a continuous set-valued map
 such that $\mathcal W(p)$ is convex for all $p\in Y$, then 
 %
 \begin{equation*}\begin{aligned}
-\text{int}(\mathscr G(\mathcal W)) = \{(p,z) \in Y\times Z : \forall \zeta\in\mathbb R^n\;\exists \epsilon>0, \, z+\epsilon \zeta\in \mathcal W(p) \}
+\interior(\mathscr G(\mathcal W)) = \{(p,z) \in Y\times Z : \forall \zeta\in\mathbb R^n\;\exists \epsilon>0, \, z+\epsilon \zeta\in \mathcal W(p) \}
 \end{aligned}\end{equation*}
 %
 denotes the \emph{interior} of its graph and
 %
 \[
-  \partial \mathscr G(\mathcal W) = \mathscr G(\mathcal W)\setminus \textup{int}(\mathscr G(\mathcal W))
+  \partial \mathscr G(\mathcal W) = \mathscr G(\mathcal W)\setminus \interior(\mathscr G(\mathcal W))
 \]
 %
 its \emph{boundary};
@@ -302,7 +305,7 @@ The central idea connecting parametric convexity of a set valued map $\mathcal W
   is parametrically convex iff
 %
 \begin{equation}\label{eq:graph:def:p:convexity}
-\lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \not\in\textup{int} (\mathscr G(\mathcal W))
+\lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \not\in \interior (\mathscr G(\mathcal W))
 \end{equation}
 %
 holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$ such that  $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$.}
@@ -320,7 +323,7 @@ holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr
   %   S &= \lambda \mathcal{W}(p_1) \oplus (1-\lambda) \mathcal{W}(p_2) \\
   %     &= \bigl\{ z : \lambda z_1 + (1 - \lambda) z_2, \ z_1 \in\mathcal W(p_1), \ z_2 \in\mathcal W(p_2) \bigr\} .
   % \end{align*}
-  We first show that $z\in \partial S = S \setminus \textup{int}(S)$ if and only if
+  We first show that $z\in \partial S = S \setminus \interior(S)$ if and only if
   % \begin{equation}\label{eq:Scond}
   %   z = \lambda z_1 + (1 - \lambda) z_2
   %   \quad \text{and} \quad
@@ -410,7 +413,7 @@ Then any convex subset $\mathcal C\subseteq\Omega$ will be such that $\mathscr
 G(\mathcal W)\vert_{\mathcal C}$ is a convex set.
 %
 Furthermore, for any $(p_1,z_1),(p_2,z_2)\in \partial\mathscr G(\mathcal W)\vert_{\mathcal C}$ we have
-$\lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \in\mathrm{int} (\mathscr G(\mathcal W))\vert_{\mathcal C}$ for all $\lambda\in(0,1)$ since
+$\lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \in\interior (\mathscr G(\mathcal W))\vert_{\mathcal C}$ for all $\lambda\in(0,1)$ since
 $\mathscr G(\mathcal W)\vert_{\mathcal C}$ is strictly convex in $p$.
 %
 Hence~\eqref{eq:graph:def:p:convexity} is violated in this case, implying that $r(p,z)$ cannot be a non-concave function of $p$ in any non-empty set $\Omega$ if $\mathcal W$ is parametrically convex. 
@@ -514,40 +517,44 @@ Conversely if the boundary $\partial\mathscr G(\mathcal W)$ is locally given by 
 \end{remark}
 %
 \begin{corollary}\label{thm:polytopic:set:not:p:convex}
-\revision{The polytopic parametric set-valued map $\mathcal W(p):=\{z: a_i z + b_i p\leq c_i \; \forall i\in\mathbb N_m\}$
-is not parametrically convex for any $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ with $\text{rank}(B)>1$.}
+  \revision{The polytopic parametric set-valued map $\mathcal W(p):=\{z: a_i z + b_i p\leq c_i \; \forall i\in\mathbb N_m\}$
+    is  parametrically convex if and only if the matrix $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ is such that $\rank(B) \leq 1$.}
+%is not parametrically convex for any $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ such that $\rank (B) >1$.}
 \end{corollary}
 %
 \begin{proof}
-\revision{First, assume $\text{rank}(B)=0$, in this case the graph $\mathscr G(\mathcal W)$ is constant for all $p$
+\revision{First assume that $B=0$. In this case the graph $\mathscr G(\mathcal W)$ is constant for all $p$, i.e.
 %
 \begin{equation*}
 	\mathscr G(\mathcal W) = \{(p,z):a_i z\leq c_i \; \forall i\in\mathbb N_m\},
 \end{equation*}
 %
-which satisfies Theorem~\ref{thm:p:convexity:graph}.
+which clearly satisfies the  conditions of Theorem~\ref{thm:p:convexity:graph} for parametric convexity.
 %
-Next assume $\text{rank}(B)=1$, this implies that the image of $B$ $\text{rg}(B)$ is one dimensional, in particular there exists $\gamma\in\mathbb{R}^m$ such that $\text{rg}(B) = \{\gamma t: t\in\mathbb R\}$.
+Next assume $\rank(B)=1$. This implies that the image,  $\image(B)$, of $B$ is one dimensional and in particular there exists $\gamma\in\mathbb{R}^m$ such that $\image(B) = \{\gamma t: t\in\mathbb R\}$.
 %
-This implies that the graph $\mathscr G(\mathcal W)$ is given by
-%
-\begin{equation*}
-  \mathscr G(\mathcal W) = \{(t,z)\in\mathbb R^{1+n}:a_i z\leq c_i-\gamma_i t \; \forall i\in\mathbb N_m\}
-\end{equation*}
-%
-which is empty for all $t>t^\ast$ for some $t^\ast$ and is a non-uniformly scaled version of $\{Az\leq c\}$ otherwise, and again satisfies Theorem~\ref{thm:p:convexity:graph}.
-%
-Now consider $\text{rank}(B)=r>1$, i.e. the image $\text{rg}(B)$ is higher-dimensional, i.e. we find $\gamma_1,\gamma_2,...$ such that $\text{rg}(B) = \{\gamma_1t_1+\gamma_2t_2+\dots:t_i\in \mathbb R\}$.
-%
-This implies that the elements of $\sum_i\gamma_i t_i$ which define the right hand side of $\mathscr{G}(\mathcal W)$
+This implies that the graph $\mathscr G(\mathcal W)$ can be expressed 
 %
 \begin{equation*}
-  \mathscr G(\mathcal W) = \{(t,z)\in\mathbb R^{r+n}:a_i z\leq c_i-\sum_j(\gamma_j)_i t_j \; \forall i\in\mathbb N_m\}
+  \mathscr G(\mathcal W) = \{(t,z)\in\mathbb R^{1+n}:a_i z\leq c_i-\gamma_i t \; \forall i\in\mathbb N_m\} ,
 \end{equation*}
 %
-will vary with $t$, in other words: 
+where $\mathcal W(t)$ is empty for all $t > t^\ast$ for some $t^\ast$ and $\mathcal W(t)$ is a scaled version of $\{ z : Az\leq c\}$ for all $t \leq t^\ast$. Hence the conditions of Theorem~\ref{thm:p:convexity:graph} are again satisfied.}
 %
-For $\text{rank}(B)>2$ the graph $\mathscr G(\mathcal W)$ is given by a convex polyhedron with vertices in the parameter space, which implies that the graph is locally strictly convex and $\mathcal W(p)$ therefore violates Theorem~\ref{thm:p:convexity:graph}.}
+
+\revision{Now assume that $\text{rank}(B)=r \geq 1$. In this case
+%  $\image(B) = \{\gamma_1t_1+\cdots +\gamma_rt_r : t_1,\ldots,t_r \in \mathbb R\}$ for  some $\gamma_1, \ldots \gamma_r\in\mathbb{R}^m$.
+  $\image(B) = \{\Gamma t : t \in \mathbb R^r\}$ for  some $\Gamma \in\mathbb{R}^{m\times r}$,
+  %
+  and $\mathscr{G}(\mathcal W)$ can be expressed
+  % 
+\begin{equation*}
+  \mathscr G(\mathcal W) = \Bigl\{(t,z)\in\mathbb R^{r+n}:a_i z\leq c_i-\sum_{j=1}^r \gamma_{i,j} t_j \; \forall i\in\mathbb N_m\Bigr\},
+\end{equation*}
+%
+where $\gamma_{i,j}$ is the $(i,j)$th element of $\Gamma$.
+%
+Whenever $\text{rank}(B)\geq 2$ therefore, the graph $\mathscr G(\mathcal W)$ is given by a convex polyhedron that has vertices in the parameter space, which implies that the graph is locally strictly convex and $\mathcal W(p)$ therefore violates Theorem~\ref{thm:p:convexity:graph}.}
 \qed
 \end{proof}
 %
