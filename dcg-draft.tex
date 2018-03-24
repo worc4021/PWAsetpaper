@@ -60,13 +60,12 @@
 
 \providecommand{\norm}[1]{\left\|#1\right\|}
 \providecommand{\abs}[1]{\left|#1\right|}
-\providecommand{\span}{\text{span}}
-\providecommand{\conv}{\text{conv}}
-\providecommand{\epi}{\text{epi}}
-\providecommand{\rk}[1]{\text{rank}\left(#1\right)}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\interior}{int}
 \DeclareMathOperator{\image}{im}
+\DeclareMathOperator{\vertices}{vert}
+\DeclareMathOperator*{\conv}{conv}
+\DeclareMathOperator{\epi}{epi}
 
 \newcommand*{\Resize}[1]{\resizebox{\columnwidth}{!}{$#1$}}
 
@@ -88,7 +87,7 @@
 %
 \begin{document}
 
-\title{Explicit Operations on Parametrised Polytopes}%\thanks{Grants or other notes
+\title{Explicit Operations on Parametrised Polyhedra}%\thanks{Grants or other notes
 %about the article that should go on the front page should be
 %placed here. General acknowledgments should be placed at the end of the article.}
 %\subtitle{Do you have a subtitle?\\ If so, write it here}
@@ -119,13 +118,13 @@ We consider a particular class of set-valued maps; for this we introduce the pro
 %
 In order to guarantee the convexity of the difference of a convex set and a set-valued map it proves necessary and sufficient that the set-valued map is parametrically convex.
 %
-For generic piecewise polyhedral set-valued maps we show that parametric convexity is equivalent to a constant combinatorial structure of all its realisations.
+For generic piecewise polyhedral set-valued maps we show that parametric convexity is equivalent to a fixed combinatorial structure of all its realisations.
 %
 We present a computational method for verifying parametric convexity of a piecewise polyhedral set-valued map as well as a way to calculate the parametric Pontryagin difference between a polyhedron and a piecewise polyhedral set-valued map.
 %
 Two examples are given to illustrate the presented methodology.
 
-\keywords{Parametric convexity \and Piecewise affine set-valued map \and Pontryagin difference \and Parametrised polytopes}
+\keywords{Parametric convexity \and Piecewise affine set-valued map \and Pontryagin difference \and Parametrised polyhedra}
 
 \subclass{52B55 \and 52A41 \and 90C25}
 % 52A20 Convex sets in $n$ dimensions (including convex hypersurfaces)
@@ -148,28 +147,28 @@ in~\cite{Hadwiger:1950,Hadwiger:1957}.
 %However in the years since the term Minkowski difference has often been used to refer to a different operation.
 %
 It was implicitly reintroduced in the context of
-differential games in~\cite{Pontryagin:1966}, where it was used to characterise safe sets for which strategies could be found which keep elements inside some second set for all possible adversary actions.
+differential games in~\cite{Pontryagin:1966}, where it was used to characterise safe sets for which there exist strategies for restricting system parameters to desired sets for all possible adversary actions.
 %
-Since its introduction, the usage of the Pontryagin difference has been extended beyond applications in differential games to various scenarios in which safe sets are needed that withstand some perturbation.
+Since its introduction, the usage of the Pontryagin difference has been extended beyond applications in differential games to various scenarios in which safe sets are needed to withstand unknown disturbances.
 %
-See for example~\cite{blanchini:2007} for a its use as a robust
-control analysis tool in several different contexts and under the name
+For example~\cite{blanchini:2007} describes its use as a robust
+control analysis tool in several different contexts under the name
 (set-)erosion. It has also found use in morphological image analysis, e.g.~\cite{Haralick:1987}.
 %
 
-When the Pontryagin difference has to be performed explicitly by numerical algorithms, it is usually assumed that the respective sets are polytopic, since it is not possible to operate on general sets explicitly.
+When the Pontryagin difference has to be performed explicitly by numerical algorithms, it is usually assumed that the respective sets are polyhedral, since it is not possible to operate on general sets explicitly.
 %
 Algorithms to determine the Pontryagin difference between two
-polytopes do not require more complex computation than the solving of
+polyhedra do not require more complex computation than the solution of
 linear programs~\cite{Kolmanovsky:1998,Kerrigan:2003}, and their
 analytical properties are well-known, see e.g.~\cite{blanchini:2007,Haralick:1987,Kolmanovsky:1998}.
 %
 The sets on which these operations can be performed are fixed
-predetermined polytopes but, due to their physical interpretation in
+predetermined polyhedra but, due to their physical interpretation in
 terms of safe sets, it can be desirable to extend the class of sets on which these operations can be performed.
 %
 For this purpose we consider the case in which the subtrahend is a
-set-valued map with a polytopic realisation.
+set-valued map with a polyhedral realisation.
 
 General set-valued maps have been studied analytically and various results are available in the literature, see e.g.~\cite{Aubin:2009}.
 %
@@ -178,9 +177,20 @@ maps are largely unknown. We refer to~\cite{Finzel:2000} for some results for po
 %
 In this paper we present a particular class of set-valued map for which the Pontryagin difference can be computed explicitly.
 %
-The set-valued maps we consider are parametrised polytopes with a property we introduce as \emph{parametric convexity} which allows us to guarantee that the \emph{parametric Pontryagin difference} is convex for all convex minuend sets.
+The set-valued maps we consider are parametrised polyhedra with a property we introduce as \emph{parametric convexity} which allows us to guarantee that the \emph{parametric Pontryagin difference} is convex for all convex minuend sets.
 %
-We provide the computational framework to allow us to perform parametric Pontryagin differences explicitly.
+We also describe computational methods that allow the parametric Pontryagin difference to be determined explicitly.
+
+\revision{To motivate the main issues addressed by this paper using a very simple example, consider the problem of determining the safe set for the state $x$ of a system in order to ensure that the successor state $x^+ = x + w$ lies in a given set $S$, where $w$ is the action of an adversary that satisfies $w\in\mathcal W$ for some known set $\mathcal W$. The safe set for $x$ in this problem is precisely the Pontryagin difference between $S$ and $\mathcal W$.
+%
+Now suppose that the adversary action $w$ is not independent of $x$ but instead belongs to a set $\mathcal W(x)$ that depends explicitly on $x$. In this case the safe region is the set of points $x$ satisfying $x+w\in S$ for all $w\in \mathcal W(x)$, which is by definition the parametric Pontryagin difference between the set $S$ and the set-valued map $\mathcal W(x)$. 
+%
+To be of use as a computational tool, the Pontryagin difference between a convex set $S$ and a set-valued map $\mathcal W(x)$ should be convex for a well-defined class of maps $\mathcal W(x)$; the paper characterizes this class by introducing the concept of and conditions for parametric convexity. 
+%
+In many applications the sets of interest are either polyhedral or bounded by polyhedra. The paper determines the conditions under which a polyhedral set-valued map is parametrically convex, discusses computational methods for checking parametric convexity, and describes how to compute the parametric Pontryagin difference between a polyhedron and a polyhedral set-valued map.
+}
+
+
 
 The paper is structured as follows:
 %
@@ -191,56 +201,92 @@ convexity, which is the essential ingredient for all subsequent
 analysis, and provide analytic results for set operations. 
 We refine and extend these results for the case of set-valued maps with polyhedral realisations in Section~\ref{sec:polyhedral:maps}.
 %
-Section~\ref{sec:computational:methods} elaborates on how to determine whether a polyhedral map is in fact parametrically convex and how to perform operations on such set-valued maps, these concepts are then illustrated in Section~\ref{sec:numerical:examples} by two examples and finally we conclude the paper in Section~\ref{sec:conclusion}.
+Section~\ref{sec:computational:methods} elaborates on how to determine whether a polyhedral map is in fact parametrically convex and how to perform operations on such set-valued maps, these concepts are then illustrated in Section~\ref{sec:numerical:examples} by numerical examples and finally we conclude the paper in Section~\ref{sec:conclusion}.
 
 
-Throughout this paper we refer to the the real $d$-dimensional parameter space as $Y\subseteq\mathbb R^d$, the $n$-dimensional realisation space as~$Z\subseteq\mathbb R^n$ and its power set~$\mathscr P(Z)$.
+Throughout this paper we refer to the real $d$-dimensional parameter space as $Y\subseteq\mathbb R^d$, the $n$-dimensional realisation space as~$Z\subseteq\mathbb R^n$ and its power set~$\mathscr P(Z)$.
 %
-We denote the integer range~$\{1,\dots,m\}$ by~$\mathbb N_m$ and index sets by $\mathcal A,\,\mathcal J$ or $\mathcal I$, the complement of a subset of an index set $\mathcal I\subset\mathcal A$ is denoted by $\bar{\mathcal I}=\mathcal A\setminus\mathcal I$, the objects $a_{\mathcal I}$ and $b_{\mathcal I}$ denote the matrix and the column vector with rows given by the row vectors $a_i$ and the scalar values $b_i$ with $i\in\mathcal I$.
+We denote the integer range~$\{1,\dots,m\}$ as~$\mathbb N_m$, and symbols $\mathcal A$, $\mathcal I$ are used to denote index sets.
+%, the complement of a subset of an index set $\mathcal A\subset\mathcal I$ is denoted $\bar{\mathcal A}=\mathcal I\setminus\mathcal A$.
+%, the objects $a_{\mathcal I}$ and $b_{\mathcal I}$ denote the matrix and the column vector with rows given by the row vectors $a_i$ and the scalar values $b_i$ with $i\in\mathcal I$.
 %
-By $f\vert_\Omega$ we mean $f$ evaluated only $\Omega$, a ball centred around $c$ of radius $r$ is denoted by $B_r(z)=\{x:\norm{x-z}_2\leq\epsilon\}$ with the Euclidean norm $\norm{\cdot}_2$.
+By $f\vert_\Omega$ we mean $f$ evaluated only on $\Omega$. The $n$-ball of radius $r$ centred at $c$ is denoted $B_r^n(c)=\{x\in\mathbb R^n :\norm{x-c}_2\leq r\}$, where $\norm{\cdot}_2$ is the Euclidean norm.
 %
-The Minkowski sum~\cite{Minkowski:1911} of the sets $X_1,X_2$ is denoted by $X_1\oplus X_2$, for a $d_2$ dimensional set $X$ the projection onto $\mathbb R^{d_1}$ with $d_1\leq d_2$ is denoted by $\pi_{d_1}(X) = \{x\in\mathbb R^{d_1}:\exists \tilde x\in\mathbb R^{d_2-d_1} (x,\tilde x)\in X\}$.
+\revision{The Minkowski sum~\cite{Minkowski:1911} of sets $X_1,X_2\subset\mathbb R^n$ and their Pontryagin difference are respectively denoted
+\begin{align*}
+X_1\oplus X_2 &=\{x_1 + x_2 : x_1\in X_1, \, x_2\in X_2 \} , \\
+X_1\ominus X_2 &=\{x\in\mathbb R^n : x + x_2 \in X_1, \, \forall x_2\in X_2\} .
+% X_1\oplus X_2 &=\{x\in\mathbb R^n : \exists x_1\in X_1, \, x_2\in X_2 \text{ such that } x = x_1+x_2 \} . \\
+% X_1\ominus X_2 &=\{x\in\mathbb R^n : x+x_2 \in X_1, \, \forall x_2\in X_2\} .
+\end{align*}
 %
-For a polytopic set $X$ the set of its vertices is denoted by $\text{vert}(X)$.
+The projection of a set $X\subset \mathbb R^{n_2}$ onto $\mathbb R^{n_1}$, with $n_1\leq n_2$, is denoted 
+\[
+\pi_{n_1}(X) = \{x\in\mathbb R^{n_1}: (x,\tilde x)\in X, \, \tilde x\in\mathbb R^{n_2-n_1} \}.
+\]
+%
+We use the terms `polyhedron' and `polyhedral set' interchangeably to denote any set that can be expressed as the intersection of finitely many closed half-spaces in $\mathbb{R}^n$, for arbitrary $n$.
+The set of all vertices of a polyhedral set $X$ is denoted $\vertices(X)$.}
 %
 \section{Preliminaries}\label{sec:preliminaries}
 
-Throughout the paper we deal with set-valued maps, i.e. functions that map an element of a metric space~$Y$ to a subset of a metric space~$Z$, that is $f:Y\mapsto\mathscr P(Z), Y\ni y\rightarrow f(y)\subset Z$. 
+The paper makes extensive use of the concept of a set-valued map; this is a function $f$ that maps an element of the metric space~$Y$ to a subset of the metric space~$Z$, i.e.\ $f:Y\mapsto\mathscr P(Z), Y\ni y\rightarrow f(y)\subset Z$. 
 %
-A detailed presentation on properties of set-valued maps is beyond the scope of this paper and we refer to~\cite{Aubin:2009}, here we only assume that the set-valued map is continuous in the sense that its \emph{graph}
+We refer the reader to~\cite{Aubin:2009} for a detailed discussion of the properties of set-valued maps. Here we only assume that the set-valued map is continuous in the sense that its \emph{graph} 
 %
 \begin{equation}
-  \mathscr G(f) = \{(y,z)\in Y\times Z: z\in f(y)\}
+  \mathscr G(f) = \{(y,z)\in Y\times Z: z\in f(y)\} 
 \end{equation}
 %
-has a continuous boundary, i.e. for every bounded point $(y,z)\in\partial\mathscr G(f)$ the boundary $\partial\mathscr G(f)$ is locally given by the graph of a continuous function.
+has a continuous boundary $\partial\mathscr G(f)$.
+%, so that for every point $(y,z)\in\partial\mathscr G(f)$ the boundary $\partial\mathscr G(f)$ is locally given by the graph of a continuous function.
 %
-We only consider set-valued maps with convex images, i.e. maps for which $z_1,z_2\in f(y)\Rightarrow \lambda z_1+(1-\lambda)z_2\in f(y)$ for all $\lambda\in[0,1]$ holds for all $y\in Y$.
+We consider only set-valued maps with convex images, namely maps with the property that, for all $y\in Y$, we have $\lambda z_1+(1-\lambda)z_2\in f(y)$ for all $\lambda\in[0,1]$ if $z_1,z_2\in f(y)$.
+%
+An important class of set-valued maps are those with polyhedral realisations, so that $f(y)$ is a polyhedron for all $y\in Y$, and in particular we study polyhedral set-valued maps which depend on the \emph{parameter} $y$ in a piecewise affine way.
+%
+The graph of a  piecewise affine polyhedral set-valued map is given by a union of polyhedra~\cite{Finzel:2000}.
 
-An important subset of such set-valued maps are such that their realisations are polytopic, i.e. $f(y)$ is a polytope for all $y\in Y$, in particular we study maps which depend on the \emph{parameter} in a piecewise affine way.
-%
-The graph of such maps is given by a union of polytopes, they have been studied in~\cite{Finzel:2000}.
-%
-We will make statements about \emph{generic} such maps, that is properties which are structurally stable in the sense that if~$f(y)$ has a particular property than there exists an open neighbourhood $U\ni y$ such that $f(\tilde y)$ has the same property for all $\tilde y\in U$, furthermore the set of points for which the property does not hold is of measure zero.
-%
-In the course of this paper it will be self evident what the set of points is, where the property of interest fails, in particular a lower dimensional polyhedron and we therefore omit a measure theoretic treatment of our assumption.
+\revision{In Sections~\ref{sec:polyhedral:maps} and~\ref{sec:computational:methods}
+of this paper we consider \emph{generic} polyhedral set-valued maps, which are defined as follows.}
 
-The particular property we require is \emph{simplicity}, for each $y\in Y$ the set $f(y)$ is a polytope and each of its vertices~$v(y)$ is supported by a minimal number of hyperplanes, i.e. there exists a linear system defining the set~$f(y) = \{z:A(y)z\leq b(y)\}$ and each vertex $v(y)$ is defined by $n$ hyperplanes $A_{\mathcal I}(y)v(y)=b_{\mathcal I}(y)$ and $A_{\bar{\mathcal I}}(y)v(y)<b_{\bar{\mathcal I}}(y)$.
+\begin{definition}[Generic polyhedral set-valued map]\label{def:generic_polyhedral_set}
+\revision{The polyhedral set-valued map $f(y)$ is said to be generic if $f(y)$ is a \emph{simple} polyhedron for all $y\in Y$ (except possibly on a subset of $Y$ of zero measure), and if $f(y)$ is \emph{structurally stable}. For given $y\in Y$, the polyhedral set $f(y) = \{z: a_i(y)z\leq b_i(y)\, \forall i\in \mathcal I\}\subset \mathbb R^n$ is simple if each of its vertices is supported by a minimal number of hyperplanes, i.e.~if for each vertex $v(y)$ there exists an index set $\mathcal A\subset \mathcal I$, with $\lvert \mathcal A\rvert = n$, such that $a_i(y)v(y)=b_i(y)$ for all $i\in\mathcal A$ and $a_i(y)v(y)<b_i(y)$ for all $i\in \mathcal I \setminus \mathcal A$.
 %
-It is easy to see, that if $A(\cdot)$ and $b(\cdot)$ are continuous in $y$, then $\mathcal I$ locally defines a vertex, i.e. the combinatorial structure of a simple polytope is structurally stable and therefore being simple is a generic property of a polytope.
+Furthermore $f(y)$ is structurally stable if the combinatorial structure of $f(y)$ is unchanged when the functions $a_i(y)$, $b_i(y)$ are replaced by perturbed versions $a_i(y) + \epsilon u^{\!\top}$, $b_i(y)+\epsilon s$, for arbitrary $u\in B_1^n(0)$ and $s\in B_1^1(0)$, 
+whenever $\epsilon> 0$ is sufficiently small.}
+\end{definition}
 
+% \revision{In Sections~\ref{sec:polyhedral:maps} and~\ref{sec:computational:methods}
+% of this paper we consider \emph{generic} polyhedral set-valued maps, by which we mean set-valued maps with the properties that $f(y)$ is a \emph{simple} polyhedron for all $y\in Y$ (except possibly on a subset of $Y$ of zero measure), and that $f(y)$ is \emph{structurally stable}. The polyhedral set $f(y) = \{z: a_i(y)z\leq b_i(y)\, \forall i\in \mathcal I\}\subset \mathbb R^n$ is simple if each of its vertices is supported by a minimal number of hyperplanes, i.e.~if for each vertex $v(y)$ there exists an index set $\mathcal A\subset \mathcal I$, with $\lvert \mathcal A\rvert = n$, such that $a_i(y)v(y)=b_i(y)$ for all $i\in\mathcal A$ and $a_i(y)v(y)<b_i(y)$ for all $i\in \mathcal I \setminus \mathcal A$.
+% %
+% Furthermore we say that $f(y)$ is structurally stable if the combinatorial structure of $f(y)$ does not vary as $y$ varies over the interior of $Y$.}
 
-The induced graph~$G(P)$ of a polytope~$P$ is the graph with vertices and edges that coincide with the vertices and edges of the polytope itself~\cite{Bondy:2008}.
 %
-In this paper we only use one property of induced graphs, namely the \emph{Perles Conjecture}~\cite{Kalai:1988}:
+% We note that $f(y)$ is simple almost everywhere in $Y$ if and only if it has a fixed number of vertices and rays for all $y\in Y$ except possibly on a subset of $Y$ with measure zero (i.e.~ a lower-dimensional polyhedron).}
+%
+%in the sense that if $f(y)$ is simple, then there exists a neighbourhood, $U$, of $y$ such that $f(\tilde y)$ is simple for all $\tilde y\in U$, and furthermore any subset of $Y$ on which $f(y)$ is not simple must be of measure zero (i.e.~a lower-dimensional polyhedron).}
+
+% It is easy to see that if $A(\cdot)$ and $b(\cdot)$ are continuous in $y$, then $\mathcal I$ locally defines a vertex, i.e. the combinatorial structure of a simple polyhedron is structurally stable and therefore being simple is a generic property of a polyhedron.
+% zero measure.
+%
+%In our analysis it will be self-evident what the set of points is, where the property of interest fails, in particular a lower dimensional polyhedron and we therefore omit a measure theoretic treatment of our assumption.
+%
+% The particular property we require is \emph{simplicity}, namely that for each $y\in Y$ the set $f(y)$ is a polyhedron and each of its vertices~$v(y)$ is supported by a minimal number of hyperplanes, i.e.~there exists a linear system defining the set $f(y) = \{z:A(y)z\leq b(y)\}$ and each vertex $v(y)$ is defined by $n$ hyperplanes $A_{\mathcal I}(y)v(y)=b_{\mathcal I}(y)$ and $A_{\bar{\mathcal I}}(y)v(y)<b_{\bar{\mathcal I}}(y)$.
+% %
+% It is easy to see that if $A(\cdot)$ and $b(\cdot)$ are continuous in $y$, then $\mathcal I$ locally defines a vertex, i.e. the combinatorial structure of a simple polyhedron is structurally stable and therefore being simple is a generic property of a polyhedron.
+
+The induced graph~$G(P)$ of a polyhedron~$P$ is the graph with vertices and edges that coincide with the vertices and edges of the polyhedron itself~\cite{Bondy:2008}.
+%
+In this paper we only use one property of induced graphs, 
+\revision{namely the \emph{Perles Conjecture} proved in~\cite{blind87} and~\cite{Kalai:1988}, which can be stated as follows:}
 \emph{For a simple polytope~$P$ the graph~$G(P)$ determines the combinatorial structure of~$P$.}
 
 \section{Parametric Convexity}\label{sec:parametric:convexity}
 
-In this section we define the property of \emph{parametric convexity} in the context of set-valued maps. 
+In this section we first define the property of \emph{parametric convexity} in the context of set-valued maps,
 %
-This property is then used to demonstrate the convexity of a generalised Pontryagin difference operation (see e.g.~\cite{Hadwiger:1950,blanchini:2007}). 
+then we use this property to demonstrate the convexity of a generalised Pontryagin difference operation (see e.g.~\cite{Hadwiger:1950,blanchini:2007}). 
 %
 % In this section we refer to sets $Y\subseteq\mathbb R^d$ and $Z\subseteq\mathbb R^n$.
 %
@@ -253,11 +299,9 @@ Let $\mathcal W:Y\rightarrow \mathscr P(Z)$, where $Y\ni p\mapsto \mathcal W(p) 
 for all $p_1,p_2\in Y$ and $\lambda\in (0,1)$.
 \end{definition}
 %
-Notice that Definition~\ref{def:parametric:convexity} does not require convexity of~$\mathcal W(p)$. 
+Although Definition~\ref{def:parametric:convexity} does not require convexity of~$\mathcal W(p)$, we only consider maps~$\mathcal W$ for which $\mathcal W(p)$ is convex for all fixed $p\in Y$ in the remainder of this paper.
 %
-However, recall that we will only consider maps~$\mathcal W$ for which $\mathcal W(p)$ is convex for all fixed $p\in Y$.
-%
-A similar definition was given in~\cite{Hadwiger:1957} for scalar families of sets ($d=1$), however the results presented are not directly related.
+\revision{We note that a similar definition is given in~\cite{Hadwiger:1957} for scalar families of sets ($d=1$), and set-valued maps satisfying~(\ref{eq:def:parametrically:convex}) are called \emph{concave} in~\cite{wasowicz16}, however in both cases the results presented are not directly related to the topic of this paper.}
 
 \subsection{Properties of Parametrically Convex Maps}\label{ssec:properties:of:p:convex:maps}
 %
@@ -285,22 +329,20 @@ its \emph{boundary};
 \revision{furthermore for any $(p,z)\in\partial\mathscr G(\mathcal W)$ the \emph{normal cone} is defined as}
 %
 \[
-  \revision{\mathcal N_{\mathcal W} (p,z) = \{\zeta \in\mathbb R^n: \zeta^T (y - z) \leq 0, \;  \forall y\in \mathcal W(p) \} .}
+  \revision{\mathcal N_{\mathcal W} (p,z) = \{v \in\mathbb R^n: v^\top (y - z) \leq 0, \;  \forall y\in \mathcal W(p) \} .}
 \]
 %
 \end{definition}
 %
 \begin{remark}
 %
-\revision{Note that the normal cone in Definition~\ref{def:graph:of:map} is defined in the space of the \emph{set variable} $z\in Y$ rather than \emph{graph variable} $(p,z)\in Y\times Z$.
-%
-Furthermore, the normal cone $\mathcal N_{\mathcal W} (p,z)$ is the set of normals to all hyperplanes that contain $z$ but no other points in $\mathcal W(p)$.}
+\revision{The normal cone $\mathcal N_{\mathcal W} (p,z)$  in  Definition~\ref{def:graph:of:map} belongs to the same space as $z$ rather than the space of the graph variable $(p,z)$; it consists of normals of hyperplanes in $\mathbb R^n$ that contain $z$ but no points in the interior of $\mathcal W(p)$.}
 %
 \end{remark}
 %
 The central idea connecting parametric convexity of a set valued map $\mathcal W$ with properties of its graph $\mathscr G(\mathcal W)$ is stated next.
 %
-\begin{theorem}\label{thm:p:convexity:graph}
+\begin{lemma}\label{lem:p:convexity:graph}
   \revision{A set-valued map $\mathcal W$ satisfying $\mathcal W(p)\ni 0$ for all $p\in Y$
   is parametrically convex iff
 %
@@ -310,42 +352,56 @@ The central idea connecting parametric convexity of a set valued map $\mathcal W
 %
 holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr G(\mathcal W)$ such that  $\mathcal N_{\mathcal W}(p_1,z_1)\cap\mathcal N_{\mathcal W}(p_2,z_2)\neq\emptyset$.}
 %
-\end{theorem}
+\end{lemma}
 %
-\begin{proof}
-  %
-  \revision{Consider the set $S$, defined for given $\lambda\in (0,1)$ and $p_1,p_2\in Y$ by
-  \[
-    S = \lambda \mathcal{W}(p_1) \oplus (1-\lambda) \mathcal{W}(p_2) 
+\begin{proof}\def\W{\mathcal{W}}\def\N{\mathcal{N}}
+% 
+  \revision{
+    Consider the set $S$, defined for given $\lambda\in (0,1)$ and $p_1,p_2\in Y$ by
+    \[
+      S = \lambda \mathcal{W}(p_1) \oplus (1-\lambda) \mathcal{W}(p_2) 
       = \bigl\{ z : \lambda z_1 + (1 - \lambda) z_2, \ z_1 \in\mathcal W(p_1), \ z_2 \in\mathcal W(p_2) \bigr\} .
-  \]
-  % \begin{align*}
-  %   S &= \lambda \mathcal{W}(p_1) \oplus (1-\lambda) \mathcal{W}(p_2) \\
-  %     &= \bigl\{ z : \lambda z_1 + (1 - \lambda) z_2, \ z_1 \in\mathcal W(p_1), \ z_2 \in\mathcal W(p_2) \bigr\} .
-  % \end{align*}
-  We first show that $z\in \partial S = S \setminus \interior(S)$ if and only if
-  % \begin{equation}\label{eq:Scond}
-  %   z = \lambda z_1 + (1 - \lambda) z_2
-  %   \quad \text{and} \quad
-  %   \mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset 
-  % \end{equation}
-  $z = \lambda z_1 + (1 - \lambda) z_2$ for some $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ such that $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$.}
+    \]
+    We first show that $z\in \partial S = S \setminus \interior(S)$ if and only if
+    $z = \lambda z_1 + (1 - \lambda) z_2$ for some $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ such that $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$.}
   
-  \revision{Specifically, if $z\in \partial S$ then $z\in S$ and there exists $\zeta\in\mathbb R^n$ such that $z + \epsilon \zeta \notin S$ for all $\epsilon > 0$.
-  %
-  From this it follows that $z = \lambda z_1 + (1-\lambda ) z_2$ for $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$ and there exists $\nu\in \mathbb R^n$ such that for all $\mu \in [0,1]$ we have
-  \begin{equation}\label{eq:normal_cone_cond}
-    \nu^T \bigl( \mu \zeta_1 + (1-\mu) \zeta_2 \bigr) \leq 0 
-  \end{equation}
-  for all $\zeta_1$ and $\zeta_2$ such that $\nu_1^T\zeta_1 \leq 0$ and $\nu_2^T\zeta_2 \leq 0$ for all $\nu_1\in\mathcal N_{\mathcal W}(p_1)$ and $\nu_2\in\mathcal N_{\mathcal W}(p_2)$. Note that these conditions are equivalent to the requirement that the normal cone to $S$ at $z$ is non-empty.}
+  \revision{If $z\in\partial S$, then there must exist $\zeta\in\mathbb R^n$ such that $z + \epsilon \zeta \notin S$ for all $\epsilon > 0$, which implies that it is not possible to find $z_1^\prime\in \mathcal{W}(p_1)$ and $z_2^\prime\in \mathcal{W}(p_2)$ such that $z + \epsilon \zeta =  \lambda z_1^\prime + (1 - \lambda) z_2^\prime$ for all $\epsilon > 0$. Hence $z_1\in\partial\W(p_1)$ and $z_2\in\partial\W(p_2)$ are necessary conditions for $z\in\partial S$.}
 
-\revision{Clearly we must have $\nu\in \mathcal N_{\mathcal W}(p_1)$ (since $\mu = 1$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_1 \leq 0$) and similarly $\nu\in \mathcal N_{\mathcal W}(p_2)$ (since $\mu = 0$ in (\ref{eq:normal_cone_cond}) gives $\nu^T\zeta_2 \leq 0$), and hence $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ is necessary for $z\in\partial S$.
+\revision{We therefore assume that $z = \lambda z_1 + (1-\lambda) z_2$ with $z_i\in\partial\W(p_i)$, $i=1,2$. Then $z+\zeta\in S$ if and only if there exists $\zeta_1$ or $\zeta_2$ such that $\zeta = \lambda\zeta_1$ or $(1-\lambda)\zeta_2$,  with $\zeta_i\in \N_\W^\ast(p_i, z_i)$, where $\N_\W^\ast(p_i, z_i)$ is the polar cone:
+\[
+% \zeta_i\in 
+\N_\W^\ast(p_i,z_i) = \bigl\{ \zeta : v_i^\top\zeta \leq 0 \ \ \forall v_i\in\N_\W(p_i,z_i) \bigr\} .
+\]
+Therefore $z+\zeta\in S$ if and only if
+$\zeta\in\N_\W^\ast(p_1,z_1)\cup \N_\W^\ast(p_2,z_2)$.
+% since if $\zeta \in \N_\W^\ast(p_i, z_i)$ for $i=1$ or $2$,
+% then $\zeta_1$ or $\zeta_2$ exists such that $\zeta = \lambda\zeta_1$ or $(1-\lambda)\zeta_2$, with $z_i+ \zeta_i\in\W(p_i)$ for $i=1$ or $2$.
+It follows that $v$ lies in the normal cone to $S$ at $z$ if and only if 
+\[
+v^\top \zeta \leq 0 \ \ \forall \zeta\in\N_\W^\ast(p_1,z_1) \cup \N_\W^\ast(p_2,z_2),
+\]
+or equivalently, if and only if, for all $\zeta_i\in\N_\W^\ast(p_1,z_i)$,
+%such that $v_i^T\zeta_i \leq 0$, $\forall v_i \in \N_W(p_i,z_i)$, 
+$i=1,2$, we have
+\begin{equation}\label{eq:normal_cone_cond}
+v^\top \bigl( \mu \zeta_1 + (1-\mu) \zeta_2 \bigr) \leq 0 \ \ \forall \mu\in [0, 1].
+\end{equation}
+  % \revision{Specifically, if $z\in \partial S$ then $z\in S$ and there exists $\zeta\in\mathbb R^n$ such that $z + \epsilon \zeta \notin S$ for all $\epsilon > 0$.
+  % %
+  % Therefore we must have $z = \lambda z_1 + (1-\lambda ) z_2$ for $z_1\in\partial \mathcal W(p_1)$ and $z_2\in\partial \mathcal W(p_2)$, and furthermore there exists $\nu\in \mathbb R^n$ such that for all $\mu \in [0,1]$ we have
+  % \begin{equation}\label{eq:normal_cone_cond}
+  %   \nu^T \bigl( \mu \zeta_1 + (1-\mu) \zeta_2 \bigr) \leq 0 
+  % \end{equation}
+  % for all $\zeta_1$ and $\zeta_2$ such that $\nu_1^T\zeta_1 \leq 0$ and $\nu_2^T\zeta_2 \leq 0$ for all $\nu_1\in\mathcal N_{\mathcal W}(p_1,z_1)$ and $\nu_2\in\mathcal N_{\mathcal W}(p_2,z_2)$. Note that these conditions are equivalent to the requirement that the normal cone to $S$ at $z$ is non-empty.}
+Clearly $v$ must lie in $\mathcal N_{\mathcal W}(p_1,z_1)$ (since $\mu = 1$ in (\ref{eq:normal_cone_cond}) gives $v^\top\zeta_1 \leq 0$) and similarly $v\in \mathcal N_{\mathcal W}(p_2,z_1)$ (since $\mu = 0$ in (\ref{eq:normal_cone_cond}) gives $v^\top\zeta_2 \leq 0$), and hence $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ is necessary for $z\in\partial S$.
   %
-  Furthermore $\nu\in \mathcal N_{\mathcal W}(p_1)\cap \mathcal N_{\mathcal W}(p_2)$ is also sufficient to ensure (\ref{eq:normal_cone_cond}) for all $\mu\in[0,1]$, and hence also sufficient for $z\in\partial S$.}
+  Furthermore $v\in \mathcal N_{\mathcal W}(p_1,z_1)\cap \mathcal N_{\mathcal W}(p_2,z_2)$ is also sufficient to ensure (\ref{eq:normal_cone_cond}) for all $\mu\in[0,1]$, and hence also sufficient for $z\in\partial S$.}
   %
 
-  \revision{If $\lambda z_1 + (1-\lambda ) z_2 \in\partial S$, then (\ref{eq:graph:def:p:convexity}) is equivalent to $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$, and the proof is therefore completed by applying the preceding argument for all $(p_1,z_1) \in\partial\mathscr G(\mathcal W)$ and $(p_2,z_2)\in\partial\mathscr G(\mathcal W)$, and all $\lambda\in (0,1)$.}
-  \qed
+  \revision{Given that $0\in\W(p)$ for all $p\in Y$, we must have $0\in\W\bigl(\lambda p_1 + (1-\lambda)p_2\bigr)$ and $0\in S$. Therefore condition (\ref{eq:graph:def:p:convexity}), when invoked for all $z\in\partial S$, is equivalent to  $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$. The proof is completed by applying the preceding argument for all $p_1,p_2\in Y$ and all $\lambda\in (0,1)$.}
+\qed
+% If $\lambda z_1 + (1-\lambda ) z_2 \in\partial S$, then (\ref{eq:graph:def:p:convexity}) is equivalent to $\mathcal W\bigl(\lambda p_1 + (1-\lambda) p_2 \bigr) \subseteq S$, and the proof is therefore completed by applying the preceding argument for all $(p_1,z_1) \in\partial\mathscr G(\mathcal W)$ and $(p_2,z_2)\in\partial\mathscr G(\mathcal W)$, and all $\lambda\in (0,1)$.
+%   \qed
 % %
 % Assume~\eqref{eq:graph:def:p:convexity} holds for $(p_1,z_1),(p_2,z_2)\in\partial\mathscr G(\mathcal W)$.
 % %
@@ -387,21 +443,22 @@ holds for all $\lambda\in(0,1)$ and all $(p_1,z_1), (p_2,z_2)\in\partial\mathscr
 \end{proof}
 %
 
-Condition~\eqref{eq:graph:def:p:convexity} requires that the graph $\mathscr G(\mathcal W)$ is non-convex.
+\revision{%
+Condition~\eqref{eq:graph:def:p:convexity} fails whenever the graph $\mathscr G(\mathcal W)$ is strictly convex.}
 %
 Indeed it is shown next that if $\mathscr G(\mathcal W)$ is strictly convex at any $(p,z)\in\partial \mathscr G (\mathcal W)$, then~\eqref{eq:graph:def:p:convexity} is violated and 
 $\mathcal W$ cannot be parametrically convex.
 
 %
-\begin{corollary}\label{thm:inequalities:convex:concave}
+\begin{theorem}\label{thm:inequalities:convex:concave}
 %
 Let $\mathcal W(p):=\{z\in\mathbb R^n: r(p,z)\leq0\}$ define a set-valued
 map where 
 $r: \mathbb R^d \times\mathbb R^n \rightarrow \mathbb R$, $(p,z)\mapsto r(p,z)$ is a continuous function which is convex in $z \in\mathbb R^n$, 
 then $\mathcal W$ is parametrically
-convex iff the function $r$ is concave in $p\in\mathbb R^d$.
+convex if and only if the function $r$ is concave in $p\in\mathbb R^d$.
 %
-\end{corollary}
+\end{theorem}
 %
 \begin{proof}
 First note that $r(p,z)$ is assumed to be a convex function of $z$ for any given value of $p$ so that $\mathcal W(p)$ is a convex set for each $p\in\mathbb R^d$.
@@ -414,11 +471,11 @@ G(\mathcal W)\vert_{\mathcal C}$ is a convex set.
 %
 Furthermore, for any $(p_1,z_1),(p_2,z_2)\in \partial\mathscr G(\mathcal W)\vert_{\mathcal C}$ we have
 $\lambda (p_1,z_1) + (1-\lambda) (p_2,z_2) \in\interior (\mathscr G(\mathcal W))\vert_{\mathcal C}$ for all $\lambda\in(0,1)$ since
-$\mathscr G(\mathcal W)\vert_{\mathcal C}$ is strictly convex in $p$.
+$\mathscr G(\mathcal W)\vert_{\mathcal C}$ is assumed to be strictly convex in $p$.
 %
 Hence~\eqref{eq:graph:def:p:convexity} is violated in this case, implying that $r(p,z)$ cannot be a non-concave function of $p$ in any non-empty set $\Omega$ if $\mathcal W$ is parametrically convex. 
 %
-Conversely, if $r(p,z)$ is concave in $p$ for all $p\in\mathbb R^d$, then the conditions of Theorem~\ref{thm:p:convexity:graph} necessarily hold.
+Conversely, if $r(p,z)$ is concave in $p$ for all $p\in\mathbb R^d$, then the conditions of Lemma~\ref{lem:p:convexity:graph} necessarily hold.
 \qed
 \end{proof}
 %
@@ -491,7 +548,8 @@ Therefore \revision{if, for example, $S$ is a convex polyhedron such that} $\{z_
 %
 Theorem~\ref{thm:convexity:of:pontryagin:difference} provides necessary and sufficient conditions for convexity of the parametric Pontryagin difference. 
 %
-Later we will show that the parametric Pontryagin difference between a polyhedral set and a piecewise polytopic set-valued map is itself polyhedral.
+In Section~\ref{sec:computational:methods}
+we show that the parametric Pontryagin difference between a polyhedral set and a piecewise affine polyhedral set-valued map is itself polyhedral.
 %
 %
 %
@@ -501,194 +559,248 @@ Later we will show that the parametric Pontryagin difference between a polyhedra
 %
 %
 %
-In this section we discuss set-valued maps~$\mathcal W$ for which every realisation~$\mathcal W(p)$ is polyhedral and in particular we study~$\mathcal W$ which depend on $p\in Y$ in a piecewise affine way. 
+In this section we discuss set-valued maps~$\mathcal W$ for which~$\mathcal W(p)$ is polyhedral for all $p\in Y$, and in particular we consider the case that the dependence of $\mathcal W(p)$ on $p$ is piecewise affine. 
 %
-To the authors' best knowledge the literature on piecewise polyhedral sets is limited to~\cite{Finzel:2000}, however properties of general set-valued maps are known and applicable, see e.g.~\cite{Aubin:2009}.
+To the authors' knowledge the literature on piecewise affine polyhedral sets is limited to~\cite{Finzel:2000}, however properties of general set-valued maps are known and applicable, see e.g.~\cite{Aubin:2009}.
 %
+
 \begin{remark}
-%
-Notice that the boundary of a polytope is almost everywhere locally convex (i.e. concave but not strictly concave) and locally strictly convex around lower dimensional faces (vertices, edges, etc.).
+We note that the boundary of a polyhedral set is almost everywhere locally convex (i.e. concave but not strictly concave) and locally strictly convex around lower dimensional faces (vertices, edges, etc.).
 %
 This trivial but important fact is exploited throughout the following statements. 
 %
-As long as the boundary $\partial\mathscr G(\mathcal W)$ is locally affine in $p\in Y$, Corollary~\ref{thm:inequalities:convex:concave} applies. 
+As long as the boundary $\partial\mathscr G(\mathcal W)$ is locally affine in $p\in Y$, Theorem~\ref{thm:inequalities:convex:concave} applies. 
 %
-Conversely if the boundary $\partial\mathscr G(\mathcal W)$ is locally given by more than one affine function in $p\in Y$ (determined by linear inequalities), then it is locally strictly convex and can therefore not be parametrically convex.
+Conversely if the boundary $\partial\mathscr G(\mathcal W)$ is locally given by more than one affine function in $p$ (determined by linear inequalities), then it is locally strictly convex and therefore cannot be parametrically convex.
 \end{remark}
 %
-\begin{corollary}\label{thm:polytopic:set:not:p:convex}
-  \revision{The polytopic parametric set-valued map $\mathcal W(p):=\{z: a_i z + b_i p\leq c_i \; \forall i\in\mathbb N_m\}$
-    is  parametrically convex if and only if the matrix $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ is such that $\rank(B) \leq 1$.}
+\begin{theorem}\label{thm:polytopic:set:not:p:convex}
+  \revision{The polyhedral parametric set-valued map $\mathcal W(p):=\{z\in \mathbb R^n : a_i z \leq b_i  + c_i p \; \forall i\in\mathbb N_m\}$, where $a_i\in\mathbb R^{1\times n}$, $b_i \in \mathbb R$ and $c_i \in \mathbb R^{1\times d}$ for $i\in\mathbb N_m$ are given parameters, is necessarily parametrically convex if $C=0$ and cannot be parametrically convex if $\rank( C ) > 1$, where $C = (\begin{matrix} c_1^\top & \cdots & c_m^\top\end{matrix})^\top$.}
+% and only if the matrix $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ is such that $\rank(B) \leq 1$.}
 %is not parametrically convex for any $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ such that $\rank (B) >1$.}
-\end{corollary}
+\end{theorem}
 %
 \begin{proof}
-\revision{First assume that $B=0$. In this case the graph $\mathscr G(\mathcal W)$ is constant for all $p$, i.e.
+\revision{First assume that $C=0$. In this case the graph $\mathscr G(\mathcal W)$ is independent of $p$, i.e.
 %
 \begin{equation*}
-	\mathscr G(\mathcal W) = \{(p,z):a_i z\leq c_i \; \forall i\in\mathbb N_m\},
+	\mathscr G(\mathcal W) = \{(p,z):a_i z\leq b_i \; \forall i\in\mathbb N_m\},
 \end{equation*}
 %
-which clearly satisfies the  conditions of Theorem~\ref{thm:p:convexity:graph} for parametric convexity.
+which clearly satisfies the  conditions of Theorem~\ref{thm:inequalities:convex:concave}
+%Lemma~\ref{lem:p:convexity:graph} 
+for parametric convexity.
 %
-Next assume $\rank(B)=1$. This implies that the image,  $\image(B)$, of $B$ is one dimensional and in particular there exists $\gamma\in\mathbb{R}^m$ such that $\image(B) = \{\gamma t: t\in\mathbb R\}$.
+% Next assume $\rank(B)=1$. This implies that the image,  $\image(B)$, of $B$ is one-dimensional and in particular there exists $\gamma\in\mathbb{R}^m$ such that $\image(B) = \{\gamma t: t\in\mathbb R\}$.
+% %
+% This implies that the graph $\mathscr G(\mathcal W)$ can be expressed 
+% %
+% \begin{equation*}
+%   \mathscr G(\mathcal W) = \{(t,z)\in\mathbb R^{1+n}:a_i z\leq c_i-\gamma_i t \; \forall i\in\mathbb N_m\} ,
+% \end{equation*}
+% %
+% where $\mathcal W(t)$ is empty for all $t > t^\ast$ for some $t^\ast$, and $\mathcal W(t)$ is a scaled version of $\{ z : a_i z\leq c_i \; \forall i\in\mathbb{N}_m\}$ for all $t \leq t^\ast$.
+% Hence the conditions of Theorem~\ref{thm:inequalities:convex:concave}
+% %Lemma~\ref{lem:p:convexity:graph} 
+% are again satisfied.}
+% %
 %
-This implies that the graph $\mathscr G(\mathcal W)$ can be expressed 
-%
-\begin{equation*}
-  \mathscr G(\mathcal W) = \{(t,z)\in\mathbb R^{1+n}:a_i z\leq c_i-\gamma_i t \; \forall i\in\mathbb N_m\} ,
-\end{equation*}
-%
-where $\mathcal W(t)$ is empty for all $t > t^\ast$ for some $t^\ast$ and $\mathcal W(t)$ is a scaled version of $\{ z : Az\leq c\}$ for all $t \leq t^\ast$. Hence the conditions of Theorem~\ref{thm:p:convexity:graph} are again satisfied.}
-%
-
-\revision{Now assume that $\text{rank}(B)=r \geq 1$. In this case
-%  $\image(B) = \{\gamma_1t_1+\cdots +\gamma_rt_r : t_1,\ldots,t_r \in \mathbb R\}$ for  some $\gamma_1, \ldots \gamma_r\in\mathbb{R}^m$.
-  $\image(B) = \{\Gamma t : t \in \mathbb R^r\}$ for  some $\Gamma \in\mathbb{R}^{m\times r}$,
+Now assume that $\text{rank}(C)=r> 1$. In this case $\image(C) = \{\Gamma t : t \in \mathbb R^r\}$ for  some $\Gamma \in\mathbb{R}^{m\times r}$,
   %
   and $\mathscr{G}(\mathcal W)$ can be expressed
   % 
+% \begin{equation*}
+%   \mathscr G(\mathcal W) = \Bigl\{(t,z)\in\mathbb R^{r+n}: \begin{pmatrix} a_{\mathbb N_m} & -\Gamma \end{pmatrix}  \begin{pmatrix} z \\ t \end{pmatrix} \leq b_{\mathbb N_m} \Bigr\} \end{equation*}
 \begin{equation*}
-  \mathscr G(\mathcal W) = \Bigl\{(t,z)\in\mathbb R^{r+n}:a_i z\leq c_i-\sum_{j=1}^r \gamma_{i,j} t_j \; \forall i\in\mathbb N_m\Bigr\},
+  \mathscr G(\mathcal W) = \Bigl\{(p,z) : a_i z \leq b_i + \sum_{j=1}^r \gamma_{i,j} t_j \; \forall i\in\mathbb N_m,\; t =\Gamma^\dagger Cp \Bigr\},
 \end{equation*}
 %
-where $\gamma_{i,j}$ is the $(i,j)$th element of $\Gamma$.
+where $\gamma_{i,j}$ is the $(i,j)$th element of $\Gamma$ and $\Gamma^\dagger = (\Gamma^\top\Gamma)^{-1}\Gamma^\top$.
 %
-Whenever $\text{rank}(B)\geq 2$ therefore, the graph $\mathscr G(\mathcal W)$ is given by a convex polyhedron that has vertices in the parameter space, which implies that the graph is locally strictly convex and $\mathcal W(p)$ therefore violates Theorem~\ref{thm:p:convexity:graph}.}
+But this implies that the graph $\mathscr G(\mathcal W)$ is locally strictly convex, and hence $\mathcal W(p)$ violates the conditions of Theorem~\ref{thm:inequalities:convex:concave} in this case.}
+ % given by a convex polyhedron that has vertices in the parameter space, which implies that the graph is locally strictly convex and $\mathcal W(p)$ therefore violates Lemma~\ref{lem:p:convexity:graph}.}
 \qed
 \end{proof}
 %
-We now present the central theorem of this work, which holds for piecewise affine polytopic set-valued maps which are generic, which implies two things, their realisation is simple and further no more than one structural component changes at a time. 
-%
-The second assumption will become clearer in the proof of the central statement for piecewise affine polytopic set-valued maps and makes the statement of Theorem~\ref{thm:p:convexity:graph} more specific.
-%
-\begin{corollary}\label{thm:p:convexity:PWA:set:constant:num:verts}
-The generic piecewise affine polytopic parametric set-valued valued map 
-%
-\begin{equation}\label{eq:definition:PWA:polytopic:set:general}
-  \mathcal W(p) := \Bigl\{z\in\mathbb R^n: a_i z \leq \max_{k}\{b_{i,k} + c_{i,k}p\} \; \forall i\in\mathbb N_m \Bigr\}
+
+\revision{In the special case of $\rank(C)=1$, the map $\mathcal W(p)=\{ z : a_i z \leq b_i + c_i p \; \forall i \in \mathbb N_m\}$ considered in Theorem~\ref{thm:polytopic:set:not:p:convex} may or may not be parametrically convex. For example, if $\image(C) = \{ \Gamma t : t\in\mathbb R\}$, with $\Gamma = (\begin{matrix} b_1 & \cdots & b_m\end{matrix})^\top$, then $\mathscr G(\mathcal W)$ is a translated polyhedral cone,
+\[
+\mathscr G(\mathcal W) = \{ (p , z) : a_i z \leq b_i t \; \forall i\in\mathbb N_m, \; t = \Gamma^\dagger C p + 1\} ,
+\]
+(where $\Gamma^\dagger = \Gamma^\top/(\Gamma^\top\Gamma)$),
+which necessarily satisfies the conditions of Theorem~\ref{thm:inequalities:convex:concave}. On the other hand, if $\Gamma = (\begin{matrix} 0 & \cdots & 0 & b_m\end{matrix})^\top$, then $\mathscr G(\mathcal W)$ can be expressed
+\begin{equation}\label{eq:graph:non-generic:1-d}
+\mathscr G(\mathcal W) = \{ (p ,z): a_i z \leq b_i  \; \forall i\in\mathbb N_{m-1}, \; a_m z \leq b_m t ,\; t = \Gamma^\dagger C p + 1\} 
 \end{equation}
+(where $\Gamma^\dagger = (\begin{matrix} 0 & \cdots & 0 & b_m^{-1}\end{matrix})$).
+In this case $\mathcal W(p)$ cannot be parametrically convex whenever the set $\{ z\in\mathbb R^n : a_iz \leq b_i \; \forall i\in\mathbb N_{m-1}\}$ is compact, since $\mathscr G(\mathcal W)$ is then locally strictly convex. The case of $\rank(C)=1$ is a special case of Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts}, which is given next. In fact this example provides a useful insight into Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts}, since if $a_i\neq a_j$ for all $i,j\in\mathbb N_m$, then by inspection of (\ref{eq:graph:non-generic:1-d}) it can be seen that 
+%$\mathcal W(p)$ is non-generic, in the sense that 
+the number of vertices of $\mathcal W(p)$ varies with $p$. A key contribution of Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts} (which is stated in terms of piecewise affine set-valued maps, so $a_i\neq a_j$ for all $i,j\in\mathbb N_m$ can be assumed without loss of generality) is that $\mathcal W(p)$ is parametrically convex in this special case if and only if the number of vertices of $\mathcal W(p)$ is fixed for all $p\in Y$ (with the possible exception of a zero measure subset of $Y$).}
+
+\revision{Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts} applies to piecewise affine polyhedral set-valued maps defined by
+\begin{equation}\label{eq:definition:PWA:polytopic:set:general}
+  \mathcal W(p) := \Bigl\{z\in\mathbb R^n: a_i z \leq \max_{k\in\mathbb N_q}\{b_{i,k} + c_{i,k}p\} \; \forall i\in\mathbb N_m \Bigr\} 
+\end{equation}
+where $a_i\in\mathbb R^{1\times n}$, $b_{i,k} \in \mathbb R$ and $c_{i,k} \in \mathbb R^{1\times d}$ for $i\in\mathbb N_m$ and $k\in\mathbb N_q$ are given parameters.
+Here the right hand side of each inequality defining $\mathcal W(p)$ is a multi-parametric linear program (mpLP):  $\phi_i(p) = \max_{k\in\mathbb N_q} \{b_{i,k} + c_{i,k}p\}$,
+the solution of which is a continuous piecewise affine function, $\phi_i(p) = b_{i,k^\ast_i} + c_{i,k^\ast_i}p$, where $k^\ast_i(p)$ is piecewise constant on a polyhedral complex, see e.g.~\cite{spjotvold07}.
 %
-is parametrically convex iff the number of vertices, $v_\kappa(p)$, and rays, $r_\eta(p)$, of~$\mathcal W(p)$ is constant for almost all $p\in Y$.
-\end{corollary}
-%
-\begin{proof}
-For clarity this proof is divided into three parts:
-\begin{enumerate}
-\item Note that $h_i(p) = \max_{k} \{b_{i,k} + c_{i,k}p\}$ is a multi-parametric linear program (mpLP),
-the solution of which is a piecewise affine function $h_i(p) = b_{i,k^\ast_i} + c_{i,k^\ast_i}p$, where $k^\ast_i(p)$ is piecewise constant on a polyhedral complex, see e.g.~\cite{spjotvold:2005}.
-%
-This means that there exists a finite partition of $Y\subseteq\mathbb R^d$ into convex polyhedra 
+This means that there exists a finite partition of $Y\subseteq\mathbb R^d$ into closed convex polyhedra 
 $\mathcal P_j$ such that $\bigcup_{j\in\mathcal I} \mathcal P_j = Y$ and 
 ${\bf{k}}^\ast(p) = (k_1^\ast(p),\dots,k_m^\ast(p))$ is constant for all $p \in \mathcal P_j$.
 %
 Hence the graph $\mathscr G(\mathcal W)$ is given by a finite union of polyhedra
 %
 \begin{equation*}
-  \mathscr G(\mathcal W) = \bigcup_{j\in\mathcal I} \left\{z: a_i z \leq b_{i,k_i^\ast} + c_{i,k_i^\ast}p \; \forall i \in\mathbb N_m \right\}\bigr\vert_{\mathcal P_{j}}
+  \mathscr G(\mathcal W) = \bigcup_{j\in\mathcal I} \left\{(p,z): a_i z \leq b_{i,k_i^\ast} + c_{i,k_i^\ast}p \; \forall i \in\mathbb N_m \right\}\bigr\vert_{\mathcal P_{j}} .
 \end{equation*}
-%
-and it follows that if the number of vertices or rays changes within any partition $\mathcal P_j$ then $\mathscr
-G(\mathcal W)\vert_{\mathcal P_j}$ is a strictly convex polyhedron and Corollary~\ref{thm:polytopic:set:not:p:convex} applies.
-%
-\item Our attention is therefore concentrated on the boundaries of partitions $\mathcal P_j$, at points $p\in\mathcal P_{j_1} \cap \mathcal P_{j_2}$ where 
-%some mpLP changes its solution, i.e. 
-$\bigl(b_{i,k_i^\ast} + c_{i,k_{j_1}^\ast} p\bigr)\bigr\rvert_{\mathcal P_{j_1}} = 
-\bigl(b_{i,k_{j_2}^\ast} + c_{i,k_{j_2}^\ast} p\bigr)\bigr\rvert_{\mathcal P_{j_2}}$.
-%
-Notice that a vertex $v_\kappa(p)$ is defined by \emph{active} and \emph{inactive} inequalities, namely $\mathcal A_\kappa(p)$ and
-$\bar{\mathcal A}_\kappa(p)$ respectively, where
-%
-\begin{equation*}\begin{split}
-  a_i v_\kappa(p) &= b_{i,k_i^\ast} + c_{i,k_i^\ast} p \quad\forall i\in\mathcal A_\kappa(p)\\
-  a_i v_\kappa(p) &< b_{i,k_i^\ast} + c_{i,k_i^\ast} p \quad\forall i\in\bar{\mathcal A}_\kappa(p) .
-\end{split}\end{equation*}
-%
-Since $\mathcal W(p)$ is simple almost everywhere in~$Y$, i.e. each vertex is defined by exactly $n$ active inequalities, we have $\abs{\mathcal A_\kappa(p)}=n$ for all $p\in Y$ and all $\kappa$.
-%
-Furthermore, since~$\mathcal W(p)$ is generic, only one element of ${\bf{k}}^\ast\vert_{\mathcal P_{j_1}}$
-and ${\bf{k}}^\ast\vert_{\mathcal P_{j_2}}$ for neighbouring $\mathcal P_{j_1}$ and $\mathcal P_{j_2}$ differs, that is, there exists a single index $i\in\mathbb N_m$ such that $k_i^\ast\vert_{\mathcal P_{j_1}}\neq k_i^\ast\vert_{\mathcal P_{j_2}}$.
-%
-Hence, in order for the number of vertices to change, there must be a hyperplane $fp=g$, such that the number of vertices for $fp \leq g$ is 
-$N$ and for $fp>g$ is at least $N+1$.
-%
-It follows from the previous discussion that $\{p:fp=g\} = \textup{aff}\{\mathcal P_{j_1}\cap\mathcal P_{j_2}\}$ for some $j_1\neq j_2$.
-%
-In order for vertices $v_{\kappa_1}(p)$ and $v_{\kappa_2}(p)$ to merge, the index sets $\mathcal A_{\kappa_1}(p)$ and $\mathcal A_{\kappa_2}(p)$ have to differ by only one 
-element, i.e.~$\mathcal A_{\kappa_1}(p) = \mathcal J\cup \{s\}$ and $\mathcal A_{\kappa_2}(p) = \mathcal J\cup\{u\}$ if $fp>g$.
-%
-Furthermore, for $p$ such that $fp\leq g$ we have $v_{\kappa_1}(p)=v_{\kappa_2}(p)$, implying that $\mathcal A_{\kappa_1}(p) = 
-\mathcal A_{\kappa_2}(p)$.
-%
-Since only one change in the active index set is considered (due to non-degeneracy assumptions), we must have
-$\mathcal A_{\kappa_1}(p) = \mathcal A_{\kappa_2}(p) = \mathcal J \cup \{s,u\}$.
-%
-Hence on the hyperplane $fp=g$, both the maximising index ${\bf{k}}^\ast(p)$ and the active index sets $\mathcal A_{\kappa_1}(p)$ 
-and $\mathcal A_{\kappa_2}(p)$ must change, which implies that this problem is degenerate.
-%
-\item In order for a degenerate graph $\mathscr G(\mathcal W)$ to be parametrically convex, the vertices $v_{\kappa_1}(p)$ and $v_{\kappa_2}(p)$ must be identical for $fp\leq g$, and in particular their dependence on $p$ has to be identical.
-%
-This can be expressed using the implicit function theorem as follows
-%
+A linear inequality defining $\mathcal W(p)$ is \emph{active} at $(p,z)\in\partial\mathscr G (\mathcal W)$ if it holds with equality, and \emph{inactive} if it holds with strict inequality. We denote the set of active constraints at any point $(p,z)\in\partial\mathscr G (\mathcal W)$ as the index set $\mathcal A (p,z)$ defined by
 \begin{align*}
-  \frac{d}{dp}\left(  a_{\mathcal J\cup \{s\}} v_{\kappa_1}(p) - b_{\mathcal J\cup \{s\}} - 
-  c_{\mathcal J\cup \{s\},{\bf{k}}^\ast} p\right) &= 0\\
-  \frac{d}{dp}\left(  a_{\mathcal J\cup \{u\}} v_{\kappa_2}(p) - b_{\mathcal J\cup \{u\}} - 
-  c_{\mathcal J\cup \{u\},{\bf{k}}^\ast} p\right) &= 0
+&a_i z = b_{i,k_i^\ast} + c_{i,k_i^\ast} p \quad\forall i \in \mathcal A (p,z) \\
+&a_i z < b_{i,k_i^\ast} + c_{i,k_i^\ast} p \quad \forall i \in \mathbb N_m \setminus \mathcal A (p,z) .
 \end{align*}
+Before stating Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts} we first give two intermediate results.}
+ 
+%Finally we note that any zero measure subset of $Y\subseteq\mathbb R^d$ referred to in the following statements about piecewise affine polyhedral maps necessarily has the form of a polyhedral set of dimension less than $d$.}
+
+%In the following statements we use the terminology \emph{almost everywhere} in $Y$ to indicate all points in $Y$ except a subset of $Y$ of zero measure, namely a lower-dimensional polyhedral subset of $Y$.}
+
+%Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts} is stated in terms of generic piecewise affine polyhedral maps, which implies that their realisation is simple and no more than one structural component can change at a time as $p$ varies.
+
 %
-which implies
-\begin{align*}
-  a_{\mathcal J\cup \{s\}} \frac{dv_{\kappa}}{dp} &= c_{\mathcal J\cup \{s\},{\bf{k}}^\ast}\\
-  a_{\mathcal J\cup \{u\}} \frac{dv_{\kappa}}{dp} &= c_{\mathcal J\cup \{u\},{\bf{k}}^\ast}
-\end{align*}
+%The second assumption will become clearer in the proof of the central statement for piecewise affine polytopic set-valued maps and makes the statement of Lemma~\ref{lem:p:convexity:graph} more specific.
 %
-and since we can assume that the inequalities are non-redundant for some right hand side, we find that 
-%
-\begin{equation}\label{eq:derivative:condition:on:index:sets}
-  \frac{dv_\kappa}{dp} = a_{\mathcal J\cup \{s\}}^{-1}c_{\mathcal J\cup \{s\},{\bf{k}}^\ast} = 
-  a_{\mathcal J\cup \{u\}}^{-1}c_{\mathcal J\cup \{u\},{\bf{k}}^\ast}
+
+% \begin{lemma}\label{lem:sep_hyperplane}
+% \revision{Let the affine polyhedral map (\ref{eq:definition:PWA:polytopic:set:general}) be such that $\lvert \vertices\bigl(\mathcal W(p)\bigr) \rvert = \nu$ for all $p\in Y$ except a zero measure subset of $Y$. Then 
+
+
+% for any $(p_i,z_i)\in \partial \mathscr G (\mathcal W)$, $i=1,2$ we have $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ if and only if $\mathcal A(p_1,z_1) \cap \mathcal A(p_2,z_2)\neq \emptyset$.}
+
+
+\begin{lemma}\label{lem:active_set}
+\revision{For a given integer $\nu$, let the piecewise affine polyhedral set-valued map (\ref{eq:definition:PWA:polytopic:set:general}) satisfy $\lvert \vertices (\mathcal W(p) ) \rvert = \nu$ for all $p\in Y$ except a zero measure subset of $Y$. Then, for any $(p_1,z_1)\in \partial \mathscr G (\mathcal W)$ and $(p_2,z_2)\in \partial \mathscr G (\mathcal W)$, we have $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ if and only if $\mathcal A(p_1,z_1) \cap \mathcal A(p_2,z_2)\neq \emptyset$.}
+\end{lemma}
+
+\begin{proof}
+\revision{
+The definition of the active set $\mathcal A(p,z)$ implies that the normal cone at $(p,z)\in \partial \mathscr G (\mathcal W)$ is given by 
+\begin{equation}\label{eq:normal_cone_face_normals}
+\mathcal N_{\mathcal W}(p,z) = \sum_{i\in\mathcal A(p,z)} \lambda_i a_i, \quad \lambda_i \geq 0 \ \ \forall i\in\mathcal A(p,z) ,
 \end{equation}
+and it follows immediately that $\mathcal A(p_1,z_1) \cap \mathcal A(p_2,z_2)\neq \emptyset$ is a sufficient condition for $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$, for any $(p_i,z_i)\in \partial \mathscr G (\mathcal W)$, $i=1,2$. 
 %
-has to hold for the degenerate graph to remain parametrically convex.
+We show next that this condition is also necessary for $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$.
 %
-To complete the proof we note that~\eqref{eq:derivative:condition:on:index:sets} is a degenerate condition, in the sense that an arbitrarily small perturbation will result in $v_{\kappa_1}(p) \neq v_{\kappa_2}(p)$, and we therefore disregard this possibility.
+Specifically, if the number of vertices of $\mathcal W(p)$ is fixed for all $y\in Y$, then for each $i\in\mathcal A(p_1,z_1)$: (i) there must exist $z\in\mathcal W(p_2)$ such that $i\in\mathcal A(p_2,z)$; and (ii) if $i\not\in\mathcal A(p_2,z_2)$, then there must exist $u\in\mathbb R^n$ such that 
+\begin{equation}\label{eq:separating_hyperplane}
+a_i u \geq 0 \quad \text{and} \quad a_j u < 0 \ \ \forall j\in \mathcal A(p_2,z_2).
+\end{equation}
+Note that properties (i) and (ii) also hold if $\lvert\vertices(\mathcal W(p))\rvert$ is fixed for all $p\in Y$ except a zero measure subset of $Y$ since the right hand side of each inequality defining $\mathcal W(p)$ is continuous in $p$.
+% Specifically, the assumption that the number of vertices of $\mathcal W(p)$ is fixed for all $p\in Y$ except possibly a zero-measure subset of $Y$ implies that for each $i\in\mathcal A(p_1,z_1)$ there must exist $z\in\mathcal W(p_2)$ such that $i\in\mathcal A(p_2,z)$, and furthermore, if $i\not\in\mathcal A(p_2,z_2)$, then there must exist $u\in\mathbb R^n$ such that 
+% \begin{equation}\label{eq:separating_hyperplane}
+% a_i u \geq 0 \quad \text{and} \quad a_j u < 0 \ \ \forall j\in \mathcal A(p_2,z_2).
+% \end{equation}
+Now suppose that $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$. In this case (\ref{eq:normal_cone_face_normals}) implies that there must exist $i\in\mathcal A(p_1,z_1)$ such that 
+\begin{equation}\label{eq:overlapping_normal_cones}
+a_i = \sum_{j\in\mathcal A(p_2,z_2)} \lambda_j a_j, \quad \lambda_j \geq 0 \ \ \forall j\in\mathcal A(p_2,z_2) ,
+\end{equation}
+%but we must also have $i\not\in\mathcal A(p_2,z_2)$ 
+and if $\mathcal A(p_1,z_1)\cap\mathcal A(p_2,z_2) = \emptyset$, then we must also have $i\not\in\mathcal A(p_2,z_2)$. But (\ref{eq:separating_hyperplane}) would then contradict (\ref{eq:overlapping_normal_cones}), and it follows that
+$\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W}(p_2,z_2) \neq \emptyset$ 
+only if $\mathcal A(p_1,z_1)\cap\mathcal A(p_2,z_2) \neq \emptyset$.}
 \qed
-\end{enumerate}
 \end{proof}
+
+\begin{lemma}\label{lem:vert_change}
+\revision{Let $p_i$ for $i=1,2$ be such that the piecewise affine polyhedral map (\ref{eq:definition:PWA:polytopic:set:general}) satisfies $\lvert \vertices(\mathcal W(p)) \rvert = \nu_i$ for some integer $\nu_i$,
+%for all $p$ in an open neighbourhood of $p_i$. 
+for all $p\in U_i\subset Y$, where $U_i$ is an open set containing $p_i$. 
+If $\nu_1\neq \nu_2$ and $\mathcal W(p)$ is generic in the sense of Definition~\ref{def:generic_polyhedral_set}, then $\mathcal W(p)$ cannot be parametrically convex.}
+\end{lemma}
+
+\begin{proof}
+\revision{%
+Under the conditions of the lemma, the number of vertices of $\mathcal W(p)$ must change as $p$ moves along any path in $Y$ from $U_1$ to $U_2$. Therefore $\lvert \vertices (\mathcal W(p)) \rvert$ must change at a point $p$ that lies either in the interior of an element, $\mathcal P_j$ $j\in\mathcal I$, of the partition of $Y$, or on a boundary, $\mathcal P_j\cap\mathcal P_k$, for $j,k\in\mathcal I$. 
 %
-It is worth pointing out that Corollary~\ref{thm:p:convexity:PWA:set:constant:num:verts} can be reformulated in a numerically useful way:
+However the latter case cannot occur if $\mathcal W(p)$ is generic because it would imply a structural instability (since arbitrarily small perturbations in the parameters $a_i,b_{i,k_i^\ast},c_{i,k_i^\ast}$ would cause a change in the combinatorial structure of $\mathcal W(p)$), which is not admissible under Definition~\ref{def:generic_polyhedral_set}.
+%
+On the other hand, if $\lvert \vertices (\mathcal W(p)) \rvert$ changes at a point $p$ in the interior of $\mathcal P_j$, then $\mathscr G(\mathcal W)\vert_{\mathcal P_j}$ is locally a strictly convex polyhedron, and Theorem~\ref{thm:inequalities:convex:concave} implies that $\mathcal W(p)$ cannot be parametrically convex in this case.} \qed
+\end{proof}
+
+
+The main result of this section is given next.
+% derived from Lemmas~\ref{lem:active_set} and~\ref{lem:vert_change}. 
+
+\begin{theorem}\label{thm:p:convexity:PWA:set:constant:num:verts}
+The generic piecewise affine polyhedral map (\ref{eq:definition:PWA:polytopic:set:general})
+is parametrically convex \revision{if and only if there exists an integer $\nu$ such that 
+$\lvert\vertices(\mathcal W(p))\rvert = \nu$
+%$\mathcal W(p)$ has a fixed number of vertices 
+for all $p\in Y$ except a zero measure subset of $Y$.}
+%with the possible exception of a subset of $Y$ of zero measure.}
+\end{theorem}
+%
+
+\begin{proof}
+\revision{
+The necessity of the requirement that the number of vertices of $\mathcal W(p)$ is fixed 
+%for some given $\nu$, $\lvert \vertices\bigl(\mathcal W(p)\bigr) \rvert =\nu$ 
+for all $p\in Y$ (except possibly on a zero measure subset of $Y$) follows directly from Lemma~\ref{lem:vert_change}. Sufficiency can be demonstrated using Lemmas~\ref{lem:p:convexity:graph} and~\ref{lem:active_set}. Thus if $(p_1,z_1),(p_2,z_2)\in\partial \mathscr G(\mathcal W)$ and $\mathcal N_{\mathcal W}(p_1,z_1) \cap \mathcal N_{\mathcal W} (p_2, z_2) \neq \emptyset$, then Lemma~\ref{lem:active_set} implies that there exists an index, $h$, that belongs to both $\mathcal A(p_1,z_1)$ and $\mathcal A(p_2,z_2)$. Expressing $\mathcal W(p)$ as  
+\[
+\mathcal W(p) = \{ z : r(p,z) \leq 0\}, \ \ 
+r(p,z) = \max_{i\in\mathbb N_m} \bigl\{ a_i z - \max_{k\in\mathbb N_q} \{ b_{i,k} + c_{i,k} p \} \bigr\},
+\]
+we therefore have $r(p_j,z_j) = a_h z_j - \max_{k\in\mathbb N_q} (b_{h,k} + c_{h,k} p_j ) = 0$ for $j = 1,2$ and
+\begin{align*}
+&r\bigl(\lambda p_1 + (1\!-\!\lambda) p_2, \lambda z_1 + (1\!-\!\lambda) z_2\bigr) \\
+&= 
+\max_{i\in\mathbb N_m} \Bigl\{ a_i \bigl(\lambda z_1 + (1\!-\!\lambda) z_2\bigr) - \max_{k\in\mathbb N_q} \bigl\{ b_{i,k} + c_{i,k}\bigl(\lambda p_1 + (1\!-\!\lambda) p_2\bigr) \bigr\} \Bigr\} \\
+&\geq
+\max_{i\in\mathbb N_m} \Bigl\{  a_i \bigl(\lambda z_1 + (1\!-\!\lambda) z_2\bigr)
+- \lambda \max_{k\in\mathbb N_q} \{ b_{i,k} + c_{i,k} p_1\} 
+- (1\!-\!\lambda) \max_{k\in\mathbb N_q} \{ b_{i,k} + c_{i,k} p_2\} \Bigr\} \\
+&\geq
+\lambda \bigl ( a_h z_1 - \max_{k\in\mathbb N_q} \{ b_{h,k} + c_{h,k} p_1\} \bigr) + (1\!-\!\lambda) \bigl( a_h z_2 - \max_{k\in\mathbb N_q} \{ b_{h,k} + c_{h,k} p_2\} \bigr) \\
+&\geq 0
+\end{align*}
+for all $\lambda\in (0,1)$. It follows that $\lambda(p_1,z_1)+(1-\lambda) (p_2,z_2) \notin \interior (\mathscr G(\mathcal W))$ for all $\lambda\in (0,1)$, and hence $\mathcal W(p)$ meets the conditions of Lemma~\ref{lem:p:convexity:graph} for parametric convexity.}
+\qed
+\end{proof}
+
+
+%
+Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts} can be reformulated in a computationally useful way as follows.
 %
 \begin{corollary}\label{thm:combinatorical:equivalence:alternative}
-The generic set~$\mathcal W(p)$ defined by~\eqref{eq:definition:PWA:polytopic:set:general} is parametrically convex if and only if it is combinatorially equivalent for any $p_1,p_2\in Y\subseteq\mathbb R^d$ almost everywhere, i.e.\ $\mathcal W(p_1)\cong\mathcal W(p_2)$.
+The generic piecewise affine polyhedral map (\ref{eq:definition:PWA:polytopic:set:general})
+is parametrically convex if and only if $\mathcal W(p_1)$ and $\mathcal W(p_2)$ are combinatorially equivalent for all $p_1,p_2\in Y$ except a zero measure subset of $Y$.
+%, i.e.\ $\mathcal W(p_1)\cong\mathcal W(p_2)$.
 \end{corollary}
 %
 \begin{proof}
-Two polyhedra are combinatorially equivalent if there exists a bijection between all their faces which preserves the inclusion, see e.g.~\cite{Ziegler:1995}.
+Two polyhedra are combinatorially equivalent if there exists a bijection between their faces (vertices, edges, facets, etc) which preserves the inclusion relationships between them, see e.g.~\cite{Ziegler:1995}.
 %
-It is clear that as long as all complexes in proof~\ref{thm:p:convexity:PWA:set:constant:num:verts}, $\mathcal A_\kappa(p)=\mathcal A_\kappa$ are constant, all faces of $\mathcal W(p)$ are defined as intersections of the same set of half spaces.
+\revision{It is clear that if the number of vertices of $\mathcal W(p)$ is fixed for all $p\in Y$, then although the shape of~$\mathcal W(p)$ might change, all facets of $\mathcal W(p)$ are defined by the same set of hyperplanes for all $p\in Y$.
+%its combinatorial structure does not.
 %
-Although the shape of~$\mathcal W(p)$ might change its, combinatorial structure does not, furthermore the combinatorial structure of $\mathcal W(p)$ is not affected by changes of the right hand side.
+The induced graph of a polytope is defined by the vertices and the edges of the polytope, and therefore the induced graph, $G(\mathcal W(p))$, of $\mathcal W(p)$, must be independent of $p$ if $\lvert\vertices(\mathcal W(p))\rvert$ is fixed for all $p\in Y$.
 %
-The Perles Conjecture~\cite{Kalai:1988} states that the combinatorial structure of a simple polytope is uniquely determined by its graph, that is, as long as the induced graph of~$\mathcal W(p)$ remains unchanged so does its combinatorial structure.
+The Perles Conjecture, as proved in~\cite{Kalai:1988}, shows that the combinatorial structure of a simple polytope is determined uniquely by its induced graph; hence if $G(\mathcal W(p))$ does not vary with $p$, then neither does the combinatorial structure of $\mathcal W(p)$, and it follows that $\mathcal W(p_1)$ and $\mathcal W(p_2)$ are combinatorially equivalent for all $p_1,p_2\in Y$. Conversely, if $\lvert\vertices(\mathcal W(p))\rvert$ varies with $p$, then $\mathcal W(p_1)$ and $\mathcal W(p_2)$ cannot be combinatorially equivalent for all $p_1,p_2\in Y$.
 %
-The induced graph of a polytope is given by the vertices and the edges of a polytope, and since we have that the number of vertices remains unchanged throughout~$Y$ for $\mathcal W(p)$, the induced graph $G(\mathcal W(p))$ has to have a constant number of vertices.
+% This is only possible if it is constant itself or it abruptly changes on multiple edges, however changing multiple edges involves changing multiple active sets which is a degenerate case.
 %
-This is only possible if it is constant itself or it abruptly changes multiple edges, however changing multiple edges involves changing multiple active sets which is a degenerate case.
+Although the preceding argument ignores the possibility that $\mathcal W(p)$ is non-simple on a zero-measure subset of $Y$, we can define a continuous selection through these sets since the combinatorial structure of $\mathcal W(p)$ is by assumption fixed for values of $p$ arbitrarily nearby.}
 %
-Notice that this result only applies to sets with full measure, where $\mathcal W(p)$ is non-degenerate.
-%
-It is possible that there exist zero-measure sets (points, lines, $d-1$-hyperplanes) in~$Y$ where $\mathcal W$ becomes singular, meaning not simple
-and vertices may merge, however due to the fact that for parameters outside such sets the combinatorial structure is fixed, we can find a  continuous selection through these sets, in any sense we like.
-%
-This means in particular that we ignore the fact that locally $v_{\kappa_1}=v_{\kappa_2}$ and can
- use a locally redundant representation $\mathcal W(p) = \conv_\kappa\{v_\kappa(p)\}$.
+%This means in particular that we ignore the fact that locally $v_{\kappa_1}=v_{\kappa_2}$ and can  use a locally redundant representation $\mathcal W(p) = \conv_\kappa\{v_\kappa(p)\}$.
 \qed
 \end{proof}
+
 %
-This allows for efficient numerical treatment, since we know how the vertices are defined, i.e.~$\mathcal A_\kappa = const$.
+Corollary~\ref{thm:combinatorical:equivalence:alternative}
+allows for efficient numerical methods, since combinatorial equivalence for all $p\in Y$ implies that each vertex is defined by a fixed active set independently of $p$.
 %
-We will illustrate how we exploit this property in Section~\ref{sec:computational:methods} and~\ref{sec:numerical:examples}.
+Sections~\ref{sec:computational:methods} and~\ref{sec:numerical:examples} illustrate how this property can be exploited computationally.
 %
 
 % In order to determine the Pontryagin difference between two sets one constructs the boundary of the Pontryagin difference. 
@@ -728,17 +840,17 @@ Pontryagin difference between any convex set $S$ and a set-valued
 map~$\mathcal W$ to be convex, $\mathcal W$ must be parametrically
 convex.
 %
-We have also seen that for a set-valued map with polyhedral realisations $\mathcal W(p)$, the number of vertices and rays must not change throughout the parameter space~$Y$ in order that $\mathcal W(p)$ is parametrically convex.
+We have also seen that for a set-valued map with polyhedral realisations $\mathcal W(p)$, the number of vertices must not change throughout the parameter space~$Y$ in order that $\mathcal W(p)$ is parametrically convex.
 %
 Checking this condition may seem computationally challenging, however
 we show in this section that it suffices to perform a finite number of calculations.
 %
-For notational convenience let $\phi_i(p) = \max_k\{b_{i,k}+c_{i,k}p\}$ denote the right hand side of~\eqref{eq:definition:PWA:polytopic:set:general}, i.e. $\mathcal W(p) = \{z\in\mathbb R^n: a_i z\leq \phi_i(p)\;\forall i\in\mathbb N_m\}$.
+For notational convenience let $\phi_i(p) = \max_{k\in\mathbb N_q}\{b_{i,k}+c_{i,k}p\}$ denote the right hand side of~\eqref{eq:definition:PWA:polytopic:set:general}, i.e. $\mathcal W(p) = \{z\in\mathbb R^n: a_i z\leq \phi_i(p)\;\forall i\in\mathbb N_m\}$.
 %
 It is equivalent to study~$\phi_i$ and its \emph{epigraph} 
 %
 $$
-	\epi(\phi_i) = \{(p,t)\in Y\times\mathbb R: \phi_i(p)\leq t\}
+	\epi(\phi_i) := \{(p,t)\in Y\times\mathbb R: \phi_i(p)\leq t\}
 $$
 %
 see e.g.~\cite{Gorokhovik:1993}.
@@ -746,50 +858,53 @@ see e.g.~\cite{Gorokhovik:1993}.
 On each $d$-dimensional face 
 %
 \begin{equation}\label{eq:conv:hull:facet:of:epigraph}
-F_j = \underset{f}{\conv}\left\{\left(\begin{array}{c}p_{j,f}\\ t_{j,f}\end{array}\right)\right\}
+F_j = \conv_f \left\{\left(\begin{array}{c}p_{j,f}\\ t_{j,f}\end{array}\right)\right\}
 \end{equation}
 %
-of $\epi(\phi_i)$ there exists a maximiser~$k_j$ such that~$\phi_i$ is defined by~$\phi_i(p)=b_{i,k_j}+c_{i,k_j}p$ for all $p\in\pi_d(F_j)$ or equivalently~$\phi_i(p)=\sum_{f}\lambda_f t_{j,f}$ with ${\bf{0}}\leq\lambda\leq{\bf{1}}$ such that $p=\sum_{f}\lambda_f p_{j,f}$.
+of $\epi(\phi_i)$ there exists a maximiser~$k_j$ such that~$\phi_i$ is defined by~$\phi_i(p)=b_{i,k_j}+c_{i,k_j}p$ for all $p\in\pi_d(F_j)$ or equivalently~$\phi_i(p)=\sum_{f}\lambda_f t_{j,f}$ where the coefficients
+$\lambda_f \in [0,1]$ satisfy 
+% ${\bf{0}}\leq\lambda\leq{\bf{1}}$ 
+$p=\sum_{f}\lambda_f p_{j,f}$ and $\sum_f\lambda=1$.
 %
-Notice that if~\eqref{eq:conv:hull:facet:of:epigraph} is redundant, i.e. not all elements are vertices of $F_j$, then the statement is still true, and we can write $\phi_i(p)$ as a convex combination of points.
+%Notice that we can write $\phi_i(p)$ as a convex combination of points even if~\eqref{eq:conv:hull:facet:of:epigraph} is redundant (i.e.~if not every point in the convex combination on the rhs of~\eqref{eq:conv:hull:facet:of:epigraph} is a vertex of $F_j$).
 
-Let~$\mathcal C$ be a polyhedral complex such that in each $d$-dimensional element~$\mathcal P_j\in\mathcal C$ the set-valued map is given by $\mathcal W(p) = \{z\in\mathbb R^n:a_i z\leq b_{i,k_j} + c_{i,k_k} p\}$. 
+Let~$\mathcal C$ be a polyhedral complex such that in each $d$-dimensional element~$\mathcal P_j\in\mathcal C$ the set-valued map is given by $\mathcal W(p) = \{z\in\mathbb R^n:a_i z\leq b_{i,k_j} + c_{i,k_j} p\}$. 
 %
-It is worth pointing out that any such polyhedral complex is not assumed to be minimal, since the minimal such complex could have non-convex elements, those elements can however be partitioned such that every element of the non-minimal $\mathcal C$ are convex polyhedra. 
+It is worth pointing out that any such polyhedral complex is not assumed to be minimal, since the minimal complex could have non-convex elements, those elements can however be partitioned so that every element of the non-minimal $\mathcal C$ is a convex polyhedron. 
 %
 A natural way to obtain a convex polyhedral complex is by projecting the facets of the set
 %
-\begin{equation}
-  E=\left\{(p,t_1,\dots,t_m)\in Y\times\mathbb R^{m}:\phi_i(p)\leq t_i\right\}
-\end{equation}
+\[%\begin{equation}
+  E :=\left\{(p,t_1,\dots,t_m)\in Y\times\mathbb R^{m}:\phi_i(p)\leq t_i\right\}
+\]%\end{equation}
 %
 onto $\mathbb R^d$.
 %
 The set of vertices of elements in the complex coincides with the union of all vertices of $d$-dimensional faces of $\epi(\phi_i)$ for all $i\in\mathbb N_m$, i.e.
 %
 $$\begin{aligned}
-	\bigcup_{P\in\mathcal C}\text{vert}(P) = \bigcup_{(\ast)} \text{vert}(\pi_d(F)) = \bigcup_{i\in\mathbb N_m}\pi_d(\text{vert}(\epi(\phi_i))),
+	\bigcup_{{P}\in\mathcal C}\vertices({P}) = \bigcup_{(\ast)} \vertices(\pi_d(F)) = \bigcup_{i\in\mathbb N_m}\pi_d(\vertices(\epi(\phi_i))),
 \end{aligned}$$
 %
 with $(\ast) = \{F: F $ is a $d$-dimensional face of $\epi(d_i)$ for some $i\in\mathbb N_m\}$.
 %
-It is now obvious that the graph $\mathscr G(\mathcal W\vert_{\mathcal P_j})$ on each $d$-dimensional element $\mathcal P_j\in\mathcal C$ is entirely defined by the values of $\mathcal W(p_j)$ at the vertices $p_j\in\text{vert}(\mathcal P_j)$.
+It is now obvious that the graph $\mathscr G(\mathcal W)\vert_{\mathcal P_j}$ on each $d$-dimensional element $\mathcal P_j\in\mathcal C$ is entirely defined by the values of $\mathcal W(p_j)$ at the vertices $p_j\in\vertices(\mathcal P_j)$.
 %
-In each~$\mathcal P_j$ we have $\mathcal W(p) = \{z: a_i z\leq \sum_f \lambda_f t_{i,j,f}, \sum_f\lambda_f p_{j,f}=p, \sum_f\lambda=1,{\bf{0}}\leq\lambda\leq{\bf{1}}\; \forall i\in\mathbb N_m\}$
+In each~$\mathcal P_j$ we have $\mathcal W(p) = \{z: a_i z\leq \sum_f \lambda_f t_{i,j,f}, \sum_f\lambda_f p_{j,f}=p, \sum_f\lambda=1, \lambda_f\in[0,1]\; \forall i\in\mathbb N_m\}$
 %
-Therefore, if~$\mathcal A_\kappa\subset\mathbb N_m$ such that~$\abs{\mathcal A_\kappa}=d$ and $a_\kappa v_\kappa = t_{\kappa,j}$ defines a vertex for $\mathcal W(p_j)$, then $a_\kappa v_\kappa = \sum_f \lambda_f t_{\kappa,f}$ defines a vertex for $\mathcal W(p)$.
+Therefore, if~$\mathcal A\subset\mathbb N_m$ such that~$\abs{\mathcal A}=d$ and $a_i v = t_{i,j}$ $\forall i\in\mathcal A$ defines a vertex $v$ of $\mathcal W(p_j)$, then $a_i v = \sum_f \lambda_f t_{i,f}$ $\forall i \in \mathcal A$ defines a vertex $v$ of $\mathcal W(p)$.
 
-The proposed algorithm to determine parametric convexity of a given piecewise affine polyhedral description~$\mathcal W(p)$ as in~\eqref{eq:definition:PWA:polytopic:set:general} can therefore be summarised as follows:
+The proposed algorithm to determine parametric convexity of a given piecewise affine polyhedral description~$\mathcal W(p)$ as in~\eqref{eq:definition:PWA:polytopic:set:general} can be summarised as follows:
 %
-Firstly, compute all vertices~$\text{vert}(E)$.
+First, compute all vertices~$\vertices(E)$.
 %
-Next, check whether the number of vertices is constant on $\mathcal D = \pi_d\left(\text{vert}(E)\right)$, i.e. 
+Next, check whether the number of vertices is constant on $\mathcal D = \pi_d\left(\vertices(E)\right)$, i.e. 
 %
-$$\abs{\text{vert}(\mathcal W(p))} = c_{\mathcal D} \quad \forall p\in\mathcal D$$
+$$\abs{\vertices(\mathcal W(p))} = c_{\mathcal D} \ \ \forall p\in\mathcal D$$
 %
 for some constant $c_{\mathcal D}$. If this is the case, then
-Corollary~\ref{thm:p:convexity:PWA:set:constant:num:verts} holds and
-$\mathcal W(p)$ is parametrically convex. Furthermore enumerating the vertices of $\mathcal W(p)$ for any fixed $p\in Y$ yields all vertices defining index sets $\mathcal A_\kappa\subset\mathbb N_m$ which remain unchanged for all $p\neq\tilde p\in Y$ according to Corollary~\ref{thm:combinatorical:equivalence:alternative}.
+Theorem~\ref{thm:p:convexity:PWA:set:constant:num:verts} holds and
+$\mathcal W(p)$ is parametrically convex. Furthermore, enumerating the vertices of $\mathcal W(p)$ for any fixed $p\in Y$ yields all vertices defining active sets $\mathcal A\subset\mathbb N_m$ which remain unchanged for all $p\in Y$ according to Corollary~\ref{thm:combinatorical:equivalence:alternative}.
 %
 \subsection{Computing the Parametric Pontryagin Difference}\label{ssec:computation:p:pontryagin:difference}
 %
@@ -797,33 +912,35 @@ $\mathcal W(p)$ is parametrically convex. Furthermore enumerating the vertices o
 %
 The constancy of the active inequalities defining vertices of~$\mathcal W(p)$ is particularly useful when we compute the parametric Pontryagin difference $S\ominus\mathcal W(S)$.
 %
-In particular for the set $S=\{p\in\mathbb R^d:\Lambda_i p\leq\lambda_i,i\in\mathbb N_q\}$ each facet $P_i=\{p:\Lambda_i p=\lambda_i\wedge\Lambda_j p\leq\lambda_j,j\neq i\}$ defines facets of the set difference.
+In particular, for the set $S=\{p\in\mathbb R^d:\Lambda_i p\leq\lambda_i \, \forall i\in\mathbb N_q\}$ each facet $P_i=\{p:\Lambda_i p=\lambda_i \wedge \Lambda_j p\leq\lambda_j \, \forall j\neq i\}$ can be used to determine facets of the set difference.
 %
-Namely each point~$p$ on the boundary of $S\ominus\mathcal W(S)$ is such that there exists an admissible $w^\ast$ such that $p+w^\ast$ lies on the boundary of $S$.
+Namely each point~$p$ on the boundary of $S\ominus\mathcal W(S)$ is such that there exists $w^\ast\in\mathcal W(p)$ so that $p+w^\ast$ lies on the boundary of $S$.
 %
-Computing the set $S\ominus\mathcal W(S)$ therefore reduces to computing points~$p$ for which an admissible $w^\ast$ exists to produce~$p+w^\ast\in P_i$ for some $i\in\mathbb N_q$.
+Computing the set $S\ominus\mathcal W(S)$ therefore reduces to computing points~$p$ for which $w^\ast\in\mathcal W(p)$ exists to produce~$p+w^\ast\in P_i$ for some $i\in\mathbb N_q$.
 %
-In order to find such points we use the inequality they have to satisfy:
+In order to find such points we use the inequalities:
 %
-\begin{equation}\begin{split}
-  \Lambda_i(p+w)\leq\lambda_i\forall w\in\mathcal W(p)\\
+\[%\begin{equation}
+\begin{split}
+  \Lambda_i(p+w)\leq\lambda_i\ \forall w\in\mathcal W(p)\\
   \Lambda_i p+\underbrace{\max_{w\in\mathcal W(p)}\Lambda_i w}_{(\dagger)}\leq\lambda_i
-\end{split}\end{equation}
+\end{split}
+\]%\end{equation}
 %
 The term~$(\dagger)$ is a mpLP, however we are less interested in the
-objective value of~$(\dagger)$ than the shape of its solution
-over~$p$, since this defines the shape of the set of points 
-that can only just be taken to $P_i$ for an extremal value of $w\in\mathcal W(p)$ and hence form the boundary of $S\ominus \mathcal W(S)$.
+objective value of~$(\dagger)$ than the \revision{dependence of its solution
+on~$p$}, since this defines the set of points 
+that can only just be taken to $P_i$ for an extremal value of $w\in\mathcal W(p)$ and thus form the boundary of $S\ominus \mathcal W(S)$.
 %
 We exploit the linearity of the objective function to argue that only vertices of~$\mathcal W(p)$ are candidates to be the maximiser in~$(\dagger)$.
 %
 According to Corollary~\ref{thm:combinatorical:equivalence:alternative} there exists a fixed map~$T$ such that 
 %
-\begin{equation}
+\[%\begin{equation}
   \begin{pmatrix}w_1\\ \vdots\\ w_N\end{pmatrix} = \underbrace{\begin{pmatrix}T_1\\ \vdots\\ T_N\end{pmatrix}}_T t(p)
-\end{equation}
+\]%\end{equation}
 %
-defines all vertices of $\mathcal W(p) = \conv\{w_1(t(p)),\dots,w_N(t(p))\}$ for a element-wise convex piecewise affine function $t(p)$.
+defines all vertices of $\mathcal W(p) = \conv\bigl\{w_1(t(p)),\dots,w_N(t(p))\bigr\}$ for an elementwise convex piecewise affine function $t(p)$.
 %
 It is easy to see that the choice $t_i(p)=\phi_i(p)$ again leads us to the epigraph~$\epi(\phi_i)$ and therefore that the maximisation~$(\dagger)$ becomes
 %
@@ -838,7 +955,7 @@ It is easy to see that the choice $t_i(p)=\phi_i(p)$ again leads us to the epigr
 %
 Furthermore the solution to~\eqref{eq:rewriting:pontryagin:diff:without:facet:constraint} is only relevant for such~$p$ that can be taken to~$P_i$ for some $i\in\mathbb N_q$.
 %
-By including this constraint in~\eqref{eq:rewriting:pontryagin:diff:without:facet:constraint}, we obtain a linear program that is only feasible on the points which can be taken to $P_i$ for feasible $w$:
+By including this constraint in~\eqref{eq:rewriting:pontryagin:diff:without:facet:constraint}, we obtain a linear program that is only feasible on the points which can be taken to $P_i$ for $w\in\mathcal W(p)$:
 %
 \begin{equation}\label{eq:rewriting:pontryagin:diff:with:facet:constraint}
   \begin{array}{rl}
@@ -853,8 +970,8 @@ By including this constraint in~\eqref{eq:rewriting:pontryagin:diff:without:face
 %
 Notice that we are only interested in the feasible~$p$ rather than the objective value of~\eqref{eq:rewriting:pontryagin:diff:with:facet:constraint}, i.e. $p$ such that there exist $t$ and $\tau$ such that 
 %
-\begin{equation}
-  (p,t,\tau)\in\tilde P_i=\left\{(p,t,\tau):\begin{array}{rcl}
+\[%\begin{equation}
+  (p,t,\tau)\in\tilde P_i :=\left\{(p,t,\tau):\begin{array}{rcl}
   \Lambda_iT_jt&\leq&\tau\\
   B_k+C_k p&\leq& t_k\\
   \Lambda_i p + \tau&=&\lambda_i\\
@@ -865,7 +982,7 @@ Notice that we are only interested in the feasible~$p$ rather than the objective
    k\in\mathbb N_m
    \end{array}
    \right\}
-\end{equation}
+\]%\end{equation}
 %
 %but this is the definition of the projection onto $\mathbb R^d$.
 %
@@ -877,11 +994,11 @@ Therefore the boundary of $S\ominus \mathcal W(S)$ can be expressed as the union
  \right)
 \end{equation}
 %
-The simplest way to use~\eqref{eq:boundary:S:ominus:WS} is to use a vertex description of $\tilde P_i$:
+The simplest way to use~\eqref{eq:boundary:S:ominus:WS} is through a vertex description of $\tilde P_i$:
 %
 \begin{equation}\label{the:way:we:compute:p:pontryagin:differences}
-  \text{vert}(S\ominus\mathcal W(S)) =
-  \bigcup_{i\in\{1,\dots,q\}}\pi_d(\text{vert}(\tilde P_i)) .
+  \vertices(S\ominus\mathcal W(S)) =
+  \bigcup_{i\in\{1,\dots,q\}}\pi_d(\vertices(\tilde P_i)) .
 \end{equation}
 
 We conclude this section by proposing an alternative way of computing $S\ominus\mathcal W(S)$.
@@ -896,8 +1013,8 @@ We conclude this section by proposing an alternative way of computing $S\ominus\
 %exists such that $p+w$ lies on the boundary of $S$, c
 Consider the set
 %
-\begin{equation}
-  L = \left\{(p,t,\tau):\begin{array}{rcl}
+\[%\begin{equation}
+  L := \left\{(p,t,\tau):\begin{array}{rcl}
   \Lambda_iT_jt&\leq&\tau_i\\
   B_k+C_k p&\leq& t_k\\
   \Lambda_i p + \tau_i&\leq&\lambda_i\\
@@ -906,9 +1023,9 @@ Consider the set
   k\in\mathbb N_m\\
   i\in\mathbb N_q\end{array}
   \right\} .
-\end{equation}
+\]%\end{equation}
 %
-The set~$L$ contains all points $p$ for which there exists a feasible $w\in\mathcal W(p)$ such that $p+w\in S$ and hence $\pi_d(L)=S\ominus\mathcal W(S)$, which does not require a vertex enumeration.
+This set contains all points $p$ for which there exists $w\in\mathcal W(p)$ such that $p+w\in S$ and hence $\pi_d(L)=S\ominus\mathcal W(S)$, which does not require a vertex enumeration.
 %
 Notice that although both of the methods described in this section
 provide the same result, the first method requires the vertex
@@ -920,7 +1037,7 @@ onto $\mathbb R^d$. Depending on the complexity of $S$, the appropriate method m
 %
 %
 \section{Numerical Examples}\label{sec:numerical:examples}
-\subsection{Norm bound sets}\label{ssec:example:one}
+\subsection{Norm-bound sets}\label{ssec:example:one}
 %
 Consider the set~$X = \{x\in\mathbb R^2: \abs{x_1}\leq 1\wedge \abs{x_2}\leq 1\}$ and the set-valued map $\mathcal W(x) = \{w\in\mathbb R^2: \norm{w}_P\leq\kappa\norm{x}_P\}$.
 %
@@ -940,7 +1057,7 @@ For this choice we find $c_1 = \cos\left(\frac{\pi}{n-1}\right)$ and $c_2=1$.
 %
 Here~$\mathcal W(x)$ is a scaled approximation of an euclidean ball and therefore obviously parametrically convex with a fixed combinatorial structure.
 %
-In fact, we find the~$n$ vertices given by the solution to
+In fact the~$n$ vertices of $\mathcal W(x)$ are  given by the solution of
 %
 $$
   \left(\begin{array}{cc}
@@ -952,7 +1069,7 @@ $$
 %
 for $k=1,\dots,n$.
 
-In order to apply the method described in Section~\ref{ssec:computation:p:pontryagin:difference} we a require map $T$ such that 
+In order to apply the method described in Section~\ref{ssec:computation:p:pontryagin:difference} we require a map $T$ such that 
 %
 $$
 \begin{pmatrix}
@@ -960,9 +1077,9 @@ w_1\\ \vdots \\ w_n
 \end{pmatrix} = \begin{pmatrix}T_1\\\vdots\\T_n\end{pmatrix}{\bf{1}}t(x).
 $$
 %
-holds, but this becomes trivial as $t=\max_{k\leq n} \{F_kx\}$ is a scalar.
+holds, and this becomes trivial as $t=\max_{k\leq n} \{F_kx\}$ is a scalar.
 % 
-The sets $\tilde P_i$ and $L$ are given by
+The sets $\tilde P_i$ and $L$ are then given by
 %
 % Characterising the parametric Pontryagin difference~$X\ominus\mathcal W(X) = \{z\in\mathbb R^2:z+w\in X\;\forall w\in\mathcal W(z)\}$ is done by characterising its boundary.
 % %
@@ -1012,7 +1129,7 @@ $$
 %
 respectively.
 
-For the choice~$\kappa=0.2$ and~$n = 35$ the set~$X\ominus\mathcal W(X)=\pi_2(L)=$\linebreak $\conv\{\cup_{i\in\{1,\dots,4\}}\pi_2(\text{vert}(\tilde P_i)\}$ is illustrated in Figure~\ref{fig:example:parametric:pontryagin:difference}.
+For the choice~$\kappa=0.2$ and~$n = 35$ the set~$X\ominus\mathcal W(X)=\pi_2(L)=$\linebreak $\conv\{\cup_{i\in\{1,\dots,4\}}\pi_2(\vertices(\tilde P_i)\}$ is illustrated in Figure~\ref{fig:example:parametric:pontryagin:difference}.
 
 \begin{figure}[h]
 \centering
@@ -1030,40 +1147,52 @@ For the choice~$\kappa=0.2$ and~$n = 35$ the set~$X\ominus\mathcal W(X)=\pi_2(L)
 \end{figure}
 
 
-\subsection{Elementwise bound sets}\label{exp:second:example}
+\subsection{Elementwise-bound sets}\label{exp:second:example}
 %
 For another example we take inspiration from a robust control scenario.
 %
-We want to approximate the maximal positive invariant set for a system of the type~$x^+=Ax + f(x)$ for $x\in\mathcal X$, i.e. the largest set of points~$\mathcal X^\infty\subseteq\mathcal X$ such that $x\in\mathcal X^\infty\Rightarrow x^+\in\mathcal X^\infty$, see e.g.~\cite{blanchini:2007}.
+We want to approximate the maximal positive invariant set for a system of the type
+\begin{equation}\label{eq:nonlinear_system}
+x^+=Ax + f(x),
+\end{equation}
+(where $x$ denotes the system state and $x^+$ the successor state)
+for $x\in\mathcal X$, i.e. the largest set of points~$\mathcal X^\infty\subseteq\mathcal X$ such that $x\in\mathcal X^\infty$ implies $x^+\in\mathcal X^\infty$, see e.g.~\cite{blanchini:2007}.
 %
-For general nonlinear systems~$x^+=Ax + f(x)$ the maximal positive invariant set cannot be calculated, but assume we find piecewise affine bounds on the nonlinearity, i.e. $\min_{k\leq M_i}\{h_{i,k}^x x + h_{i,k}^c\}\leq f_i(x)\leq\max_{k\leq N_i}\{H_{i,k}^x x + H_{i,k}^c\}$ for all $x\in\mathcal X$ and all elements of~$f(x)$.
-%
-We can now study the system $x^+=Ax+w$ with $w\in\mathcal W(x) = \{w:\min_{k\leq M_i}\{h_{i,k}^x x + h_{i,k}^c\}\leq w_i\leq\max_{k\leq N_i}\{H_{i,k}^x x + H_{i,k}^c\}\,\forall i\in\mathbb N_d\}$.
-%
-To bound the maximal positive invariant set for the nonlinear system we compute the maximal robust positive invariant set for the perturbed linear system $x^+=Ax+w$, i.e. the set of states~$\mathscr X^\infty\subseteq\mathcal X$ such that $x\in\mathscr X^\infty$ implies $x^+\in\mathscr X^\infty$ for all possible $w\in\mathcal W(x)$.
-%
-The algorithm to determine the maximal robust positive invariant sets recursively intersects the current set iterate~$X_l$ with the set of all possible successor states starting from the current iterate $X_{l+1}=X_l\cap\left\{\bigcup_{x\in X_l,w\in\mathcal W(x)}\{Ax+w\}\right\}$.
-%
-We will only present a single step of this procedure.
-%
-Notice that for a constant set-valued map~$\mathcal W(x) = \mathcal W$ the iteration can be summarised as $X_{l+1} = X_l\cap A^{-1}(X_l\ominus\mathcal W)$, for a set valued map a similar compact notation also holds, however it is more confusing than helpful:~$X_{l+1}=X_l\cap(A^{-1}X_l\ominus A^{-1}\mathcal W(A^{-1}X_l))$.
 
-In order to illustrate the proposed treatment of the nonlinearities we use the two dimensional system~$x^+=x+f(x)$ where the nonlinearity is given by
+For general nonlinear systems~$x^+=Ax + f(x)$ the maximal positive invariant set cannot be calculated, but assuming piecewise affine bounds on the nonlinearity,
+\[
+\min_{k\leq M_i}\{h_{i,k}^x x + h_{i,k}^c\}\leq f_i(x)\leq\max_{k\leq N_i}\{H_{i,k}^x x + H_{i,k}^c\}
+\] 
+for all $x\in\mathcal X$ and each element of~$f(x)$,
 %
-\begin{subequations}
-\begin{equation}
-  f_1(x) = \frac{1}{10}\left(\frac{x_1}{2}+x_2\right)^3
-\end{equation}
-\begin{equation}
-  f_2(x) = \frac{1}{2}\arcsin\left(g_1\left(x_1-\frac{x_2}{2}\right)+g_2\left(x_1-\frac{x_2}{2}\right) \right)
-\end{equation}
-\end{subequations}
+we can study the system $x^+=Ax+w$ with 
+\[
+w\in\mathcal W(x) = \Bigl\{w:\min_{k\leq M_i}\{h_{i,k}^x x + h_{i,k}^c\}\leq w_i\leq\max_{k\leq N_i}\{H_{i,k}^x x + H_{i,k}^c\}\,\forall i\in\mathbb N_d\Bigr\}.
+\]
 %
-with $g_1(t)=\sigma(t)\sqrt{\frac{t}{2}}$, $g_2(t)=\sigma(-t)\frac{t}{2}$ where $\sigma(t)$ denotes the Heaviside function
+To bound the maximal positive invariant set of the system~(\ref{eq:nonlinear_system}) we compute the maximal robust positive invariant set for the perturbed linear system $x^+=Ax+w$, i.e. the set of states~$\mathscr X^\infty\subseteq\mathcal X$ such that $x\in\mathscr X^\infty$ implies $x^+\in\mathscr X^\infty$ for all possible $w\in\mathcal W(x)$.
+%
+The algorithm to determine the maximal robust positive invariant sets recursively intersects the current set iterate~$X_l$ with the set of all possible successor states starting from the current iterate, so that $X_{l+1}=X_l\cap\left\{\bigcup_{x\in X_l,w\in\mathcal W(x)}\{Ax+w\}\right\}$.
+%
+We illustrate the procedure by describing a single iteration of the algorithm.
+%
+% Notice that for a constant set-valued map~$\mathcal W(x) = \mathcal W$ the iteration can be summarised as $X_{l+1} = X_l\cap A^{-1}(X_l\ominus\mathcal W)$, for a set valued map a similar compact notation also holds, however it is more confusing than helpful:~$X_{l+1}=X_l\cap(A^{-1}X_l\ominus A^{-1}\mathcal W(A^{-1}X_l))$.
+
+To demonstrate the proposed treatment of the nonlinearities we use the two-dimensional system~$x^+=x+f(x)$, where the nonlinearity is given by $f = [f_1 \ \ f_2]^\top$,
+%
+%\begin{subequations}
+\begin{align*}
+  f_1(x) &= \frac{1}{10}\left(\frac{x_1}{2}+x_2\right)^3 \\
+  f_2(x) &= \frac{1}{2}\arcsin\left(g_1\left(x_1-\frac{x_2}{2}\right)+g_2\left(x_1-\frac{x_2}{2}\right) \right)
+\end{align*}
+%\end{subequations}
+%
+with $g_1(t)=\sigma(t)\sqrt{\frac{t}{2}}$, $g_2(t)=\sigma(-t)\frac{t}{2}$ where $\sigma(t)$ denotes the Heaviside function.
 %\sigma\left(x_1-\frac{x_2}{2}\right)\sqrt{\frac{x_1-\frac{x_2}{2}}{2}} + \sigma\left(-\left(x_1-\frac{x_2}{2}\right)\right)\frac{x_1-\frac{x_2}{2}}{2}
-$$
-  \sigma(t) = \left\{\begin{array}{crcl}1& t&\geq&0\\ 0 &t&<&0 \end{array}\right.
-$$
+\[
+  \sigma(t) = \begin{cases} 1 & t \geq 0 \\ 0 & t < 0 \end{cases}
+%\left\{\begin{array}{crcl}1& t&\geq&0\\ 0 &t&<&0 \end{array}\right.
+\]
 %
 As the constraint set we use $X_l = \{x:\abs{x_1}+\abs{x_2}\leq 2\}$.
 %
@@ -1081,21 +1210,21 @@ $$
   \right\}
 $$
 %
-with $t_1=\max_k\{H_{1,k}^x x+H_{1,k}^c\},\; t_3=\max_k\{H_{2,k}^x x+H_{2,k}^c\},\; t_2=-\max_k\{-h_{1,k}^x x-h_{1,k}^c\}$ and $t_4=-\max_k\{-h_{1,k}^x x-h_{1,k}^c\}$.
+with $t_1=\max_k\{H_{1,k}^x x+H_{1,k}^c\}$, $t_3=\max_k\{H_{2,k}^x x+H_{2,k}^c\}$, $t_2={-\max_k}\{-h_{1,k}^x x-h_{1,k}^c\}$ and $t_4={-\max_k}\{-h_{1,k}^x x-h_{1,k}^c\}$.
 %
 Each facet~$P_i=\{x:\Lambda_i x=\lambda_i\wedge\Lambda_jx\leq\lambda_j,j\neq i\}$ of the current set iterate defines facets of the next set iterate satisfying
 %
 \begin{equation}
-\Lambda_i(Ax+w^\ast)=\lambda_i\quad \Lambda_j(Ax+w^\ast)\leq\lambda_j,j\neq i
+\Lambda_i(Ax+w^\ast)=\lambda_i, \quad \Lambda_j(Ax+w^\ast)\leq\lambda_j \ \forall j\neq i ,
 \end{equation}
 %
-where $w^\ast$ is the maximiser of the defining mpLP $\max_{w\in\mathcal W(x)}\Lambda_iw$, i.e. one of the aforementioned vertices with their representation
+where $w^\ast$ is the maximiser of the defining mpLP $\max_{w\in\mathcal W(x)}\Lambda_iw$, i.e.~one of the vertices defined by
 %
 $$
   \begin{pmatrix} w_1\\ \vdots \\ w_N\end{pmatrix}= Tt.
 $$
 %
-With this the collection of facets generated by~$P_i$ is given by the projection
+The collection of facets generated by~$P_i$ is then given by the projection
 %
 \begin{equation}
   \pi_d\left(\left\{(x,t,\tau):\begin{array}{rcl}
@@ -1110,7 +1239,7 @@ With this the collection of facets generated by~$P_i$ is given by the projection
   \right\}\right)
 \end{equation}
 %
-Analogously to the previous example, instead of computing~$q$ projections from $3d+1$ onto $d$ we can perform a single projection with the same result:
+Analogously to the previous example, rather than computing~$q$ projections from $\mathbb R^{3d+1}$ onto $\mathbb R^d$, we can perform a single projection with the same result:
 %
 \begin{equation}
   \pi_d\left(\left\{(x,t,\tau):\begin{array}{rcl}
@@ -1124,7 +1253,7 @@ Analogously to the previous example, instead of computing~$q$ projections from $
   \right\}\right)
 \end{equation}
 %
-The resulting set for this 2 dimensional example is illustrated in Figure~\ref{fig:second:example:resulting:set}.
+The resulting set for this two-dimensional example is illustrated in Figure~\ref{fig:second:example:resulting:set}.
 
 
 \begin{figure}
@@ -1224,7 +1353,7 @@ The resulting set for this 2 dimensional example is illustrated in Figure~\ref{f
 %
 %
 %
-\section{Conclusion}\label{sec:conclusion}
+\section{Conclusions}\label{sec:conclusion}
 %
 %
 %
@@ -1235,9 +1364,9 @@ We introduce the framework of parametric convexity and related analysis, which p
 %
 Furthermore we provide the link required to make the parametric Pontryagin difference computationally accessible for polytopic sets, this relies on the combinatorial nature of the subtrahend set-valued map.
 %
-Using two simple examples we illustrated the potency of the proposed methodology.
+Using two simple examples we illustrate the potency of the proposed methodology.
 
-The parametric Pontryagin difference has been applied successfully in a robust control environment~\cite{Schaich:2015,Schaich:2015a} and this work will further to extend its scope of application.
+The parametric Pontryagin difference has been used successfully in robust control applications~\cite{Schaich:2015,Schaich:2015a} and this work will further extend its scope of application.
 
 \bibliographystyle{plain}
 \bibliography{Bibliography}
