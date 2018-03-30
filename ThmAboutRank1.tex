@@ -1,0 +1,165 @@
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm,hyperref,graphicx,lpic,xcolor}
+\usepackage[left=20mm,top=20mm,right=20mm,bottom=25mm]{geometry}
+\usepackage{hyperref}
+% \usepackage{showkeys}
+\hypersetup{pdfauthor={Manuel Schaich}}
+
+\usepackage{tikz}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,patterns,decorations.pathreplacing,calc,shapes.geometric}
+
+\tikzset{
+    at xy split/.style 2 args={
+        at={(#1,#2)}
+    },
+    a/.style={circle, draw=red},`'
+    b/.style={rectangle, draw=blue}
+}
+\tikzset{myrad/.style 2 args={circle,inner sep=0pt,minimum width=(2*(sqrt(#1)*1 pt ) - \pgflinewidth,fill=#2,draw=#2,fill opacity=.5,opacity=.8}}
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.7}
+
+\graphicspath{{./Pix/}}
+\pagestyle{plain}
+
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+      <5> <6> <7> <8> <9> <10> gen * mathx
+      <10.95> mathx10 <12> <14.4> <17.28> <20.74> <24.88> mathx12
+      }{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareFontSubstitution{U}{mathx}{m}{n}
+\DeclareMathSymbol{\temp}{\mathbin}{mathx}{'341}
+\newcommand{\bigominus}{\raisebox{10pt}{$\temp$}}
+
+
+\providecommand{\norm}[1]{\left\|#1\right\|}
+\providecommand{\abs}[1]{\left|#1\right|}
+\providecommand{\span}{\text{span}}
+\providecommand{\conv}{\text{conv}}
+\providecommand{\ext}{\text{ext}}
+\providecommand{\rank}{\text{rank}}
+
+\providecommand{\revision}{}
+
+
+\newtheorem{theorem}{Theorem}
+
+
+
+\begin{document}
+
+Currently, we have:
+
+\begin{theorem}\label{thm:polytopic:set:not:p:convex}
+  The polyhedral parametric set-valued map $\mathcal W(p):=\{z\in \mathbb R^n : a_i z \leq b_i  + c_i p \; \forall i\in\mathbb N_m\}$, 
+  where $a_i\in\mathbb R^{1\times n}$, $b_i \in \mathbb R$ and $c_i \in \mathbb R^{1\times d}$ for 
+  $i\in\mathbb N_m$ are given parameters, is necessarily parametrically convex if $C=0$ and cannot 
+  be parametrically convex if $\rank( C ) > 1$, where 
+  $C = (\begin{matrix} c_1^\top & \cdots & c_m^\top\end{matrix})^\top.$
+% and only if the matrix $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ is such that $\rank(B) \leq 1$.}
+%is not parametrically convex for any $B^T = [\begin{matrix} b_1^T & \cdots & b_m^T\end{matrix}]$ such that $\rank (B) >1$.}
+\end{theorem}
+
+Consider the polytope
+%
+\[
+	P = \{x\in\mathbb R^3: Ax\leq\mathbf{1}\}
+\]
+%
+with
+%
+\[
+	A = \begin{pmatrix} I_2 & \mathbf{1} \\
+						-I_2 & \mathbf{1} \\
+						I_2 & -\mathbf{1} \\
+						-I_2 & -\mathbf{1}
+						\end{pmatrix}
+\]
+%
+I.e. the polytope illustrated in Figure~\ref{fig:P},
+%
+\begin{figure}
+\centering
+\tdplotsetmaincoords{65}{40}
+\begin{tikzpicture}[tdplot_main_coords,scale=2]
+
+\draw[blue] (  0.0000,   0.0000,   1.0000) -- (  1.0000,  -1.0000,   0.0000) -- (  1.0000,   1.0000,   0.0000) -- (  0.0000,   0.0000,   1.0000) -- cycle;
+
+\draw[blue] (  0.0000,   0.0000,   1.0000) -- (  1.0000,   1.0000,   0.0000) -- ( -1.0000,   1.0000,   0.0000) -- (  0.0000,   0.0000,   1.0000) -- cycle;
+
+\draw[blue] ( -1.0000,  -1.0000,   0.0000) -- ( -1.0000,   1.0000,   0.0000) -- (  0.0000,   0.0000,   1.0000) -- ( -1.0000,  -1.0000,   0.0000) -- cycle;
+
+\draw[blue] ( -1.0000,  -1.0000,   0.0000) -- (  1.0000,  -1.0000,   0.0000) -- (  0.0000,   0.0000,   1.0000) -- ( -1.0000,  -1.0000,   0.0000) -- cycle;
+
+\draw[blue] (  0.0000,   0.0000,  -1.0000) -- (  1.0000,   1.0000,   0.0000) -- (  1.0000,  -1.0000,   0.0000) -- (  0.0000,   0.0000,  -1.0000) -- cycle;
+
+\draw[blue] (  0.0000,   0.0000,  -1.0000) -- ( -1.0000,   1.0000,   0.0000) -- (  1.0000,   1.0000,   0.0000) -- (  0.0000,   0.0000,  -1.0000) -- cycle;
+
+\draw[blue] (  0.0000,   0.0000,  -1.0000) -- ( -1.0000,   1.0000,   0.0000) -- ( -1.0000,  -1.0000,   0.0000) -- (  0.0000,   0.0000,  -1.0000) -- cycle;
+
+\draw[blue] (  0.0000,   0.0000,  -1.0000) -- (  1.0000,  -1.0000,   0.0000) -- ( -1.0000,  -1.0000,   0.0000) -- (  0.0000,   0.0000,  -1.0000) -- cycle;
+\end{tikzpicture}
+\caption{Polytope $P$.}\label{fig:P}
+\end{figure}
+%
+clearly not parametrically convex when considering $z = (x_1,x_2)$ and $p = x_3$.
+%
+However, Theorem~\ref{thm:polytopic:set:not:p:convex} is satisfied.
+%
+Now consider the polytope $P_2 = \{x\in\mathbb R^4:-1\leq x_{1/2}+x_{3/4}\leq 1\}$, and consider $z=(x_1,x_2)$ and $p=(x_3,x_4)$ with $-\frac{1}{2}\leq p_{1/2}\leq \frac{1}{2}$.
+%
+This means 
+%
+\[
+A = \begin{pmatrix}1& \\ &1 \\ -1& \\ &-1\end{pmatrix}, C = \begin{pmatrix} -1& \\ &-1  \\ 1& \\ &1\end{pmatrix}
+\]
+% 
+For this particular choice we can write the vertex description of $W(p)$ as
+%
+\[
+	W(p) = \conv \left\{ \begin{pmatrix}\pm(1-p_1)\\\pm (1-p_2)\end{pmatrix},\begin{pmatrix}\mp(1-p_1)\\\pm (1-p_2)\end{pmatrix}\right\}
+\]
+%
+Therefore, $\rank(C)=2>1$ and Theorem~\ref{thm:polytopic:set:not:p:convex} claims that $W(p)$ is not parametrically convex. 
+%
+However, it is. 
+%
+For any subset of $p\in Y\subset \{p:-1<p_{1/2}<1\}$. 
+%
+It is a quite unexciting parametrically convex set-valued map but it is parametrically convex nevertheless, in particular $W(\lambda p_1) \oplus W((1-\lambda)p_2) = W(\lambda p_1+(1-\lambda)p_2)$.
+%
+\\[2em]
+%
+I think that in order to make a precise and useful statement we have to drop the notion of the explicit representation of $W(p)$ and use something along the lines of
+%
+\begin{theorem}
+Let $P\subset Y\times Z$ be a polytope defined by
+%
+\[
+	P = \{(p,z):Cp+Az\leq\mathbf{1}\}
+\] 
+%
+and let 
+%
+\[
+H_i = \{v\in\mathbb R^{d+n}h_iv=1\}, i\in\{1,\dots,t\}
+\]
+be its supporting hyperplanes.
+%
+The set-valued map $W(p) = \{z\in Z:Az\leq\mathbf{1}-Cp\}$ is parametrically convex iff all hyperplanes $H_i$ support $P$ on the entire set $Y\times Z$, i.e. $H_i\cap (Y\times Z) = H_i\cap P$.
+\end{theorem}
+%
+The parametrically convex part of this statement follows pretty much immediately, however, it does exactly what we want, i.e. it excludes polytopes that have vertices in $p$ and has no condition on the rank of $C$.
+%
+On the other hand this seems quite abstract.
+%
+\\[2em]
+%
+The statement that used to follow with the three part proof that was not very well formulated I would have treated as you have and split it into smaller statements.
+%
+\end{document}
